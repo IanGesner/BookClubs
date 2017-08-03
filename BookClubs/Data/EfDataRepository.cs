@@ -8,6 +8,12 @@ namespace BookClubs.Data
 {
     public class EfDataRepository : IDataRepository
     {
+        private readonly ApplicationDbContext _dbContext;
+        public EfDataRepository()
+        {
+            _dbContext = new ApplicationDbContext();
+        }
+
         public void AddApplicationUser(ApplicationUser person)
         {
             throw new NotImplementedException();
@@ -22,6 +28,22 @@ namespace BookClubs.Data
         {
             throw new NotImplementedException();
         }
+
+        public void UpdateProfile(ApplicationUser user)
+        {
+            ApplicationUser userToUpdate = _dbContext.Users.Where(u => u.Id == user.Id).FirstOrDefault();
+
+            if (userToUpdate != null)
+            {
+                userToUpdate.FirstName = user.FirstName;
+                userToUpdate.LastName = user.LastName;
+                userToUpdate.Biography = user.Biography;
+
+                _dbContext.SaveChanges();
+            }
+        }
+
+
 
         public List<Group> GetAllGroups()
         {
@@ -43,17 +65,12 @@ namespace BookClubs.Data
             throw new NotImplementedException();
         }
 
-        public void RemoveApplicationUser(ApplicationUser id)
+        public void RemoveApplicationUser(ApplicationUser user)
         {
             throw new NotImplementedException();
         }
 
         public void RemoveGroup(Group id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateApplicationUser(ApplicationUser id)
         {
             throw new NotImplementedException();
         }

@@ -95,7 +95,7 @@
     <button type="button" class="btn btn-basic btn-block btn-bc" data-toggle="collapse" data-target="#editProfile">Edit Profile</button>
     <div id="editProfile" class="collapse">
         @{ /*TODO: Add editors for profile picture, first name, last name, biography*/}
-        
+        @Html.Partial("_CreateProfilePartial", Model.User)
         
     </div>
 </div>

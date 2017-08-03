@@ -7,22 +7,23 @@ using System.Threading.Tasks;
 
 namespace BookClubs.Data
 {
-    interface IDataRepository
+    public interface IDataRepository
     {
         #region APPLICATION USERS
         List<ApplicationUser> GetAllApplicationUsers();
         void AddApplicationUser(ApplicationUser person);
         ApplicationUser GetApplicationUser(int? id);
-        void UpdateApplicationUser(ApplicationUser id);
-        void RemoveApplicationUser(ApplicationUser id);
+        void UpdateProfile(ApplicationUser user);
+        void RemoveApplicationUser(ApplicationUser user);
         #endregion
+
         #region GROUPS
         List<Group> GetAllGroups();
         List<Group> GetAllGroups(string id);
         Group GetGroup(int? id);
         void AddGroup(Group group);
-        void UpdateGroup(Group id);
-        void RemoveGroup(Group id);
+        void UpdateGroup(Group group);
+        void RemoveGroup(Group group);
         #endregion
     }
 }

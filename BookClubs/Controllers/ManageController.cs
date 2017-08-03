@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BookClubs.Models;
+using BookClubs.Data;
 
 namespace BookClubs.Controllers
 {
@@ -15,16 +16,23 @@ namespace BookClubs.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IDataRepository _dataRepository;
 
-        public ManageController()
+        //public ManageController()
+        //{
+        //    _dataRepository = new EfDataRepository();
+        //}
+
+        public ManageController(IDataRepository repo)
         {
+            _dataRepository = repo;
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
+        //public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        //{
+        //    UserManager = userManager;
+        //    SignInManager = signInManager;
+        //}
 
         public ApplicationSignInManager SignInManager
         {
@@ -32,9 +40,9 @@ namespace BookClubs.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -48,6 +56,17 @@ namespace BookClubs.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        public ActionResult EditProfile(ApplicationUser model)
+        {
+            if (ModelState.IsValid)
+            {
+                _dataRepository.UpdateProfile(model);
+                return RedirectToAction("Index");
+            }
+            else
+                return RedirectToAction("Index");
         }
 
         //
@@ -64,13 +83,15 @@ namespace BookClubs.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                User = await UserManager.FindByIdAsync(userId)
             };
             return View(model);
         }
@@ -333,7 +354,7 @@ namespace BookClubs.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -384,6 +405,6 @@ namespace BookClubs.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

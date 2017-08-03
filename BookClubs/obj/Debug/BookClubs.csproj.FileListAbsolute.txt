@@ -100,3 +100,9 @@ c:\users\ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Micro
 c:\users\ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csprojResolveAssemblyReference.cache
 c:\users\ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.dll
 c:\users\ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.pdb
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\SimpleInjector.dll
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\SimpleInjector.Integration.Web.dll
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\SimpleInjector.Integration.Web.Mvc.dll
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\SimpleInjector.xml
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\SimpleInjector.Integration.Web.xml
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\SimpleInjector.Integration.Web.Mvc.xml
