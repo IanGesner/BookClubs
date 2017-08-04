@@ -106,3 +106,5 @@ C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Simpl
 C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\SimpleInjector.xml
 C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\SimpleInjector.Integration.Web.xml
 C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\SimpleInjector.Integration.Web.Mvc.xml
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations.InitialCreate.resources
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csproj.GenerateResource.Cache

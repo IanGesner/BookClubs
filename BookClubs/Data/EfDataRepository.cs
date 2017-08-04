@@ -42,9 +42,7 @@ namespace BookClubs.Data
                 _dbContext.SaveChanges();
             }
         }
-
-
-
+        
         public List<Group> GetAllGroups()
         {
             throw new NotImplementedException();
