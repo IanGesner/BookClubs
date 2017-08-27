@@ -97,7 +97,6 @@ c:\users\ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Micro
 c:\users\ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Microsoft.AI.ServerTelemetryChannel.xml
 c:\users\ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Microsoft.AI.WindowsServer.xml
 c:\users\ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Microsoft.AI.Web.xml
-c:\users\ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csprojResolveAssemblyReference.cache
 c:\users\ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.dll
 c:\users\ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.pdb
 C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\SimpleInjector.dll
@@ -108,3 +107,7 @@ C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Simpl
 C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\SimpleInjector.Integration.Web.Mvc.xml
 C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations.InitialCreate.resources
 C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csproj.GenerateResource.Cache
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations.NewGroupModel.resources
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations.AddedProfilePicModel.resources
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csprojResolveAssemblyReference.cache
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations.RevertedSomeChanges.resources

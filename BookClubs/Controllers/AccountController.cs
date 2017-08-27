@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BookClubs.Models;
+using BookClubs.Data;
 
 namespace BookClubs.Controllers
 {
@@ -17,9 +18,20 @@ namespace BookClubs.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IDataRepository _dataRepository;
 
-        public AccountController()
+        public AccountController(IDataRepository repo)
         {
+            _dataRepository = repo;
+        }
+
+        public ActionResult EditProfile()
+        {
+            var currentUserId = User.Identity.GetUserId();
+
+            var model = _dataRepository.GetApplicationUser(currentUserId);
+
+            return View(model);
         }
 
         public ApplicationSignInManager SignInManager
@@ -136,6 +148,8 @@ namespace BookClubs.Controllers
             return View();
         }
 
+
+
         //
         // POST: /Account/Register
         [HttpPost]
@@ -157,7 +171,7 @@ namespace BookClubs.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("EditProfile", "Account");
                 }
                 AddErrors(result);
             }

@@ -18,21 +18,10 @@ namespace BookClubs.Controllers
         private ApplicationUserManager _userManager;
         private IDataRepository _dataRepository;
 
-        //public ManageController()
-        //{
-        //    _dataRepository = new EfDataRepository();
-        //}
-
         public ManageController(IDataRepository repo)
         {
             _dataRepository = repo;
         }
-
-        //public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        //{
-        //    UserManager = userManager;
-        //    SignInManager = signInManager;
-        //}
 
         public ApplicationSignInManager SignInManager
         {

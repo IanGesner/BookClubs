@@ -19,6 +19,5 @@ namespace BookClubs.Models
         {
             return new ApplicationDbContext();
         }
-
     }
 }

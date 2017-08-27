@@ -13,6 +13,12 @@ namespace BookClubs
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    name: "Group Profile",
+            //    url: "{controller}/{id}",
+            //    defaults: new { controller = "Groups", action = "Details", id = UrlParameter.Optional }
+            //    );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

@@ -33,6 +33,7 @@ namespace BookClubs.Data
         {
             ApplicationUser userToUpdate = _dbContext.Users.Where(u => u.Id == user.Id).FirstOrDefault();
 
+            //if FirstOrDefault() finds a user matching the ID, set the first name, last name, and biography
             if (userToUpdate != null)
             {
                 userToUpdate.FirstName = user.FirstName;
@@ -42,25 +43,27 @@ namespace BookClubs.Data
                 _dbContext.SaveChanges();
             }
         }
-        
+
         public List<Group> GetAllGroups()
         {
-            throw new NotImplementedException();
+            return _dbContext.Groups.ToList();
         }
 
-        public List<Group> GetAllGroups(string id)
+        public List<Group> GetAllGroups(string groupName)
         {
             throw new NotImplementedException();
         }
 
-        public ApplicationUser GetApplicationUser(int? id)
+        public ApplicationUser GetApplicationUser(string id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Users.Where(u => u.Id == id).FirstOrDefault();
         }
 
         public Group GetGroup(int? id)
         {
-            throw new NotImplementedException();
+            Group group = _dbContext.Groups.Where(g => g.Id == id).FirstOrDefault();
+
+            return group;
         }
 
         public void RemoveApplicationUser(ApplicationUser user)
@@ -76,6 +79,11 @@ namespace BookClubs.Data
         public void UpdateGroup(Group id)
         {
             throw new NotImplementedException();
+        }
+
+        public List<GroupEvent> GetAllGroupEvents()
+        {
+            return _dbContext.GroupEvents.ToList();
         }
     }
 }

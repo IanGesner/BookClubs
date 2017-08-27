@@ -79,3 +79,9 @@ C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs.Tests\bin
 C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs.Tests\obj\Debug\BookClubs.Tests.csprojResolveAssemblyReference.cache
 C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs.Tests\obj\Debug\BookClubs.Tests.dll
 C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs.Tests\obj\Debug\BookClubs.Tests.pdb
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs.Tests\bin\Debug\SimpleInjector.dll
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs.Tests\bin\Debug\SimpleInjector.Integration.Web.dll
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs.Tests\bin\Debug\SimpleInjector.Integration.Web.Mvc.dll
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs.Tests\bin\Debug\SimpleInjector.xml
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs.Tests\bin\Debug\SimpleInjector.Integration.Web.xml
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs.Tests\bin\Debug\SimpleInjector.Integration.Web.Mvc.xml

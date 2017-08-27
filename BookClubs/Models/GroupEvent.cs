@@ -1,20 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace BookClubs.Models
 {
     public class GroupEvent
     {
         [Key]
+        [Required]
         public int Id { get; set; }
+
+        [Required]
         public string Address { get; set; }
+
+        [Required]
         public string City { get; set; }
+
+        [Required]
         public string State { get; set; }
+
+        [Required]
         public string ZipCode { get; set; }
-        public Book Book { get; set; }
+
+        [Required]
+        public virtual Book Book { get; set; }
+
+        [Required]
         public DateTime DateTime { get; set; }
     }
 }

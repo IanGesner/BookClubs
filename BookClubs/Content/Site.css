@@ -26,3 +26,11 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.hover-row {
+    background-color: #808080;
+}
+
+td.hover-cell {
+    background-color: #808080;
+}

@@ -12,7 +12,7 @@ namespace BookClubs.Data
         #region APPLICATION USERS
         List<ApplicationUser> GetAllApplicationUsers();
         void AddApplicationUser(ApplicationUser person);
-        ApplicationUser GetApplicationUser(int? id);
+        ApplicationUser GetApplicationUser(string id);
         void UpdateProfile(ApplicationUser user);
         void RemoveApplicationUser(ApplicationUser user);
         #endregion
@@ -25,5 +25,7 @@ namespace BookClubs.Data
         void UpdateGroup(Group group);
         void RemoveGroup(Group group);
         #endregion
+
+        List<GroupEvent> GetAllGroupEvents();
     }
 }

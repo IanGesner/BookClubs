@@ -8,6 +8,8 @@ namespace BookClubs.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
         public virtual ICollection<ApplicationUser> Users { get; set; }
         public virtual ICollection<GroupEvent> GroupEvents { get; set; }
     }

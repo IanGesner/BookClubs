@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BookClubs.Data;
+using BookClubs.Models;
+using BookClubs.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,16 +11,54 @@ namespace BookClubs.Controllers
 {
     public class GroupsController : Controller
     {
+        IDataRepository _dataRepository;
+
+        public GroupsController(IDataRepository dataRepository)
+        {
+            _dataRepository = dataRepository;
+        }
+
         // GET: Groups
         public ActionResult Index()
         {
-            return View();
+            // Name, City, State - Books - Members
+            var viewModel = _dataRepository.GetAllGroups().SelectMany(group => group.GroupEvents
+                                                                        .OrderBy(ge => ge.DateTime)
+                                                            .Take(1), (group, nextEvent) =>
+                                                            new GroupListItemViewModel
+                                                            {
+                                                                Id = group.Id,
+                                                                GroupName = group.Name,
+                                                                GroupCity = group.City,
+                                                                GroupState = group.State,
+                                                                CurrentBookTitle = nextEvent.Book.Title,
+                                                                MemberCount = group.Users.Count().ToString()
+                                                            });
+
+            return View(viewModel);
         }
 
         // GET: Groups/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View();
+            var group = _dataRepository.GetGroup(id);
+
+            if (group != null)
+            {
+                var viewModel = new GroupDetailsViewModel
+                {
+                    Id = group.Id,
+                    GroupName = group.Name,
+                    GroupState = group.State,
+                    GroupCity = group.City,
+                    CurrentBookTitle = group.GroupEvents.FirstOrDefault().Book.Title,
+                    MemberCount = group.Users.Count.ToString()
+                };
+
+                return View(viewModel);
+            }
+            else
+                return new HttpNotFoundResult("We couldn't find the group you requested.");
         }
 
         // GET: Groups/Create
