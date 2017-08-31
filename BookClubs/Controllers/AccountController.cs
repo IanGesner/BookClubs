@@ -50,35 +50,35 @@ namespace BookClubs.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public ActionResult EditProfile(ProfileViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                // Retrieve current user
-                var userId = User.Identity.GetUserId();
-                var user = _dataRepository.GetApplicationUserById(userId);
+        //[HttpPost]
+        //public ActionResult EditProfile(ProfileViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // Retrieve current user
+        //        var userId = User.Identity.GetUserId();
+        //        var user = _dataRepository.GetApplicationUserById(userId);
 
-                //If it isn't the single-instance default picture, delete it.
-                if (!String.Equals(user.ProfilePictureUrl,_defaultPic))
-                    System.IO.File.Delete(user.ProfilePictureUrl);
+        //        //If it isn't the single-instance default picture, delete it.
+        //        if (!String.Equals(user.ProfilePictureUrl,_defaultPic))
+        //            System.IO.File.Delete(user.ProfilePictureUrl);
 
-                // Create a profile picture URL to save to.
-                // Set the new file name to the current user's ID
-                var profilePicUrl = _profilePicDir + userId +
-                 "." + BcHelper.GetFileExtension(model.ProfilePicture);
+        //        // Create a profile picture URL to save to.
+        //        // Set the new file name to the current user's ID
+        //        var profilePicUrl = _profilePicDir + userId +
+        //         "." + BcHelper.GetFileExtension(model.ProfilePicture);
 
 
-                // Save the profile picture and update the user's
-                // ProfilePicUrl property in database
-                model.ProfilePicture.SaveAs(Server.MapPath(profilePicUrl));
-                user.ProfilePictureUrl = profilePicUrl;
+        //        // Save the profile picture and update the user's
+        //        // ProfilePicUrl property in database
+        //        model.ProfilePicture.SaveAs(Server.MapPath(profilePicUrl));
+        //        user.ProfilePictureUrl = profilePicUrl;
                 
-                //return RedirectToAction("View", "Profile", new { id = User.Identity.GetUserName() });
-            }
+        //        return RedirectToAction("Index", "Groups");
+        //    }
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
         [HttpPost]
         [AllowAnonymous]
@@ -236,7 +236,10 @@ namespace BookClubs.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("EditProfile", "Account");
+
+                    //TODO: REVERT(1)
+                    //return RedirectToAction("EditProfile", "Account");
+                    return RedirectToAction("Index", "Groups");
                 }
                 AddErrors(result);
             }
