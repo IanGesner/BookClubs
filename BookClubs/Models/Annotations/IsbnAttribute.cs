@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BookClubs.Models.Annotations
 {
-    public class Isbn : ValidationAttribute
+    public class IsbnAttribute : ValidationAttribute
     {
-        public Isbn() : base("You must enter a valid 10 or 13 digit ISBN.") { }
+        public IsbnAttribute() : base("You must enter a valid 10 or 13 digit ISBN.") { }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

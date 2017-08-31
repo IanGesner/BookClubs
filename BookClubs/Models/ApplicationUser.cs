@@ -12,12 +12,9 @@ namespace BookClubs.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-
-        [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
@@ -25,8 +22,7 @@ namespace BookClubs.Models
         public string Biography { get; set; }
 
         public virtual ICollection<Group> Groups { get; set; }
-        public virtual ProfilePicture DisplayPicture { get; set; }
-        public virtual ICollection<ProfilePicture> ProfilePictures { get; set; }
+        public string ProfilePictureUrl { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

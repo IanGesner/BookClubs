@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
+using System.Web;
 
 namespace BookClubs.Models
 {
@@ -11,9 +12,5 @@ namespace BookClubs.Models
 
         [Required]
         public string Url { get; set; }
-
-        [NotMapped]
-        public Image Image { get; set; }
-
     }
 }

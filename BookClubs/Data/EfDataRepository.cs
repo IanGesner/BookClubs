@@ -19,14 +19,23 @@ namespace BookClubs.Data
             throw new NotImplementedException();
         }
 
-        public void AddGroup(Group group)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<ApplicationUser> GetAllApplicationUsers()
         {
-            throw new NotImplementedException();
+            return _dbContext.Users.ToList();
+        }
+
+        public ApplicationUser GetApplicationUserById(string id)
+        {
+            return _dbContext.Users.Where(u => u.Id == id).FirstOrDefault();
+        }
+        public ApplicationUser GetApplicationUserByUsername(string username)
+        {
+            return _dbContext.Users.Where(u => u.UserName == username).FirstOrDefault();
+        }
+
+        public ApplicationUser GetApplicationUserByEmail(string email)
+        {
+            return _dbContext.Users.Where(u => u.Email == email).FirstOrDefault();
         }
 
         public void UpdateProfile(ApplicationUser user)
@@ -44,6 +53,22 @@ namespace BookClubs.Data
             }
         }
 
+        public void RemoveApplicationUser(ApplicationUser user)
+        {
+            _dbContext.Users.Remove(user);
+        }
+
+
+
+
+
+
+
+        public void AddGroup(Group group)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Group> GetAllGroups()
         {
             return _dbContext.Groups.ToList();
@@ -54,11 +79,6 @@ namespace BookClubs.Data
             throw new NotImplementedException();
         }
 
-        public ApplicationUser GetApplicationUser(string id)
-        {
-            return _dbContext.Users.Where(u => u.Id == id).FirstOrDefault();
-        }
-
         public Group GetGroup(int? id)
         {
             Group group = _dbContext.Groups.Where(g => g.Id == id).FirstOrDefault();
@@ -66,10 +86,7 @@ namespace BookClubs.Data
             return group;
         }
 
-        public void RemoveApplicationUser(ApplicationUser user)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public void RemoveGroup(Group id)
         {
@@ -85,5 +102,7 @@ namespace BookClubs.Data
         {
             return _dbContext.GroupEvents.ToList();
         }
+
+
     }
 }

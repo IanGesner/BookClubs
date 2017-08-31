@@ -212,30 +212,24 @@
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Data\EfDataRepository.cs" />
+    <Compile Include="Data\FileStorageStrategy.cs" />
     <Compile Include="Data\IDataRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\BcHelper.cs" />
     <Compile Include="Helpers\GroupEventDateComparer.cs" />
-    <Compile Include="Migrations\201708032144587_InitialCreate.cs" />
-    <Compile Include="Migrations\201708032144587_InitialCreate.Designer.cs">
-      <DependentUpon>201708032144587_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708081932124_NewGroupModel.cs" />
-    <Compile Include="Migrations\201708081932124_NewGroupModel.Designer.cs">
-      <DependentUpon>201708081932124_NewGroupModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708272013577_AddedProfilePicModel.cs" />
-    <Compile Include="Migrations\201708272013577_AddedProfilePicModel.Designer.cs">
-      <DependentUpon>201708272013577_AddedProfilePicModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708272147071_RevertedSomeChanges.cs" />
-    <Compile Include="Migrations\201708272147071_RevertedSomeChanges.Designer.cs">
-      <DependentUpon>201708272147071_RevertedSomeChanges.cs</DependentUpon>
+    <Compile Include="Migrations\201708311642053_LotsOfSchemaChanges.cs" />
+    <Compile Include="Migrations\201708311642053_LotsOfSchemaChanges.Designer.cs">
+      <DependentUpon>201708311642053_LotsOfSchemaChanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Annotations\Isbn.cs" />
+    <Compile Include="Models\Annotations\MaxFileSizeAttribute.cs" />
+    <Compile Include="Models\Annotations\FileTypesAttribute.cs" />
+    <Compile Include="Models\Annotations\IsbnAttribute.cs" />
+    <Compile Include="Models\Annotations\UniqueUserNameAttribute.cs" />
     <Compile Include="Models\ProfilePicture.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -246,6 +240,7 @@
     <Compile Include="Models\GroupEvent.cs" />
     <Compile Include="Models\ViewModels\GroupViewModels.cs" />
     <Compile Include="Models\ViewModels\ManageViewModels.cs" />
+    <Compile Include="Models\ViewModels\ProfileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -314,7 +309,8 @@
     <Content Include="Views\Account\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Profile_Pictures\" />
+    <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -332,17 +328,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708032144587_InitialCreate.resx">
-      <DependentUpon>201708032144587_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708081932124_NewGroupModel.resx">
-      <DependentUpon>201708081932124_NewGroupModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708272013577_AddedProfilePicModel.resx">
-      <DependentUpon>201708272013577_AddedProfilePicModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708272147071_RevertedSomeChanges.resx">
-      <DependentUpon>201708272147071_RevertedSomeChanges.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708311642053_LotsOfSchemaChanges.resx">
+      <DependentUpon>201708311642053_LotsOfSchemaChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

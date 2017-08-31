@@ -51,7 +51,6 @@ namespace BookClubs.Migrations
             }
         };
 
-
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
@@ -88,8 +87,7 @@ namespace BookClubs.Migrations
                     LastName = lastName,
                     Biography = bio,
                     Groups = CreateGroups(context),
-                    DisplayPicture = GetDefaultPicture(),
-                    ProfilePictures = new List<ProfilePicture>() { GetDefaultPicture() }
+                    ProfilePictureUrl = "~\\Content\\Images\\blank_profile_picture.png"
                 };
 
                 userManager.Create(newUser, "P@ssword123");
@@ -152,16 +150,6 @@ namespace BookClubs.Migrations
             return groupEvents;
         }
 
-        private ProfilePicture GetDefaultPicture()
-        {
-            var profilePicture = new ProfilePicture()
-            {
-                Url = "~\\Content\\Images\\blank_profile_picture.png",
-                Image = null
-            };
-
-            return profilePicture;
-        }
     }
 }
 

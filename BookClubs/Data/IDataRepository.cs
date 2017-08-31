@@ -10,9 +10,11 @@ namespace BookClubs.Data
     public interface IDataRepository
     {
         #region APPLICATION USERS
-        List<ApplicationUser> GetAllApplicationUsers();
         void AddApplicationUser(ApplicationUser person);
-        ApplicationUser GetApplicationUser(string id);
+        List<ApplicationUser> GetAllApplicationUsers();
+        ApplicationUser GetApplicationUserById(string id);
+        ApplicationUser GetApplicationUserByUsername(string username);
+        ApplicationUser GetApplicationUserByEmail(string email);
         void UpdateProfile(ApplicationUser user);
         void RemoveApplicationUser(ApplicationUser user);
         #endregion
@@ -27,5 +29,6 @@ namespace BookClubs.Data
         #endregion
 
         List<GroupEvent> GetAllGroupEvents();
+
     }
 }

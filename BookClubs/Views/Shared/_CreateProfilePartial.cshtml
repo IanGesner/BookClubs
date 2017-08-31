@@ -1,56 +1,104 @@
-﻿@model BookClubs.Models.ApplicationUser
+﻿@model BookClubs.Models.ViewModels.ProfileViewModel
 
-@using (Html.BeginForm("EditProfile", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
+<style>
+    #hiddenFileInput {
+        display: none;
+    }
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    #profileImage {
+        width: 150px;
+        height: 150px;
+        border-radius: 10%;
+        border: 1px solid #cccccc;
+    }
 
-        @Html.HiddenFor(model => model.Id)
+    #uploadPictureBtn {
+        margin-top: 10px;
+    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    .text-danger {
+        display: inline;
+    }
+</style>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<h2>Edit Profile</h2>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+<form action="/Account/EditProfile" method="post" enctype="multipart/form-data" name="EditProfileForm">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+    <input type="file" name="ProfilePicture" id="hiddenFileInput" />
 
-
-            <image id="profileImage" src="@Url.Content("~Content/Images/blank_profile_picture.png")" />
-            <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" capture>
-
-
-
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Biography, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Biography, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Biography, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Done" class="btn btn-default" />
-            </div>
-        </div>
-
+    <div class="form-group">
+        <label for="ProfilePicture">Profile Picture</label>
+        <br />
+        <img src="~/Content/Images/blank_profile_picture.png" id="profileImage" />
+        @Html.ValidationMessageFor(model => model.ProfilePicture, "", new { @class = "text-danger" })
+        <br />
+        <input type="button" value="Upload Picture" class="btn btn-default" id="uploadPictureBtn" />
     </div>
-}
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FirstName)
+        <br />
+        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @placeholder = "First Name", @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LastName, new { htmlAttributes = new { } })
+        <br />
+        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @placeholder = "Last Name", @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Biography, new { htmlAttributes = new { } })
+        <br />
+        @Html.EditorFor(model => model.Biography, new { htmlAttributes = new { @placeholder = "Tell us about you", @class = "form-control", @rows = "5" } })
+        @Html.ValidationMessageFor(model => model.Biography, "", new { @class = "text-danger" })
+    </div>
+
+
+    <input type="submit" value="Done" class="btn btn-primary" />
+
+</form>
+
+<script>
+    var fileSelect = document.getElementById("uploadPictureBtn");
+    var fileElement = document.getElementById("hiddenFileInput");
+
+    fileSelect.addEventListener("click", function (e) {
+        if (fileElement) {
+            fileElement.click();
+        }
+        console.log(e);
+        e.preventDefault();
+    }, false);
+
+    fileElement.addEventListener("change", function () { outputDebug(this.files) });
+    fileElement.addEventListener("change", function () { updatePreview(this.files[0]) });
+
+    function outputDebug(files) {
+        console.log("File length is" + files.length + ".\r\f Files are:");
+        for (i = 0; i < files.length; i++) {
+            console.log(files[i]);
+        }
+    }
+
+    function updatePreview(file) {
+        var imageType = /^image\//;
+
+        if (!imageType.test(file.type)) {
+            return;
+        }
+
+        var img = document.getElementById("profileImage");
+        img.file = file;
+
+        var reader = new FileReader();
+        reader.onload = (function (aImg) { return function (e) { aImg.src = e.target.result; }; })(img);
+        reader.readAsDataURL(file);
+        console.log('Image loaded.');
+    }
+
+</script>

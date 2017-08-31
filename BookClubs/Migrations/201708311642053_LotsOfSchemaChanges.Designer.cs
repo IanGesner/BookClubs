@@ -7,13 +7,13 @@ namespace BookClubs.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddedProfilePicModel : IMigrationMetadata
+    public sealed partial class LotsOfSchemaChanges : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedProfilePicModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(LotsOfSchemaChanges));
         
         string IMigrationMetadata.Id
         {
-            get { return "201708272013577_AddedProfilePicModel"; }
+            get { return "201708311642053_LotsOfSchemaChanges"; }
         }
         
         string IMigrationMetadata.Source
