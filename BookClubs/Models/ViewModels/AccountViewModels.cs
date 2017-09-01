@@ -68,11 +68,6 @@ namespace BookClubs.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "Username")]
-        [System.Web.Mvc.Remote("IsUniqueUsername", "Account", HttpMethod = "POST", ErrorMessage = "This username has been taken.")]
-        public string UserName { get; set; }
-
-        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         [System.Web.Mvc.Remote("IsUniqueEmail", "Account", HttpMethod = "POST", ErrorMessage = "This email address has already been registered.")]

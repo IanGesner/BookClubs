@@ -224,7 +224,7 @@ namespace BookClubs.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, ProfilePictureUrl = @"~/Content/Images/blank_profile_picture.png" };
+                var user = new ApplicationUser { Email = model.Email, ProfilePictureUrl = @"~/Content/Images/blank_profile_picture.png" };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
