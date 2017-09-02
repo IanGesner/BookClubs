@@ -4,11 +4,11 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Group Details</h4>
+    <h4>@Model.GroupName</h4>
     <hr />
+
+
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.GroupName)
@@ -49,10 +49,38 @@
         <dd>
             @Html.DisplayFor(model => model.MemberCount)
         </dd>
-
     </dl>
+
+    <button id="viewMembersBtn" type="button" class="btn btn-basic btn-block btn-bc">Edit Profile</button>
+
+
+
+
+    <div id="viewMembers" class="collapse">
+        
+    </div>
+
+
+
 </div>
+
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<style>
+    #viewMembers {
+        min-width: 400px;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+
+        $("#viewMembersBtn").click(function () {
+            $("#viewMembers").hide();
+        });
+
+    });
+</script>
+

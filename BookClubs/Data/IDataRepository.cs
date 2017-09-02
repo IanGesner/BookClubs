@@ -11,7 +11,7 @@ namespace BookClubs.Data
     {
         #region APPLICATION USERS
         void AddApplicationUser(ApplicationUser person);
-        List<ApplicationUser> GetAllApplicationUsers();
+        IQueryable<ApplicationUser> GetAllApplicationUsers();
         ApplicationUser GetApplicationUserById(string id);
         ApplicationUser GetApplicationUserByUsername(string username);
         ApplicationUser GetApplicationUserByEmail(string email);
@@ -20,15 +20,15 @@ namespace BookClubs.Data
         #endregion
 
         #region GROUPS
-        List<Group> GetAllGroups();
-        List<Group> GetAllGroups(string id);
+        IQueryable<Group> GetAllGroups();
+        IQueryable<Group> GetAllGroups(string id);
         Group GetGroup(int? id);
         void AddGroup(Group group);
         void UpdateGroup(Group group);
         void RemoveGroup(Group group);
         #endregion
 
-        List<GroupEvent> GetAllGroupEvents();
+        IQueryable<GroupEvent> GetAllGroupEvents();
 
     }
 }

@@ -22,8 +22,7 @@ namespace BookClubs.Controllers
         public ActionResult Index()
         {
             // Name, City, State - Books - Members
-            var viewModel = _dataRepository.GetAllGroups().SelectMany(group => group.GroupEvents
-                                                                        .OrderBy(ge => ge.DateTime)
+            var viewModel = _dataRepository.GetAllGroups().SelectMany(group => group.GroupEvents.OrderBy(ge => ge.DateTime)
                                                             .Take(1), (group, nextEvent) =>
                                                             new GroupListItemViewModel
                                                             {
@@ -42,6 +41,13 @@ namespace BookClubs.Controllers
         public ActionResult Details(int? id)
         {
             var group = _dataRepository.GetGroup(id);
+            var memberProfiles = group.Users.Select(u => new ProfileListViewModel()
+            {
+                Biography = u.Biography,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                ProfilePictureUrl = u.ProfilePictureUrl
+            }).ToList();
 
             if (group != null)
             {
@@ -52,7 +58,8 @@ namespace BookClubs.Controllers
                     GroupState = group.State,
                     GroupCity = group.City,
                     CurrentBookTitle = group.GroupEvents.FirstOrDefault().Book.Title,
-                    MemberCount = group.Users.Count.ToString()
+                    MemberCount = group.Users.Count.ToString(),
+                    MemberProfiles = memberProfiles
                 };
 
                 return View(viewModel);

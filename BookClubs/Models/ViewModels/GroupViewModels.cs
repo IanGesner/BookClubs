@@ -38,7 +38,6 @@ namespace BookClubs.Models.ViewModels
         [Display(Name = "Members")]
         public string MemberCount { get; set; }
 
-        //public Group Group { get; set; }
-        //public GroupEvent NextEvent { get; set; }
+        public List<ProfileListViewModel> MemberProfiles { get; set; }
     }
 }

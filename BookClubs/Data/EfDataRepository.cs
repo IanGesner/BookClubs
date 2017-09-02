@@ -20,9 +20,9 @@ namespace BookClubs.Data
             throw new NotImplementedException();
         }
 
-        public List<ApplicationUser> GetAllApplicationUsers()
+        public IQueryable<ApplicationUser> GetAllApplicationUsers()
         {
-            return _dbContext.Users.ToList();
+            return _dbContext.Users;
         }
 
         public ApplicationUser GetApplicationUserById(string id)
@@ -62,12 +62,12 @@ namespace BookClubs.Data
             throw new NotImplementedException();
         }
 
-        public List<Group> GetAllGroups()
+        public IQueryable<Group> GetAllGroups()
         {
-            return _dbContext.Groups.ToList();
+            return _dbContext.Groups;
         }
 
-        public List<Group> GetAllGroups(string groupName)
+        public IQueryable<Group> GetAllGroups(string groupName)
         {
             throw new NotImplementedException();
         }
@@ -91,9 +91,9 @@ namespace BookClubs.Data
             throw new NotImplementedException();
         }
 
-        public List<GroupEvent> GetAllGroupEvents()
+        public IQueryable<GroupEvent> GetAllGroupEvents()
         {
-            return _dbContext.GroupEvents.ToList();
+            return _dbContext.GroupEvents;
         }
 
 

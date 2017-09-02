@@ -11,12 +11,20 @@ namespace BookClubs.Models.ViewModels
     {
         [Display(Name = "Tell us about you")]
         public string Biography { get; set; }
-    
+
         [Required]
         [MaxFileSize(5, FileSizeUnit.Megabyte)]
         [FileTypes("jpg, jpeg, png, tiff, bmp")]
         public HttpPostedFileBase ProfilePicture { get; set; }
 
         public string ProfilePictureUrl { get; set; }
+    }
+
+    public class ProfileListViewModel
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string ProfilePictureUrl { get; set; }
+        public string Biography { get; set; }
     }
 }
