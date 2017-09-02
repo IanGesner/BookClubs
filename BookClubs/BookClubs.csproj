@@ -233,9 +233,9 @@
     </Compile>
     <Compile Include="Helpers\BcHelper.cs" />
     <Compile Include="Helpers\GroupEventDateComparer.cs" />
-    <Compile Include="Migrations\201708311642053_LotsOfSchemaChanges.cs" />
-    <Compile Include="Migrations\201708311642053_LotsOfSchemaChanges.Designer.cs">
-      <DependentUpon>201708311642053_LotsOfSchemaChanges.cs</DependentUpon>
+    <Compile Include="Migrations\201709012148200_LotsOfChanges.cs" />
+    <Compile Include="Migrations\201709012148200_LotsOfChanges.Designer.cs">
+      <DependentUpon>201709012148200_LotsOfChanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Annotations\MaxFileSizeAttribute.cs" />
@@ -282,7 +282,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\site.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -322,7 +324,8 @@
     <Content Include="Views\Account\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\Profile_Pictures\" />
+    <Folder Include="App_Data\" />
+    <Folder Include="App_Profile_Pictures\" />
     <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
@@ -341,12 +344,12 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708311642053_LotsOfSchemaChanges.resx">
-      <DependentUpon>201708311642053_LotsOfSchemaChanges.cs</DependentUpon>
-    </EmbeddedResource>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
+    <EmbeddedResource Include="Migrations\201709012148200_LotsOfChanges.resx">
+      <DependentUpon>201709012148200_LotsOfChanges.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

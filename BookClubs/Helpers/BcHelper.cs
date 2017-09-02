@@ -20,6 +20,11 @@ namespace BookClubs.Helpers
             throw new NotImplementedException();
         }
 
+        internal static string GetSrcURL(string profilePictureUrl)
+        {
+            return profilePictureUrl.Replace('\\', '/');
+        }
+
 
         //public static HttpPostedFileBase GetProfilePicture(string username)
         //{

@@ -3,7 +3,7 @@ namespace BookClubs.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class NewMigration : DbMigration
+    public partial class LotsOfChanges : DbMigration
     {
         public override void Up()
         {

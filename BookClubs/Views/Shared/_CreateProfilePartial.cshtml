@@ -31,24 +31,10 @@
     <div class="form-group">
         <label for="ProfilePicture">Profile Picture</label>
         <br />
-        <img src="~/Content/Images/blank_profile_picture.png" id="profileImage" />
+        <img src=@Model.ProfilePictureUrl id="profileImage" />
         @Html.ValidationMessageFor(model => model.ProfilePicture, "", new { @class = "text-danger" })
         <br />
         <input type="button" value="Upload Picture" class="btn btn-default" id="uploadPictureBtn" />
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.FirstName)
-        <br />
-        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @placeholder = "First Name", @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.LastName, new { htmlAttributes = new { } })
-        <br />
-        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @placeholder = "Last Name", @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">

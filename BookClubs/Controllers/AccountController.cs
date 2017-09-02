@@ -41,8 +41,6 @@ namespace BookClubs.Controllers
 
             ProfileViewModel model = new ProfileViewModel()
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
                 ProfilePictureUrl = user.ProfilePictureUrl,
                 Biography = user.Biography
             };
@@ -50,35 +48,43 @@ namespace BookClubs.Controllers
             return View(model);
         }
 
-        //[HttpPost]
-        //public ActionResult EditProfile(ProfileViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // Retrieve current user
-        //        var userId = User.Identity.GetUserId();
-        //        var user = _dataRepository.GetApplicationUserById(userId);
+        [HttpPost]
+        public ActionResult EditProfile(ProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Retrieve current user
+                var userId = User.Identity.GetUserId();
+                var user = _dataRepository.GetApplicationUserById(userId);
 
-        //        //If it isn't the single-instance default picture, delete it.
-        //        if (!String.Equals(user.ProfilePictureUrl,_defaultPic))
-        //            System.IO.File.Delete(user.ProfilePictureUrl);
+                //If it isn't the single-instance default picture, delete the current profile
+                // picture from the Profile_Pictures folder
+                if (!String.Equals(user.ProfilePictureUrl, _defaultPic))
+                    System.IO.File.Delete(Server.MapPath(user.ProfilePictureUrl));
 
-        //        // Create a profile picture URL to save to.
-        //        // Set the new file name to the current user's ID
-        //        var profilePicUrl = _profilePicDir + userId +
-        //         "." + BcHelper.GetFileExtension(model.ProfilePicture);
+                // Create a profile picture URL to save to.
+                // This will map to App_data\Profile_Pictures\{User ID}.{File Extension}
+                // Set the new file name to the current user's ID
+                var profilePicUrl = _profilePicDir + userId +
+                 "." + BcHelper.GetFileExtension(model.ProfilePicture);
 
 
-        //        // Save the profile picture and update the user's
-        //        // ProfilePicUrl property in database
-        //        model.ProfilePicture.SaveAs(Server.MapPath(profilePicUrl));
-        //        user.ProfilePictureUrl = profilePicUrl;
-                
-        //        return RedirectToAction("Index", "Groups");
-        //    }
+                // Save the profile picture and update the user's
+                // ProfilePicUrl property in database
+                model.ProfilePicture.SaveAs(Server.MapPath(profilePicUrl.Replace("/", @"\")));
+                user.ProfilePictureUrl = profilePicUrl;
 
-        //    return View(model);
-        //}
+                // Save the user's biography
+                user.Biography = model.Biography;
+
+                // Commit changes
+                _dataRepository.UpdateProfile(user);
+
+                return RedirectToAction("Index", "Groups");
+            }
+
+            return View(model);
+        }
 
         [HttpPost]
         [AllowAnonymous]
@@ -224,7 +230,10 @@ namespace BookClubs.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { Email = model.Email, ProfilePictureUrl = @"~/Content/Images/blank_profile_picture.png" };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,
+                            ProfilePictureUrl = _defaultPic, FirstName = model.FirstName,
+                            LastName = model.LastName };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -237,9 +246,7 @@ namespace BookClubs.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
 
-                    //TODO: REVERT(1)
-                    //return RedirectToAction("EditProfile", "Account");
-                    return RedirectToAction("Index", "Groups");
+                    return RedirectToAction("EditProfile", "Account");
                 }
                 AddErrors(result);
             }

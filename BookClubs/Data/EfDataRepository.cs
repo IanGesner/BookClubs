@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using BookClubs.Models;
+using System.Data.Entity;
 
 namespace BookClubs.Data
 {
@@ -40,17 +41,9 @@ namespace BookClubs.Data
 
         public void UpdateProfile(ApplicationUser user)
         {
-            ApplicationUser userToUpdate = _dbContext.Users.Where(u => u.Id == user.Id).FirstOrDefault();
-
-            //if FirstOrDefault() finds a user matching the ID, set the first name, last name, and biography
-            if (userToUpdate != null)
-            {
-                userToUpdate.FirstName = user.FirstName;
-                userToUpdate.LastName = user.LastName;
-                userToUpdate.Biography = user.Biography;
-
-                _dbContext.SaveChanges();
-            }
+            _dbContext.Users.Attach(user);
+            _dbContext.Entry(user).State = EntityState.Modified;
+            _dbContext.SaveChanges();
         }
 
         public void RemoveApplicationUser(ApplicationUser user)

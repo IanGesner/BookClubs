@@ -98,8 +98,6 @@
         @*@Html.Partial("_CreateProfilePartial", Model.User)*@
         @Html.Partial("_CreateProfilePartial", new BookClubs.Models.ViewModels.ProfileViewModel()
                        {
-                           FirstName = Model.User.FirstName,
-                           LastName = Model.User.LastName,
                            ProfilePictureUrl = Model.User.ProfilePictureUrl,
                            Biography = Model.User.Biography
                        })

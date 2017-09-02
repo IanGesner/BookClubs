@@ -9,14 +9,6 @@ namespace BookClubs.Models.ViewModels
 {
     public class ProfileViewModel
     {
-        [Required]
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; }
-
-        [Required]
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; }
-
         [Display(Name = "Tell us about you")]
         public string Biography { get; set; }
     

@@ -106,11 +106,11 @@ C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Simpl
 C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\SimpleInjector.Integration.Web.xml
 C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\SimpleInjector.Integration.Web.Mvc.xml
 C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csprojResolveAssemblyReference.cache
-C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations.LotsOfSchemaChanges.resources
-C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csproj.GenerateResource.Cache
 C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Microsoft.ApplicationInsights.TraceListener.dll
 C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Microsoft.AspNet.TelemetryCorrelation.dll
 C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\System.Diagnostics.DiagnosticSource.dll
 C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Microsoft.ApplicationInsights.TraceListener.xml
 C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Microsoft.AspNet.TelemetryCorrelation.xml
 C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\System.Diagnostics.DiagnosticSource.xml
+C:\Users\Ian\Documents\Visual Studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations.LotsOfChanges.resources
+C:\Users\Ian\Documents\Visual Studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csproj.GenerateResource.Cache
