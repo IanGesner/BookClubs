@@ -1,37 +1,47 @@
 namespace BookClubs.Migrations
 {
-    using BookClubs.Helpers;
     using BookClubs.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Data.Entity.Validation;
+    using System.Diagnostics;
+    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<BookClubs.Models.ApplicationDbContext>
     {
-        // These fields control the number of records to seed.
-        private const int USERS = 15;
-        private const int GROUPS_PER_USER = 5;
-        private const int EVENTS_PER_GROUP = 5;
+        public Configuration()
+        {
+            AutomaticMigrationsEnabled = false;
+        }
 
-        List<Book> books = new List<Book>
+        protected override void Seed(BookClubs.Models.ApplicationDbContext context)
+        {
+            if (System.Diagnostics.Debugger.IsAttached == false)
+                System.Diagnostics.Debugger.Launch();
+
+            #region ENTITY INITIALIZATIONS
+            List<Book> books = new List<Book>()
         {
             new Book()
             {
             Isbn = "9780982692639",
             Title = "Embedded Systems with ARM Cortex-M Microcontrollers in Assembly Language and C",
-            Authors = new List<Author> { new Author { FirstName = "Yifeng", LastName = "Zhu" } },
+            Authors = new List<Author> { new Author { FirstName = "Yifeng", LastName = "Zhu" } }
             },
             new Book()
             {
             Isbn = "9780262033848",
             Title = "Introduction to Algorithms",
-            Authors = new List<Author> {
+            Authors = new List<Author>
+            {
                 new Author { FirstName = "Thomas", LastName = "Cormen" },
                 new Author { FirstName = "Charles", LastName = "Leiserson" },
                 new Author { FirstName = "Ronald", LastName = "Rivest" },
-                new Author { FirstName = "Clifford", LastName = "Stein" } }
+                new Author { FirstName = "Clifford", LastName = "Stein" }}
             },
             new Book()
             {
@@ -48,109 +58,398 @@ namespace BookClubs.Migrations
             Isbn = "9780132350884",
             Title = "Clean Code: A Handbook of Agile Software Craftsmanship",
             Authors = new List<Author> { new Author { FirstName = "Robert", LastName = "Martin" } },
+            },
+            new Book()
+            {
+            Isbn = "9781476733951",
+            Title = "Wool",
+            Authors = new List<Author> { new Author { FirstName = "Hugh", LastName = "Howey" } },
+            }
+            };
+
+
+            List<GroupEvent> groupOneEvents = new List<GroupEvent>()
+        {
+            new GroupEvent
+            {
+                Address = "1234 A Street",
+                City = "Salem",
+                State = "OR",
+                ZipCode = "97302",
+                DateTime = new DateTime(2017, 9, 30, 18, 0, 0),
+                Book = books[4]
+            },
+            new GroupEvent
+            {
+                Address = "1234 A Street",
+                City = "Salem",
+                State = "OR",
+                ZipCode = "97302",
+                DateTime = new DateTime(2017, 10, 7, 18, 0, 0),
+                Book = books[4]
+            },
+            new GroupEvent
+            {
+                Address = "1234 A Street",
+                City = "Salem",
+                State = "OR",
+                ZipCode = "97302",
+                DateTime = new DateTime(2017, 10, 14, 18, 0, 0),
+                Book = books[4]
+            },
+            new GroupEvent
+            {
+                Address = "1234 A Street",
+                City = "Salem",
+                State = "OR",
+                ZipCode = "97302",
+                DateTime = new DateTime(2017, 10, 21, 18, 0, 0),
+                Book = books[1]
+            }
+            };
+
+            List<GroupEvent> groupTwoEvents = new List<GroupEvent>()
+        {
+            new GroupEvent
+            {
+                Address = "1111 B Street",
+                City = "Portland",
+                State = "OR",
+                ZipCode = "97211",
+                DateTime = new DateTime(2017, 9, 30, 18, 0, 0),
+                Book = books[2]
+            },
+            new GroupEvent
+            {
+                Address = "1111 B Street",
+                City = "Portland",
+                State = "OR",
+                ZipCode = "97211",
+                DateTime = new DateTime(2017, 10, 2, 18, 0, 0),
+                Book = books[2]
+            },
+            new GroupEvent
+            {
+                Address = "2222 C Street",
+                City = "Portland",
+                State = "OR",
+                ZipCode = "97280",
+                DateTime = new DateTime(2017, 10, 4, 18, 0, 0),
+                Book = books[2]
+            },
+            new GroupEvent
+            {
+                Address = "1111 B Street",
+                City = "Portland",
+                State = "OR",
+                ZipCode = "97211",
+                DateTime = new DateTime(2017, 10, 6, 18, 0, 0),
+                Book = books[2]
             }
         };
-
-        public Configuration()
+            List<GroupEvent> groupThreeEvents = new List<GroupEvent>()
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "BookClubs.Models.ApplicationDbContext";
-        }
-
-        protected override void Seed(ApplicationDbContext context)
-        {
-            //if (System.Diagnostics.Debugger.IsAttached == false)
-            //{
-            //    System.Diagnostics.Debugger.Launch();
-            //}
-
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-
-            SeedUsers(userManager, context);
-        }
-
-        private void SeedUsers(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
-        {
-            for (int i = 0; i < USERS; i++)
+            new GroupEvent
             {
-                var userName = "username" + i;
-                var email = "email" + i + "@domain.com";
-                var firstName = "FirstName" + i;
-                var lastName = "LastName" + i;
-                var bio = "Biography" + i;
-
-                var newUser = new ApplicationUser()
-                {
-                    UserName = userName,
-                    Email = email,
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Biography = bio,
-                    Groups = CreateGroups(context),
-                    ProfilePictureUrl = "~\\Content\\Images\\blank_profile_picture.png"
-                };
-
-                userManager.Create(newUser, "P@ssword123");
-            }
-        }
-
-        private ICollection<Group> CreateGroups(ApplicationDbContext context)
-        {
-            var groups = new List<Group>();
-            Group group;
-            var rand = new Random();
-
-            for (int i = 0; i < GROUPS_PER_USER; i++)
+                Address = "1111 B Street",
+                City = "Portland",
+                State = "OR",
+                ZipCode = "97211",
+                DateTime = new DateTime(2017, 9, 30, 18, 0, 0),
+                Book = books[0]
+            },
+            new GroupEvent
             {
-                group = new Group()
-                {
-                    Name = "Group" + i,
-                    City = "City" + i,
-                    State = "State" + rand.Next(1, 51),
-                    GroupEvents = CreateGroupEvents(i + 1, context)
-                };
-
-                groups.Add(group);
-            }
-
-            return groups;
-        }
-
-        private ICollection<GroupEvent> CreateGroupEvents(int groupNumber, ApplicationDbContext context)
-        {
-            GroupEvent groupEvent;
-            var groupEvents = new List<GroupEvent>();
-            var rand = new Random();
-
-            for (int i = 0; i < EVENTS_PER_GROUP; i++)
+                Address = "1111 B Street",
+                City = "Portland",
+                State = "OR",
+                ZipCode = "97211",
+                DateTime = new DateTime(2017, 10, 2, 18, 0, 0),
+                Book = books[3]
+            },
+            new GroupEvent
             {
-                //Build zipcode and a event date
-                string zipCode = i.ToString().PadLeft(5, '0');
-                int year = rand.Next(2017, 2019);
-                int month = rand.Next(1, 13);
-                int day = rand.Next(1, 29);
-                int bookIndex = rand.Next(0, 4);
-
-                //Create one record
-                groupEvent = new GroupEvent()
-                {
-                    Address = "Address" + groupNumber + i,
-                    City = "City" + groupNumber + i,
-                    State = "State" + rand.Next(1, 51),
-                    ZipCode = zipCode,
-                    DateTime = new DateTime(year, month, day),
-                    //Book = CreateBookWithAuthor(groupNumber, context)
-                    Book = books[bookIndex]
-                };
-
-                groupEvents.Add(groupEvent);
+                Address = "2222 C Street",
+                City = "Portland",
+                State = "OR",
+                ZipCode = "97280",
+                DateTime = new DateTime(2017, 10, 4, 18, 0, 0),
+                Book = books[0]
+            },
+            new GroupEvent
+            {
+                Address = "1111 B Street",
+                City = "Portland",
+                State = "OR",
+                ZipCode = "97211",
+                DateTime = new DateTime(2017, 10, 6, 18, 0, 0),
+                Book = books[3]
+            },
+            new GroupEvent
+            {
+                Address = "1111 B Street",
+                City = "Portland",
+                State = "OR",
+                ZipCode = "97211",
+                DateTime = new DateTime(2017, 10, 8, 18, 0, 0),
+                Book = books[0]
+            },
+            new GroupEvent
+            {
+                Address = "1111 B Street",
+                City = "Portland",
+                State = "OR",
+                ZipCode = "97211",
+                DateTime = new DateTime(2017, 10, 15, 18, 0, 0),
+                Book = books[3]
+            },
+            new GroupEvent
+            {
+                Address = "2222 C Street",
+                City = "Portland",
+                State = "OR",
+                ZipCode = "97280",
+                DateTime = new DateTime(2017, 10, 17, 18, 0, 0),
+                Book = books[0]
+            },
+            new GroupEvent
+            {
+                Address = "1111 B Street",
+                City = "Portland",
+                State = "OR",
+                ZipCode = "97211",
+                DateTime = new DateTime(2017, 10, 28, 18, 0, 0),
+                Book = books[3]
             }
-            groupEvents.Sort(GroupEventDateComparer.Instance);
+        };
+            List<Group> groups = new List<Group>()
+            {
+                new Group
+                {
+                    Name = "Group 1",
+                    City = "Salem",
+                    State = "OR",
+                    GroupEvents = groupOneEvents,
+                    Users = new List<ApplicationUser>()
+                },
+                new Group
+                {
+                    Name = "Group 2",
+                    City = "Portland",
+                    State = "OR",
+                    GroupEvents = groupTwoEvents,
+                    Users = new List<ApplicationUser>()
+                },
+                new Group
+                {
+                    Name = "Group 3",
+                    City = "Portland",
+                    State = "OR",
+                    GroupEvents = groupThreeEvents,
+                    Users = new List<ApplicationUser>()
+                }
+            };
+            List<ApplicationUser> users = new List<ApplicationUser>()
+            {
+                new ApplicationUser
+                {
+                    FirstName="Tim",
+                    LastName = "Peterson",
+                    Email = "Tim.Peterson@gmail.com",
+                    UserName = "Tim.Peterson@gmail.com",
+                    Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+                    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris " +
+                    "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
+                    "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
+                    "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
+                    "mollit anim id est laborum.",
+                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/1.jpg",
+                    Groups = new List<Group>()
+                },
+                new ApplicationUser
+                {
+                    FirstName="James",
+                    LastName = "Johnson",
+                    Email = "James.Johnson@yahoo.com",
+                    UserName = "James.Johnson@yahoo.com",
+                    Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+                    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris " +
+                    "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
+                    "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
+                    "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
+                    "mollit anim id est laborum.",
+                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/2.jpg",
+                    Groups = new List<Group>()
+                },
+                new ApplicationUser
+                {
+                    FirstName="Dustin",
+                    LastName = "Franklin",
+                    Email = "MrDusty@msn.com",
+                    UserName = "MrDusty@msn.com",
+                    Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+                    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris " +
+                    "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
+                    "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
+                    "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
+                    "mollit anim id est laborum.",
+                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/3.jpg",
+                    Groups = new List<Group>()
+                },
+                new ApplicationUser
+                {
+                    FirstName="Tran",
+                    LastName = "Nguyen",
+                    Email = "Tran.Nguyen@gmail.com",
+                    UserName = "Tran.Nguyen@gmail.com",
+                    Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+                    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris " +
+                    "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
+                    "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
+                    "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
+                    "mollit anim id est laborum.",
+                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/4.jpg",
+                    Groups = new List<Group>()
+                },
+                new ApplicationUser
+                {
+                    FirstName="Rita",
+                    LastName = "James",
+                    Email = "Rita.James@gmail.com",
+                    UserName = "Rita.James@gmail.com",
+                    Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+                    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris " +
+                    "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
+                    "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
+                    "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
+                    "mollit anim id est laborum.",
+                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/5.jpg",
+                    Groups = new List<Group>()
+                },
+                new ApplicationUser
+                {
+                    FirstName="Eduard",
+                    LastName = "Worth",
+                    Email = "Worth.Ed@gmail.com",
+                    UserName = "Worth.Ed@gmail.com",
+                    Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+                    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris " +
+                    "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
+                    "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
+                    "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
+                    "mollit anim id est laborum.",
+                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/6.jpg",
+                    Groups = new List<Group>()
+                },
+                new ApplicationUser
+                {
+                    FirstName="Tim",
+                    LastName = "Wong",
+                    Email = "Tim.Wong@gmail.com",
+                    UserName = "Tim.Wong@gmail.com",
+                    Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+                    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris " +
+                    "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
+                    "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
+                    "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
+                    "mollit anim id est laborum.",
+                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/7.jpg",
+                    Groups = new List<Group>()
+                },
+                new ApplicationUser
+                {
+                    FirstName="Ted",
+                    LastName = "Thompson",
+                    Email = "Ted.Thompson@gmail.com",
+                    UserName = "Ted.Thompson@gmail.com",
+                    Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+                    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris " +
+                    "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
+                    "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
+                    "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
+                    "mollit anim id est laborum.",
+                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/8.jpg",
+                    Groups = new List<Group>()
+                }
+            };
 
-            return groupEvents;
+            users[0].Groups.Add(groups[0]);
+            users[0].Groups.Add(groups[2]);
+            users[1].Groups.Add(groups[0]);
+            users[1].Groups.Add(groups[2]);
+            users[2].Groups.Add(groups[2]);
+            users[2].Groups.Add(groups[1]);
+            users[3].Groups.Add(groups[2]);
+            users[3].Groups.Add(groups[1]);
+            users[4].Groups.Add(groups[0]);
+            users[4].Groups.Add(groups[1]);
+            users[5].Groups.Add(groups[0]);
+            users[5].Groups.Add(groups[1]);
+            users[6].Groups.Add(groups[0]);
+            users[7].Groups.Add(groups[1]);
+
+            groups[0].Users.Add(users[0]);
+            groups[0].Users.Add(users[1]);
+            groups[0].Users.Add(users[4]);
+            groups[0].Users.Add(users[5]);
+            groups[0].Users.Add(users[6]);
+
+            groups[1].Users.Add(users[2]);
+            groups[1].Users.Add(users[3]);
+            groups[1].Users.Add(users[4]);
+            groups[1].Users.Add(users[5]);
+            groups[1].Users.Add(users[7]);
+
+            groups[2].Users.Add(users[0]);
+            groups[2].Users.Add(users[1]);
+            groups[2].Users.Add(users[2]);
+            groups[2].Users.Add(users[3]);
+            #endregion
+
+
+            try
+            {
+                context.Books.AddOrUpdate(books.ToArray());
+                context.GroupEvents.AddOrUpdate(groupOneEvents.ToArray());
+                context.GroupEvents.AddOrUpdate(groupTwoEvents.ToArray());
+                context.GroupEvents.AddOrUpdate(groupThreeEvents.ToArray());
+
+                //var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                //foreach (var user in users)
+                //{
+                //    userManager.Create(user, "P@ssword123");
+                //}
+
+                context.Groups.AddOrUpdate(groups.ToArray());
+                context.Users.AddOrUpdate(users.ToArray());
+
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+
+
         }
-
     }
 }
-
 

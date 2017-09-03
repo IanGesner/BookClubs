@@ -11,7 +11,6 @@ namespace BookClubs.Models
     {
         [Key]
         //[Isbn]
-        [Required]
         public string Isbn { get; set; }
         //public string Isbn
         //{

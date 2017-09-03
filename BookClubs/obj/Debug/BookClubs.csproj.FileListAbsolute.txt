@@ -112,5 +112,5 @@ C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Syste
 C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Microsoft.ApplicationInsights.TraceListener.xml
 C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\Microsoft.AspNet.TelemetryCorrelation.xml
 C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs\bin\System.Diagnostics.DiagnosticSource.xml
-C:\Users\Ian\Documents\Visual Studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations.LotsOfChanges.resources
-C:\Users\Ian\Documents\Visual Studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csproj.GenerateResource.Cache
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations.newmigration.resources
+C:\Users\Ian\documents\visual studio 2017\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csproj.GenerateResource.Cache

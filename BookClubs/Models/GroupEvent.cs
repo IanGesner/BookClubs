@@ -6,7 +6,6 @@ namespace BookClubs.Models
     public class GroupEvent
     {
         [Key]
-        [Required]
         public int Id { get; set; }
 
         [Required]
