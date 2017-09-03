@@ -66,8 +66,6 @@ namespace BookClubs.Migrations
             Authors = new List<Author> { new Author { FirstName = "Hugh", LastName = "Howey" } },
             }
             };
-
-
             List<GroupEvent> groupOneEvents = new List<GroupEvent>()
         {
             new GroupEvent
@@ -107,7 +105,6 @@ namespace BookClubs.Migrations
                 Book = books[1]
             }
             };
-
             List<GroupEvent> groupTwoEvents = new List<GroupEvent>()
         {
             new GroupEvent
@@ -396,22 +393,22 @@ namespace BookClubs.Migrations
             users[6].Groups.Add(groups[0]);
             users[7].Groups.Add(groups[1]);
 
-            groups[0].Users.Add(users[0]);
-            groups[0].Users.Add(users[1]);
-            groups[0].Users.Add(users[4]);
-            groups[0].Users.Add(users[5]);
-            groups[0].Users.Add(users[6]);
+            //groups[0].Users.Add(users[0]);
+            //groups[0].Users.Add(users[1]);
+            //groups[0].Users.Add(users[4]);
+            //groups[0].Users.Add(users[5]);
+            //groups[0].Users.Add(users[6]);
 
-            groups[1].Users.Add(users[2]);
-            groups[1].Users.Add(users[3]);
-            groups[1].Users.Add(users[4]);
-            groups[1].Users.Add(users[5]);
-            groups[1].Users.Add(users[7]);
+            //groups[1].Users.Add(users[2]);
+            //groups[1].Users.Add(users[3]);
+            //groups[1].Users.Add(users[4]);
+            //groups[1].Users.Add(users[5]);
+            //groups[1].Users.Add(users[7]);
 
-            groups[2].Users.Add(users[0]);
-            groups[2].Users.Add(users[1]);
-            groups[2].Users.Add(users[2]);
-            groups[2].Users.Add(users[3]);
+            //groups[2].Users.Add(users[0]);
+            //groups[2].Users.Add(users[1]);
+            //groups[2].Users.Add(users[2]);
+            //groups[2].Users.Add(users[3]);
             #endregion
 
             try
@@ -420,17 +417,19 @@ namespace BookClubs.Migrations
                 context.GroupEvents.AddOrUpdate(groupOneEvents.ToArray());
                 context.GroupEvents.AddOrUpdate(groupTwoEvents.ToArray());
                 context.GroupEvents.AddOrUpdate(groupThreeEvents.ToArray());
-
-                //var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                //foreach (var user in users)
-                //{
-                //    userManager.Create(user, "P@ssword123");
-                //}
-
-                context.Groups.AddOrUpdate(groups.ToArray());
-                context.Users.AddOrUpdate(users.ToArray());
-
+                //context.Groups.AddOrUpdate(groups.ToArray());
                 context.SaveChanges();
+
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                foreach (var user in users)
+                {
+                    userManager.Create(user, "P@ssword123");
+                }
+
+
+                //context.Users.AddOrUpdate(users.ToArray());
+
+                //
             }
             catch (DbEntityValidationException e)
             {
