@@ -414,7 +414,6 @@ namespace BookClubs.Migrations
             groups[2].Users.Add(users[3]);
             #endregion
 
-
             try
             {
                 context.Books.AddOrUpdate(books.ToArray());
