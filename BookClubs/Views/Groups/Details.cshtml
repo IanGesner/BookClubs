@@ -4,6 +4,37 @@
     ViewBag.Title = "Details";
 }
 
+<style>
+    #viewMembers {
+        display: none;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .profilePreview {
+        width: 150px;
+        height: 150px;
+        border: 1px solid #ccc;
+        display: inline-block;
+        margin: 10px;
+        border-radius: 5px;
+    }
+
+    .profilePreview:hover {
+        background-color: #ccc;
+    }
+
+    .profilePreviewImg {
+        width: 100px;
+        height: 100px;
+        border: 1px solid #ccc;
+        margin: 10px auto 5px auto;
+        display: table;
+        border-radius: 5px;
+    }
+</style>
+
 <div>
     <h4>@Model.GroupName</h4>
     <hr />
@@ -51,34 +82,31 @@
         </dd>
     </dl>
 
-    <button id="viewMembersBtn" type="button" class="btn btn-basic btn-block btn-bc">Edit Profile</button>
+    <button id="viewMembersBtn" type="button" class="btn btn-basic btn-block btn-bc">View Members</button>
+    <div id="viewMembers">
+        @foreach(var item in Model.MemberProfiles)
+        {
+            <div class="profilePreview">
+                <img class ="profilePreviewImg" src="@item.ProfilePictureUrl" />
+                <p>@item.FirstName @item.LastName</p>
+            </div>
+        }
 
 
-
-
-    <div id="viewMembers" class="collapse">
-        
     </div>
-
-
-
 </div>
 
 
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>
-<style>
-    #viewMembers {
-        min-width: 400px;
-    }
-</style>
 
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
 <script>
     $(document).ready(function () {
 
         $("#viewMembersBtn").click(function () {
-            $("#viewMembers").hide();
+            $("#viewMembers").toggle();
         });
 
     });

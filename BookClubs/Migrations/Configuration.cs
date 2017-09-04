@@ -392,32 +392,20 @@ namespace BookClubs.Migrations
             users[5].Groups.Add(groups[1]);
             users[6].Groups.Add(groups[0]);
             users[7].Groups.Add(groups[1]);
-
-            //groups[0].Users.Add(users[0]);
-            //groups[0].Users.Add(users[1]);
-            //groups[0].Users.Add(users[4]);
-            //groups[0].Users.Add(users[5]);
-            //groups[0].Users.Add(users[6]);
-
-            //groups[1].Users.Add(users[2]);
-            //groups[1].Users.Add(users[3]);
-            //groups[1].Users.Add(users[4]);
-            //groups[1].Users.Add(users[5]);
-            //groups[1].Users.Add(users[7]);
-
-            //groups[2].Users.Add(users[0]);
-            //groups[2].Users.Add(users[1]);
-            //groups[2].Users.Add(users[2]);
-            //groups[2].Users.Add(users[3]);
             #endregion
 
             try
             {
+                //Remember: 1. Add everything up to any many-to-many relationships then save changes.
+                //          2. Add any many-to-many relationships using only one of the objects involved in the relationship.
+                //              IE: Don't add user[1] to group[1] then add group[1] to user[1].
+                //          3. When dealing with ApplicationUser, it is easiest to seed it 
+                //          using a UserManager. This way, it populates columns like PasswordHash, etc.
                 context.Books.AddOrUpdate(books.ToArray());
                 context.GroupEvents.AddOrUpdate(groupOneEvents.ToArray());
                 context.GroupEvents.AddOrUpdate(groupTwoEvents.ToArray());
                 context.GroupEvents.AddOrUpdate(groupThreeEvents.ToArray());
-                //context.Groups.AddOrUpdate(groups.ToArray());
+
                 context.SaveChanges();
 
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
