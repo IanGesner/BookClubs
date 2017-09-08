@@ -22,6 +22,7 @@ namespace BookClubs.Models
         public string Biography { get; set; }
 
         public virtual ICollection<Group> Groups { get; set; }
+        public virtual ICollection<ApplicationUser> Friends { get; set; }
         public string ProfilePictureUrl { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

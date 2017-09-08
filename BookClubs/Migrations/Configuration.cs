@@ -20,11 +20,12 @@ namespace BookClubs.Migrations
 
         protected override void Seed(BookClubs.Models.ApplicationDbContext context)
         {
-            if (System.Diagnostics.Debugger.IsAttached == false)
-                System.Diagnostics.Debugger.Launch();
+            //if (System.Diagnostics.Debugger.IsAttached == false)
+            //    System.Diagnostics.Debugger.Launch();
 
             #region ENTITY INITIALIZATIONS
-            List<Book> books = new List<Book>()
+            #region IGNORE FOR NOW
+            /*List<Book> books = new List<Book>()
         {
             new Book()
             {
@@ -245,7 +246,8 @@ namespace BookClubs.Migrations
                     GroupEvents = groupThreeEvents,
                     Users = new List<ApplicationUser>()
                 }
-            };
+            };*/
+            #endregion
             List<ApplicationUser> users = new List<ApplicationUser>()
             {
                 new ApplicationUser
@@ -378,20 +380,20 @@ namespace BookClubs.Migrations
                 }
             };
 
-            users[0].Groups.Add(groups[0]);
-            users[0].Groups.Add(groups[2]);
-            users[1].Groups.Add(groups[0]);
-            users[1].Groups.Add(groups[2]);
-            users[2].Groups.Add(groups[2]);
-            users[2].Groups.Add(groups[1]);
-            users[3].Groups.Add(groups[2]);
-            users[3].Groups.Add(groups[1]);
-            users[4].Groups.Add(groups[0]);
-            users[4].Groups.Add(groups[1]);
-            users[5].Groups.Add(groups[0]);
-            users[5].Groups.Add(groups[1]);
-            users[6].Groups.Add(groups[0]);
-            users[7].Groups.Add(groups[1]);
+            //users[0].Groups.Add(groups[0]);
+            //users[0].Groups.Add(groups[2]);
+            //users[1].Groups.Add(groups[0]);
+            //users[1].Groups.Add(groups[2]);
+            //users[2].Groups.Add(groups[2]);
+            //users[2].Groups.Add(groups[1]);
+            //users[3].Groups.Add(groups[2]);
+            //users[3].Groups.Add(groups[1]);
+            //users[4].Groups.Add(groups[0]);
+            //users[4].Groups.Add(groups[1]);
+            //users[5].Groups.Add(groups[0]);
+            //users[5].Groups.Add(groups[1]);
+            //users[6].Groups.Add(groups[0]);
+            //users[7].Groups.Add(groups[1]);
             #endregion
 
             try
@@ -401,12 +403,12 @@ namespace BookClubs.Migrations
                 //              IE: Don't add user[1] to group[1] then add group[1] to user[1].
                 //          3. When dealing with ApplicationUser, it is easiest to seed it 
                 //          using a UserManager. This way, it populates columns like PasswordHash, etc.
-                context.Books.AddOrUpdate(books.ToArray());
-                context.GroupEvents.AddOrUpdate(groupOneEvents.ToArray());
-                context.GroupEvents.AddOrUpdate(groupTwoEvents.ToArray());
-                context.GroupEvents.AddOrUpdate(groupThreeEvents.ToArray());
+                //context.Books.AddOrUpdate(books.ToArray());
+                //context.GroupEvents.AddOrUpdate(groupOneEvents.ToArray());
+                //context.GroupEvents.AddOrUpdate(groupTwoEvents.ToArray());
+                //context.GroupEvents.AddOrUpdate(groupThreeEvents.ToArray());
 
-                context.SaveChanges();
+                //context.SaveChanges();
 
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
                 foreach (var user in users)
@@ -438,4 +440,3 @@ namespace BookClubs.Migrations
         }
     }
 }
-

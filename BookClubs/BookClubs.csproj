@@ -231,9 +231,9 @@
     </Compile>
     <Compile Include="Helpers\BcHelper.cs" />
     <Compile Include="Helpers\GroupEventDateComparer.cs" />
-    <Compile Include="Migrations\201709031654103_newmigration.cs" />
-    <Compile Include="Migrations\201709031654103_newmigration.Designer.cs">
-      <DependentUpon>201709031654103_newmigration.cs</DependentUpon>
+    <Compile Include="Migrations\201709082149381_Initial.cs" />
+    <Compile Include="Migrations\201709082149381_Initial.Designer.cs">
+      <DependentUpon>201709082149381_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Annotations\MaxFileSizeAttribute.cs" />
@@ -347,15 +347,15 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709031654103_newmigration.resx">
-      <DependentUpon>201709031654103_newmigration.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201709082149381_Initial.resx">
+      <DependentUpon>201709082149381_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -3,7 +3,7 @@ namespace BookClubs.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class newmigration : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -142,6 +142,19 @@ namespace BookClubs.Migrations
                 .Index(t => t.Author_Id);
             
             CreateTable(
+                "dbo.ApplicationUserApplicationUsers",
+                c => new
+                    {
+                        ApplicationUser_Id = c.String(nullable: false, maxLength: 128),
+                        ApplicationUser_Id1 = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.ApplicationUser_Id, t.ApplicationUser_Id1 })
+                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id1)
+                .Index(t => t.ApplicationUser_Id)
+                .Index(t => t.ApplicationUser_Id1);
+            
+            CreateTable(
                 "dbo.ApplicationUserGroups",
                 c => new
                     {
@@ -163,6 +176,8 @@ namespace BookClubs.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.ApplicationUserGroups", "Group_Id", "dbo.Groups");
             DropForeignKey("dbo.ApplicationUserGroups", "ApplicationUser_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.ApplicationUserApplicationUsers", "ApplicationUser_Id1", "dbo.AspNetUsers");
+            DropForeignKey("dbo.ApplicationUserApplicationUsers", "ApplicationUser_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.GroupEvents", "Group_Id", "dbo.Groups");
             DropForeignKey("dbo.GroupEvents", "Book_Isbn", "dbo.Books");
@@ -170,6 +185,8 @@ namespace BookClubs.Migrations
             DropForeignKey("dbo.BookAuthors", "Book_Isbn", "dbo.Books");
             DropIndex("dbo.ApplicationUserGroups", new[] { "Group_Id" });
             DropIndex("dbo.ApplicationUserGroups", new[] { "ApplicationUser_Id" });
+            DropIndex("dbo.ApplicationUserApplicationUsers", new[] { "ApplicationUser_Id1" });
+            DropIndex("dbo.ApplicationUserApplicationUsers", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.BookAuthors", new[] { "Author_Id" });
             DropIndex("dbo.BookAuthors", new[] { "Book_Isbn" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
@@ -181,6 +198,7 @@ namespace BookClubs.Migrations
             DropIndex("dbo.GroupEvents", new[] { "Group_Id" });
             DropIndex("dbo.GroupEvents", new[] { "Book_Isbn" });
             DropTable("dbo.ApplicationUserGroups");
+            DropTable("dbo.ApplicationUserApplicationUsers");
             DropTable("dbo.BookAuthors");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");

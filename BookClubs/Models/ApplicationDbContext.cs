@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Data.Entity.ModelConfiguration;
 
 namespace BookClubs.Models
 {
@@ -18,6 +19,21 @@ namespace BookClubs.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
+            base.OnModelCreating(modelBuilder);
+        }
+    }
+
+    internal class ApplicationUserConfiguration : EntityTypeConfiguration<ApplicationUser>
+    {
+        public ApplicationUserConfiguration()
+        {
+            HasMany(u => u.Friends)
+                .WithMany();
         }
     }
 }
