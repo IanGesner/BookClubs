@@ -10,13 +10,13 @@ namespace BookClubs.Data
     public interface IDataRepository
     {
         #region APPLICATION USERS
-        void AddApplicationUser(ApplicationUser person);
-        IQueryable<ApplicationUser> GetAllApplicationUsers();
-        ApplicationUser GetApplicationUserById(string id);
-        ApplicationUser GetApplicationUserByUsername(string username);
-        ApplicationUser GetApplicationUserByEmail(string email);
-        void UpdateProfile(ApplicationUser user);
-        void RemoveApplicationUser(ApplicationUser user);
+        void AddApplicationUser(User person);
+        IQueryable<User> GetAllApplicationUsers();
+        User GetApplicationUserById(string id);
+        User GetApplicationUserByUsername(string username);
+        User GetApplicationUserByEmail(string email);
+        void UpdateProfile(User user);
+        void RemoveApplicationUser(User user);
         #endregion
 
         #region GROUPS

@@ -235,6 +235,14 @@
     <Compile Include="Migrations\201709082149381_Initial.Designer.cs">
       <DependentUpon>201709082149381_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709082154324_Renaming.cs" />
+    <Compile Include="Migrations\201709082154324_Renaming.Designer.cs">
+      <DependentUpon>201709082154324_Renaming.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709082200227_Renaming1.cs" />
+    <Compile Include="Migrations\201709082200227_Renaming1.Designer.cs">
+      <DependentUpon>201709082200227_Renaming1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Annotations\MaxFileSizeAttribute.cs" />
     <Compile Include="Models\Annotations\FileTypesAttribute.cs" />
@@ -242,11 +250,11 @@
     <Compile Include="Models\Annotations\UniqueUserNameAttribute.cs" />
     <Compile Include="Models\ProfilePicture.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
-    <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\BcContext.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Group.cs" />
-    <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Models\GroupEvent.cs" />
     <Compile Include="Models\ViewModels\GroupViewModels.cs" />
     <Compile Include="Models\ViewModels\ManageViewModels.cs" />
@@ -355,6 +363,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201709082149381_Initial.resx">
       <DependentUpon>201709082149381_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709082154324_Renaming.resx">
+      <DependentUpon>201709082154324_Renaming.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709082200227_Renaming1.resx">
+      <DependentUpon>201709082200227_Renaming1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

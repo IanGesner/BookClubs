@@ -47,7 +47,7 @@ namespace BookClubs.Controllers
             }
         }
 
-        public ActionResult EditProfile(ApplicationUser model)
+        public ActionResult EditProfile(User model)
         {
             if (ModelState.IsValid)
             {

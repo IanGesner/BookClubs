@@ -178,3 +178,5 @@ C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.dll
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.pdb
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations.Initial.resources
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csproj.GenerateResource.Cache
+C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations.Renaming.resources
+C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations.Renaming1.resources

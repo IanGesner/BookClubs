@@ -11,14 +11,14 @@ namespace BookClubs.Migrations
     using System.Diagnostics;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<BookClubs.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<BookClubs.Models.BcContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(BookClubs.Models.ApplicationDbContext context)
+        protected override void Seed(BookClubs.Models.BcContext context)
         {
             //if (System.Diagnostics.Debugger.IsAttached == false)
             //    System.Diagnostics.Debugger.Launch();
@@ -248,9 +248,9 @@ namespace BookClubs.Migrations
                 }
             };*/
             #endregion
-            List<ApplicationUser> users = new List<ApplicationUser>()
+            List<User> users = new List<User>()
             {
-                new ApplicationUser
+                new User
                 {
                     FirstName="Tim",
                     LastName = "Peterson",
@@ -266,7 +266,7 @@ namespace BookClubs.Migrations
                     ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/1.jpg",
                     Groups = new List<Group>()
                 },
-                new ApplicationUser
+                new User
                 {
                     FirstName="James",
                     LastName = "Johnson",
@@ -282,7 +282,7 @@ namespace BookClubs.Migrations
                     ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/2.jpg",
                     Groups = new List<Group>()
                 },
-                new ApplicationUser
+                new User
                 {
                     FirstName="Dustin",
                     LastName = "Franklin",
@@ -298,7 +298,7 @@ namespace BookClubs.Migrations
                     ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/3.jpg",
                     Groups = new List<Group>()
                 },
-                new ApplicationUser
+                new User
                 {
                     FirstName="Tran",
                     LastName = "Nguyen",
@@ -314,7 +314,7 @@ namespace BookClubs.Migrations
                     ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/4.jpg",
                     Groups = new List<Group>()
                 },
-                new ApplicationUser
+                new User
                 {
                     FirstName="Rita",
                     LastName = "James",
@@ -330,7 +330,7 @@ namespace BookClubs.Migrations
                     ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/5.jpg",
                     Groups = new List<Group>()
                 },
-                new ApplicationUser
+                new User
                 {
                     FirstName="Eduard",
                     LastName = "Worth",
@@ -346,7 +346,7 @@ namespace BookClubs.Migrations
                     ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/6.jpg",
                     Groups = new List<Group>()
                 },
-                new ApplicationUser
+                new User
                 {
                     FirstName="Tim",
                     LastName = "Wong",
@@ -362,7 +362,7 @@ namespace BookClubs.Migrations
                     ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/7.jpg",
                     Groups = new List<Group>()
                 },
-                new ApplicationUser
+                new User
                 {
                     FirstName="Ted",
                     LastName = "Thompson",
@@ -410,16 +410,11 @@ namespace BookClubs.Migrations
 
                 //context.SaveChanges();
 
-                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var userManager = new UserManager<User>(new UserStore<User>(context));
                 foreach (var user in users)
                 {
                     userManager.Create(user, "P@ssword123");
                 }
-
-
-                //context.Users.AddOrUpdate(users.ToArray());
-
-                //
             }
             catch (DbEntityValidationException e)
             {

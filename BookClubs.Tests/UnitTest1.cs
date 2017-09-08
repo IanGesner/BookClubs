@@ -12,7 +12,7 @@ namespace BookClubs.Tests
         {
             EfDataRepository repo = new EfDataRepository();
 
-            repo.UpdateProfile(new Models.ApplicationUser
+            repo.UpdateProfile(new Models.User
             {
                 FirstName = "Ian",
                 LastName = "Gesner",

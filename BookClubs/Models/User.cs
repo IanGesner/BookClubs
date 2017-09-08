@@ -10,22 +10,18 @@ using System.ComponentModel.DataAnnotations;
 namespace BookClubs.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
-    public class ApplicationUser : IdentityUser
+    public class User : IdentityUser
     {
-        [Display(Name = "First Name")]
         public string FirstName { get; set; }
-
-        [Display(Name = "Last Name")]
         public string LastName { get; set; }
-
-        [Display(Name = "Tell us about you")]
         public string Biography { get; set; }
-
-        public virtual ICollection<Group> Groups { get; set; }
-        public virtual ICollection<ApplicationUser> Friends { get; set; }
         public string ProfilePictureUrl { get; set; }
 
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        public virtual ICollection<Group> Groups { get; set; }
+        public virtual ICollection<User> Friends { get; set; }
+
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
