@@ -230,25 +230,21 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BcHelper.cs" />
-    <Compile Include="Helpers\GroupEventDateComparer.cs" />
-    <Compile Include="Migrations\201709082149381_Initial.cs" />
-    <Compile Include="Migrations\201709082149381_Initial.Designer.cs">
-      <DependentUpon>201709082149381_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201709082316500_New.cs" />
+    <Compile Include="Migrations\201709082316500_New.Designer.cs">
+      <DependentUpon>201709082316500_New.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709082154324_Renaming.cs" />
-    <Compile Include="Migrations\201709082154324_Renaming.Designer.cs">
-      <DependentUpon>201709082154324_Renaming.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709082200227_Renaming1.cs" />
-    <Compile Include="Migrations\201709082200227_Renaming1.Designer.cs">
-      <DependentUpon>201709082200227_Renaming1.cs</DependentUpon>
+    <Compile Include="Migrations\201709082319073_1.cs" />
+    <Compile Include="Migrations\201709082319073_1.Designer.cs">
+      <DependentUpon>201709082319073_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Helpers\GroupEventDateComparer.cs" />
     <Compile Include="Models\Annotations\MaxFileSizeAttribute.cs" />
     <Compile Include="Models\Annotations\FileTypesAttribute.cs" />
     <Compile Include="Models\Annotations\IsbnAttribute.cs" />
     <Compile Include="Models\Annotations\UniqueUserNameAttribute.cs" />
-    <Compile Include="Models\ProfilePicture.cs" />
+    <Compile Include="Models\FriendRequest.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\BcContext.cs" />
     <Compile Include="Models\Author.cs" />
@@ -259,6 +255,7 @@
     <Compile Include="Models\ViewModels\GroupViewModels.cs" />
     <Compile Include="Models\ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\ProfileViewModels.cs" />
+    <Compile Include="Models\GroupWallPost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -361,14 +358,11 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709082149381_Initial.resx">
-      <DependentUpon>201709082149381_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709082316500_New.resx">
+      <DependentUpon>201709082316500_New.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709082154324_Renaming.resx">
-      <DependentUpon>201709082154324_Renaming.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709082200227_Renaming1.resx">
-      <DependentUpon>201709082200227_Renaming1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709082319073_1.resx">
+      <DependentUpon>201709082319073_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

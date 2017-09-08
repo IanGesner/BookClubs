@@ -5,25 +5,14 @@ namespace BookClubs.Models
 {
     public class GroupEvent
     {
-        [Key]
         public int Id { get; set; }
-
-        [Required]
         public string Address { get; set; }
-
-        [Required]
         public string City { get; set; }
-
-        [Required]
         public string State { get; set; }
-
-        [Required]
         public string ZipCode { get; set; }
-
-        [Required]
-        public virtual Book Book { get; set; }
-
-        [Required]
         public DateTime DateTime { get; set; }
+
+        public string BookId { get; set; }
+        public virtual Book Book { get; set; }
     }
 }

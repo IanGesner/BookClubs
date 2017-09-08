@@ -7,13 +7,13 @@ namespace BookClubs.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Renaming1 : IMigrationMetadata
+    public sealed partial class New : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Renaming1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(New));
         
         string IMigrationMetadata.Id
         {
-            get { return "201709082200227_Renaming1"; }
+            get { return "201709082316500_New"; }
         }
         
         string IMigrationMetadata.Source
