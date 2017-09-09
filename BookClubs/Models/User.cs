@@ -19,9 +19,18 @@ namespace BookClubs.Models
 
         public virtual ICollection<Group> Groups { get; set; }
         public virtual ICollection<User> Friends { get; set; }
+
         public virtual ICollection<GroupWallPost> GroupWallPosts { get; set; }
-        public virtual ICollection<FriendRequest> PendingRequests { get; set; }
-        public virtual ICollection<FriendRequest> SentRequests { get; set; }
+
+        public virtual ICollection<FriendRequest> PendingFriendRequests { get; set; }
+        public virtual ICollection<FriendRequest> SentFriendRequests { get; set; }
+
+        public virtual ICollection<GroupInvitation> PendingGroupInvitations { get; set; }
+        public virtual ICollection<GroupInvitation> SentGroupInvitations { get; set; }
+
+        public virtual ICollection<GroupRequest> PendingGroupRequests { get; set; }
+        public virtual ICollection<GroupRequest> SentGroupRequests { get; set; }
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {

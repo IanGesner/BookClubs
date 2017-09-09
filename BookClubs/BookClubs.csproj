@@ -230,13 +230,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BcHelper.cs" />
-    <Compile Include="Migrations\201709082316500_New.cs" />
-    <Compile Include="Migrations\201709082316500_New.Designer.cs">
-      <DependentUpon>201709082316500_New.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709082319073_1.cs" />
-    <Compile Include="Migrations\201709082319073_1.Designer.cs">
-      <DependentUpon>201709082319073_1.cs</DependentUpon>
+    <Compile Include="Migrations\201709090101229_1.cs" />
+    <Compile Include="Migrations\201709090101229_1.Designer.cs">
+      <DependentUpon>201709090101229_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Helpers\GroupEventDateComparer.cs" />
@@ -245,6 +241,8 @@
     <Compile Include="Models\Annotations\IsbnAttribute.cs" />
     <Compile Include="Models\Annotations\UniqueUserNameAttribute.cs" />
     <Compile Include="Models\FriendRequest.cs" />
+    <Compile Include="Models\GroupInvitation.cs" />
+    <Compile Include="Models\GroupRequest.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\BcContext.cs" />
     <Compile Include="Models\Author.cs" />
@@ -358,11 +356,8 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709082316500_New.resx">
-      <DependentUpon>201709082316500_New.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709082319073_1.resx">
-      <DependentUpon>201709082319073_1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709090101229_1.resx">
+      <DependentUpon>201709090101229_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

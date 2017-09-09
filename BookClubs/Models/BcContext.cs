@@ -32,8 +32,62 @@ namespace BookClubs.Models
             modelBuilder.Configurations.Add(new BookConfiguration());
             modelBuilder.Configurations.Add(new FriendRequestConfiguration());
             modelBuilder.Configurations.Add(new GroupEventConfiguration());
+            modelBuilder.Configurations.Add(new GroupInvitationConfiguration());
+            modelBuilder.Configurations.Add(new GroupRequestConfiguration());
+            modelBuilder.Configurations.Add(new GroupConfiguration());
 
             base.OnModelCreating(modelBuilder);
+        }
+    }
+
+    internal class GroupConfiguration : EntityTypeConfiguration<Group>
+    {
+        public GroupConfiguration()
+        {
+            HasRequired(g => g.Organizer)
+                .WithMany(u => u.Groups)
+                .HasForeignKey(g => g.OrganizerId)
+                .WillCascadeOnDelete(false);
+        }
+    }
+
+    internal class GroupRequestConfiguration : EntityTypeConfiguration<GroupRequest>
+    {
+        public GroupRequestConfiguration()
+        {
+            HasRequired(r => r.Sender)
+                .WithMany(u => u.SentGroupRequests)
+                .HasForeignKey(r => r.SenderId)
+                .WillCascadeOnDelete(false);
+
+            HasRequired(r => r.Recipient)
+                .WithMany(u => u.PendingGroupRequests)
+                .HasForeignKey(r => r.RecipientId)
+                .WillCascadeOnDelete(true);
+
+            HasRequired(r => r.Group)
+                .WithMany(g => g.GroupRequests)
+                .HasForeignKey(r => r.GroupId);
+        }
+    }
+
+    internal class GroupInvitationConfiguration : EntityTypeConfiguration<GroupInvitation>
+    {
+        public GroupInvitationConfiguration()
+        {
+            HasRequired(i => i.Sender)
+                .WithMany(u => u.SentGroupInvitations)
+                .HasForeignKey(r => r.SenderId)
+                .WillCascadeOnDelete(false);
+
+            HasRequired(i => i.Recipient)
+                .WithMany(u => u.PendingGroupInvitations)
+                .HasForeignKey(i => i.RecipientId)
+                .WillCascadeOnDelete(true);
+
+            HasRequired(i => i.Group)
+                .WithMany(g => g.GroupInvitations)
+                .HasForeignKey(i => i.GroupId);
         }
     }
 
@@ -52,12 +106,12 @@ namespace BookClubs.Models
         public FriendRequestConfiguration()
         {
             HasRequired(r => r.Sender)
-                .WithMany(u => u.SentRequests)
+                .WithMany(u => u.SentFriendRequests)
                 .HasForeignKey(r => r.SenderId)
                 .WillCascadeOnDelete(false);
 
             HasRequired(r => r.Recipient)
-                .WithMany(u => u.PendingRequests)
+                .WithMany(u => u.PendingFriendRequests)
                 .HasForeignKey(r => r.RecipientId)
                 .WillCascadeOnDelete(true);
         }
