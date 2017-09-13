@@ -17,10 +17,12 @@ namespace BookClubs.Models
         public string Biography { get; set; }
         public string ProfilePictureUrl { get; set; }
 
-        public virtual ICollection<Group> Groups { get; set; }
         public virtual ICollection<User> Friends { get; set; }
 
         public virtual ICollection<GroupWallPost> GroupWallPosts { get; set; }
+
+        public virtual ICollection<Group> GroupsIn { get; set; }
+        public virtual ICollection<Group> GroupsOrganized { get; set; }
 
         public virtual ICollection<FriendRequest> PendingFriendRequests { get; set; }
         public virtual ICollection<FriendRequest> SentFriendRequests { get; set; }

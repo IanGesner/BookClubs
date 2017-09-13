@@ -24,9 +24,6 @@ namespace BookClubs.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            //modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
-
             modelBuilder.Configurations.Add(new UserConfiguration());
             modelBuilder.Configurations.Add(new GroupWallPostConfiguration());
             modelBuilder.Configurations.Add(new BookConfiguration());
@@ -35,8 +32,23 @@ namespace BookClubs.Models
             modelBuilder.Configurations.Add(new GroupInvitationConfiguration());
             modelBuilder.Configurations.Add(new GroupRequestConfiguration());
             modelBuilder.Configurations.Add(new GroupConfiguration());
+            modelBuilder.Configurations.Add(new AuthorConfiguration());
 
             base.OnModelCreating(modelBuilder);
+        }
+    }
+
+    internal class AuthorConfiguration : EntityTypeConfiguration<Author>
+    {
+        public AuthorConfiguration()
+        {
+            Property(a => a.FirstName)
+                .HasMaxLength((int)MaxLength.FirstName)
+                .IsRequired();
+
+            Property(a => a.LastName)
+                .HasMaxLength((int)MaxLength.FirstName)
+                .IsRequired();
         }
     }
 
@@ -45,9 +57,30 @@ namespace BookClubs.Models
         public GroupConfiguration()
         {
             HasRequired(g => g.Organizer)
-                .WithMany(u => u.Groups)
+                .WithMany(u => u.GroupsOrganized)
                 .HasForeignKey(g => g.OrganizerId)
                 .WillCascadeOnDelete(false);
+
+            HasMany(g => g.Users)
+                .WithMany(g => g.GroupsIn);
+            
+            Property(g => g.Name)
+                .HasMaxLength((int)MaxLength.GroupName)
+                .IsRequired();
+
+            Property(g => g.Name)
+                .HasMaxLength((int)MaxLength.City)
+                .IsRequired();
+
+            Property(g => g.Name)
+                .HasMaxLength((int)MaxLength.State)
+                .IsRequired();
+
+            Property(g => g.GroupPictureUrl)
+                .IsRequired();
+
+            Property(g => g.GroupInfo)
+                .HasMaxLength((int)MaxLength.MessageBody);
         }
     }
 
@@ -68,6 +101,9 @@ namespace BookClubs.Models
             HasRequired(r => r.Group)
                 .WithMany(g => g.GroupRequests)
                 .HasForeignKey(r => r.GroupId);
+
+            Property(r => r.Body)
+                .HasMaxLength((int)MaxLength.MessageBody);
         }
     }
 
@@ -88,6 +124,9 @@ namespace BookClubs.Models
             HasRequired(i => i.Group)
                 .WithMany(g => g.GroupInvitations)
                 .HasForeignKey(i => i.GroupId);
+
+            Property(g => g.Body)
+                .HasMaxLength((int)MaxLength.MessageBody);
         }
     }
 
@@ -98,6 +137,26 @@ namespace BookClubs.Models
             HasRequired(e => e.Book)
                 .WithMany(b => b.GroupEvents)
                 .HasForeignKey(e => e.BookId);
+
+            HasRequired(e => e.Group)
+                .WithMany(g => g.GroupEvents)
+                .HasForeignKey(e => e.GroupId);
+
+            Property(e => e.Address)
+                .HasMaxLength((int)MaxLength.Address)
+                .IsRequired();
+
+            Property(e => e.City)
+                .HasMaxLength((int)MaxLength.City)
+                .IsRequired();
+
+            Property(e => e.State)
+                .HasMaxLength((int)MaxLength.State)
+                .IsRequired();
+
+            Property(e => e.ZipCode)
+                .HasMaxLength((int)MaxLength.ZipCode)
+                .IsRequired();
         }
     }
 
@@ -114,6 +173,10 @@ namespace BookClubs.Models
                 .WithMany(u => u.PendingFriendRequests)
                 .HasForeignKey(r => r.RecipientId)
                 .WillCascadeOnDelete(true);
+
+            Property(r => r.Body)
+                .HasMaxLength((int)MaxLength.MessageBody)
+                .IsRequired();
         }
     }
 
@@ -122,6 +185,12 @@ namespace BookClubs.Models
         public BookConfiguration()
         {
             HasKey(b => b.Isbn);
+            Property(b => b.Isbn)
+                .HasMaxLength((int)MaxLength.Isbn);
+
+            Property(b => b.Title)
+                .HasMaxLength((int)MaxLength.Title)
+                .IsRequired();
         }
     }
 
@@ -136,6 +205,10 @@ namespace BookClubs.Models
             HasRequired(p => p.Poster)
                 .WithMany(u => u.GroupWallPosts)
                 .HasForeignKey(p => p.PosterId);
+
+            Property(p => p.Body)
+                .HasMaxLength((int)MaxLength.MessageBody)
+                .IsRequired();
         }
     }
 
@@ -149,11 +222,32 @@ namespace BookClubs.Models
                     u.ToTable("Friends");
                 });
 
-            //HasMany(u => u.PendingRequests)
-            //    .WithRequired(r => r.Recipient);
+            Property(u => u.FirstName)
+                .HasMaxLength((int)MaxLength.FirstName)
+                .IsRequired();
 
-            //HasMany(u => u.SentRequests)
-            //    .WithRequired(r => r.Sender);
+            Property(u => u.LastName)
+                .HasMaxLength((int)MaxLength.LastName)
+                .IsRequired();
+
+            Property(u => u.Biography)
+                .HasMaxLength((int)MaxLength.Biography)
+                .IsRequired();
         }
     }
+}
+
+internal enum MaxLength
+{
+    ZipCode = 5,
+    Isbn = 13,
+    FirstName = 64,
+    LastName = 64,
+    GroupName = 64,
+    MessageBody = 1024,
+    Biography = 1024,
+    Address = 128,
+    Title = 128,
+    City = 64,
+    State = 64,
 }

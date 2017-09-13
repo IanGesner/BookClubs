@@ -37,7 +37,7 @@ namespace BookClubs.Controllers
         public ActionResult EditProfile()
         {
             var userId = User.Identity.GetUserId();
-            var user = _dataRepository.GetApplicationUserById(userId);
+            var user = _dataRepository.GetUserById(userId);
 
             ProfileViewModel model = new ProfileViewModel()
             {
@@ -55,7 +55,7 @@ namespace BookClubs.Controllers
             {
                 // Retrieve current user
                 var userId = User.Identity.GetUserId();
-                var user = _dataRepository.GetApplicationUserById(userId);
+                var user = _dataRepository.GetUserById(userId);
 
                 //If it isn't the single-instance default picture, delete the current profile
                 // picture from the Profile_Pictures folder
@@ -90,7 +90,7 @@ namespace BookClubs.Controllers
         [AllowAnonymous]
         public JsonResult IsUniqueUsername(string username)
         {
-            var user = _dataRepository.GetApplicationUserByUsername(username);
+            var user = _dataRepository.GetUserByUsername(username);
 
             return Json(user == null);
         }
@@ -100,7 +100,7 @@ namespace BookClubs.Controllers
         [AllowAnonymous]
         public JsonResult IsUniqueEmail(string email)
         {
-            var user = _dataRepository.GetApplicationUserByEmail(email);
+            var user = _dataRepository.GetUserByEmail(email);
 
             return Json(user == null);
         }
@@ -117,7 +117,7 @@ namespace BookClubs.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
+        public ApplicationUserManager ApplicationUserManager
         {
             get
             {
@@ -234,16 +234,16 @@ namespace BookClubs.Controllers
                             ProfilePictureUrl = _defaultPic, FirstName = model.FirstName,
                             LastName = model.LastName };
 
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var result = await ApplicationUserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // string code = await ApplicationUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    // await ApplicationUserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
 
                     return RedirectToAction("EditProfile", "Account");
@@ -264,7 +264,7 @@ namespace BookClubs.Controllers
             {
                 return View("Error");
             }
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
+            var result = await ApplicationUserManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
@@ -285,8 +285,8 @@ namespace BookClubs.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                var user = await ApplicationUserManager.FindByNameAsync(model.Email);
+                if (user == null || !(await ApplicationUserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -294,9 +294,9 @@ namespace BookClubs.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                // string code = await ApplicationUserManager.GeneratePasswordResetTokenAsync(user.Id);
                 // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                // await ApplicationUserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 // return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -331,13 +331,13 @@ namespace BookClubs.Controllers
             {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = await ApplicationUserManager.FindByNameAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            var result = await ApplicationUserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
@@ -375,7 +375,7 @@ namespace BookClubs.Controllers
             {
                 return View("Error");
             }
-            var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
+            var userFactors = await ApplicationUserManager.GetValidTwoFactorProvidersAsync(userId);
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
@@ -451,10 +451,10 @@ namespace BookClubs.Controllers
                     return View("ExternalLoginFailure");
                 }
                 var user = new User { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user);
+                var result = await ApplicationUserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                    result = await ApplicationUserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);

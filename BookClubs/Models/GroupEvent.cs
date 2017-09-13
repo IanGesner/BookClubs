@@ -14,5 +14,8 @@ namespace BookClubs.Models
 
         public string BookId { get; set; }
         public virtual Book Book { get; set; }
+
+        public int GroupId { get; set; }
+        public virtual Group Group { get; set; }
     }
 }

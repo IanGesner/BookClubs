@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using BookClubs.Models;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BookClubs.Data
 {
@@ -15,26 +17,29 @@ namespace BookClubs.Data
             _dbContext = new BcContext();
         }
 
-        public void AddApplicationUser(User person)
+        public void AddUser(User user, string password)
         {
-            throw new NotImplementedException();
+            var userManager = new UserManager<User>(new UserStore<User>(_dbContext));
+            userManager.Create(user, password);
+
+            _dbContext.SaveChanges();
         }
 
-        public IQueryable<User> GetAllApplicationUsers()
+        public IQueryable<User> GetAllUsers()
         {
             return _dbContext.Users;
         }
 
-        public User GetApplicationUserById(string id)
+        public User GetUserById(string id)
         {
             return _dbContext.Users.Where(u => u.Id == id).FirstOrDefault();
         }
-        public User GetApplicationUserByUsername(string username)
+        public User GetUserByUsername(string username)
         {
             return _dbContext.Users.Where(u => u.UserName == username).FirstOrDefault();
         }
 
-        public User GetApplicationUserByEmail(string email)
+        public User GetUserByEmail(string email)
         {
             return _dbContext.Users.Where(u => u.Email == email).FirstOrDefault();
         }
@@ -46,7 +51,7 @@ namespace BookClubs.Data
             _dbContext.SaveChanges();
         }
 
-        public void RemoveApplicationUser(User user)
+        public void RemoveUser(User user)
         {
             _dbContext.Users.Remove(user);
         }
@@ -59,7 +64,8 @@ namespace BookClubs.Data
 
         public void AddGroup(Group group)
         {
-            throw new NotImplementedException();
+            _dbContext.Groups.Add(group);
+            _dbContext.SaveChanges();
         }
 
         public IQueryable<Group> GetAllGroups()
@@ -91,6 +97,13 @@ namespace BookClubs.Data
             throw new NotImplementedException();
         }
 
+
+
+        public void AddGroupEvent(GroupEvent groupEvent)
+        {
+            _dbContext.GroupEvents.Add(groupEvent);
+            _dbContext.SaveChanges();
+        }
         public IQueryable<GroupEvent> GetAllGroupEvents()
         {
             return _dbContext.GroupEvents;

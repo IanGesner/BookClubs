@@ -230,9 +230,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BcHelper.cs" />
-    <Compile Include="Migrations\201709090101229_1.cs" />
-    <Compile Include="Migrations\201709090101229_1.Designer.cs">
-      <DependentUpon>201709090101229_1.cs</DependentUpon>
+    <Compile Include="Migrations\201709100014503_1.cs" />
+    <Compile Include="Migrations\201709100014503_1.Designer.cs">
+      <DependentUpon>201709100014503_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Helpers\GroupEventDateComparer.cs" />
@@ -262,7 +262,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\blank_profile_picture.png" />
+    <Content Include="App_Images\blank_profile_picture.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -340,7 +340,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="App_Profile_Pictures\Seed_Images\" />
+    <Folder Include="App_Images\Group_Display_Images\" />
+    <Folder Include="App_Images\User_Display_Images\" />
+    <Folder Include="App_Images\_Seed_Images\Group_Display_Images\" />
+    <Folder Include="App_Images\_Seed_Images\User_Display_Images\" />
     <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
@@ -356,8 +359,8 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709090101229_1.resx">
-      <DependentUpon>201709090101229_1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709100014503_1.resx">
+      <DependentUpon>201709100014503_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

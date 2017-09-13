@@ -17,7 +17,7 @@ namespace BookClubs.Tests
                 FirstName = "Ian",
                 LastName = "Gesner",
                 Biography = "I'm pretty decent. Hire me.",
-                Groups = null
+                GroupsIn = null
             });
 
         }
