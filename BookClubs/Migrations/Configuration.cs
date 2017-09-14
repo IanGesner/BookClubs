@@ -16,6 +16,7 @@ namespace BookClubs.Migrations
     {
         private const int NUM_EVENTS_PER_GROUP = 10;
         private const int NUM_USERS_PER_GROUP = 5;
+        private const int MAX_NUM_FRIENDS_PER_USER = 4;
 
         EfDataRepository _repo = new EfDataRepository();
         BcContext _context;
@@ -34,7 +35,6 @@ namespace BookClubs.Migrations
 
 
             #region IGNORE
-
             //List<GroupEvent> groupOneEvents = new List<GroupEvent>()
             //{
             //    new GroupEvent
@@ -192,25 +192,43 @@ namespace BookClubs.Migrations
 
             try
             {
+                //Insert users
                 var users = InitializeUsers();
                 foreach (var user in users)
                 {
                     _repo.AddUser(user, "P@ssword123");
                 }
 
+                //Insert groups
                 var groups = InitializeGroups();
-                SetOrganizers(_repo.GetAllUsers().ToList(), groups);
-                //SetMembers(_repo.GetAllUsers().ToList(), groups);
+                SetOrganizers(users, groups);
                 foreach (var group in groups)
                 {
                     _repo.AddGroup(group);
                 }
 
+                //Add some users to the groups
+                SetMembers(users, groups);
+                _repo.Save();
+
+                //Create some group events with a book to read
                 var books = InitializeBooks();
                 var events = InitializeGroupEvents(groups, books);
                 foreach (var groupEvent in events)
                 {
                     _repo.AddGroupEvent(groupEvent);
+                }
+
+                //Give people a couple friends
+                MakeFriends(users);
+                _repo.Save();
+
+                //Add some PendingRequests and SentRequests between
+                //users that are not already friends
+                foreach (var user in users)
+                {
+                    MakeAFriendRequest(user, users);
+                    _repo.Save();
                 }
             }
             catch (DbEntityValidationException e)
@@ -226,6 +244,90 @@ namespace BookClubs.Migrations
                     }
                 }
                 throw;
+            }
+        }
+
+        private void MakeAFriendRequest(User sender, List<User> users)
+        {
+            foreach (var user in users)
+            {
+                if (user != sender
+                    && !RequestExists(user, sender)
+                    && !user.Friends.Contains(sender))
+                {
+                    sender.SentFriendRequests.Add(new FriendRequest
+                    {
+                        Body = "Hi! Please add me so we can read books together! How fun would that be?",
+                        RecipientId = user.Id,
+                        //SenderId = innerUser.Id,
+                        TimeStamp = DateTime.Now
+                    });
+                }
+            }
+        }
+
+        private void MakeFriendRequests(List<User> users)
+        {
+            //bool seedIt = false;
+
+            //foreach (var user in users)
+            //{
+            //    foreach (var innerUser in users)
+            //    {
+            //        seedIt = false;
+
+            //        FriendRequest duplicate = innerUser.PendingFriendRequests
+            //                                    .Where(fr => fr.RecipientId == innerUser.Id)                                                
+            //                                    .FirstOrDefault();
+
+            //        if (duplicate == null)
+            //            seedIt = true;
+
+            //        if (innerUser != user 
+            //            && !innerUser.Friends.Contains(user) 
+            //            && seedIt)
+            //        {
+            //            innerUser.SentFriendRequests.Add(new FriendRequest
+            //            {
+            //                Body = "Hi! Please add me so we can read books together! How fun would that be?",
+            //                RecipientId = user.Id,
+            //                SenderId = innerUser.Id,
+            //                TimeStamp = DateTime.Now
+            //            });
+            //        }
+            //    }
+            //}
+        }
+
+        private bool RequestExists(User user1, User user2)
+        {
+            foreach (var request in user1.PendingFriendRequests)
+                if (request.SenderId == user2.Id)
+                    return true;
+
+            foreach (var request in user2.PendingFriendRequests)
+                if (request.SenderId == user1.Id)
+                    return true;
+
+            return false;
+        }
+
+        private void MakeFriends(List<User> users)
+        {
+            int seed = (int)DateTime.Now.Ticks;
+            Random rng = new Random(seed);
+
+            int friendIndex = 0;
+
+            foreach (var user in users)
+            {
+                for (int i = 0; i < MAX_NUM_FRIENDS_PER_USER; i++)
+                {
+                    friendIndex = rng.Next(users.Count);
+
+                    if (users[friendIndex] != user && !user.Friends.Contains(users[friendIndex]))
+                        user.Friends.Add(users[friendIndex]);
+                }
             }
         }
 
@@ -297,6 +399,24 @@ namespace BookClubs.Migrations
             {
                 new User
                 {
+                    FirstName="Ian",
+                    LastName = "Gesner",
+                    Email = "gesner.ian@gmail.com",
+                    UserName = "gesner.ian@gmail.com",
+                    Biography = "My biography",
+                    ProfilePictureUrl = "/App_Images/_Seed_Images/User_Display_Images/linkedin_profile_pic.jpg",
+                    GroupsIn = new List<Group>(),
+                    Friends = new List<User>(),
+                    GroupWallPosts = new List<GroupWallPost>(),
+                    PendingFriendRequests = new List<FriendRequest>(),
+                    PendingGroupInvitations = new List<GroupInvitation>(),
+                    PendingGroupRequests = new List<GroupRequest>(),
+                    SentFriendRequests = new List<FriendRequest>(),
+                    SentGroupInvitations = new List<GroupInvitation>(),
+                    SentGroupRequests = new List<GroupRequest>()
+                },
+                new User
+                {
                     FirstName="Tim",
                     LastName = "Peterson",
                     Email = "Tim.Peterson@gmail.com",
@@ -308,7 +428,7 @@ namespace BookClubs.Migrations
                     "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
                     "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
                     "mollit anim id est laborum.",
-                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/1.jpg",
+                    ProfilePictureUrl = "/App_Images/_Seed_Images/User_Display_Images/1.jpg",
                     GroupsIn = new List<Group>(),
                     Friends = new List<User>(),
                     GroupWallPosts = new List<GroupWallPost>(),
@@ -332,7 +452,7 @@ namespace BookClubs.Migrations
                     "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
                     "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
                     "mollit anim id est laborum.",
-                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/2.jpg",
+                    ProfilePictureUrl = "/App_Images/_Seed_Images/User_Display_Images/2.jpg",
                     GroupsIn = new List<Group>(),
                     Friends = new List<User>(),
                     GroupWallPosts = new List<GroupWallPost>(),
@@ -356,7 +476,7 @@ namespace BookClubs.Migrations
                     "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
                     "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
                     "mollit anim id est laborum.",
-                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/3.jpg",
+                    ProfilePictureUrl = "/App_Images/_Seed_Images/User_Display_Images/3.jpg",
                     GroupsIn = new List<Group>(),
                     Friends = new List<User>(),
                     GroupWallPosts = new List<GroupWallPost>(),
@@ -380,7 +500,7 @@ namespace BookClubs.Migrations
                     "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
                     "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
                     "mollit anim id est laborum.",
-                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/4.jpg",
+                    ProfilePictureUrl = "/App_Images/_Seed_Images/User_Display_Images/4.jpg",
                     GroupsIn = new List<Group>(),
                     Friends = new List<User>(),
                     GroupWallPosts = new List<GroupWallPost>(),
@@ -404,7 +524,7 @@ namespace BookClubs.Migrations
                     "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
                     "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
                     "mollit anim id est laborum.",
-                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/5.jpg",
+                    ProfilePictureUrl = "/App_Images/_Seed_Images/User_Display_Images/5.jpg",
                     GroupsIn = new List<Group>(),
                     Friends = new List<User>(),
                     GroupWallPosts = new List<GroupWallPost>(),
@@ -428,7 +548,7 @@ namespace BookClubs.Migrations
                     "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
                     "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
                     "mollit anim id est laborum.",
-                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/6.jpg",
+                    ProfilePictureUrl = "/App_Images/_Seed_Images/User_Display_Images/6.jpg",
                     GroupsIn = new List<Group>(),
                     Friends = new List<User>(),
                     GroupWallPosts = new List<GroupWallPost>(),
@@ -452,7 +572,7 @@ namespace BookClubs.Migrations
                     "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
                     "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
                     "mollit anim id est laborum.",
-                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/7.jpg",
+                    ProfilePictureUrl = "/App_Images/_Seed_Images/User_Display_Images/7.jpg",
                     GroupsIn = new List<Group>(),
                     Friends = new List<User>(),
                     GroupWallPosts = new List<GroupWallPost>(),
@@ -476,7 +596,7 @@ namespace BookClubs.Migrations
                     "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
                     "sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt " +
                     "mollit anim id est laborum.",
-                    ProfilePictureUrl = "/App_Profile_Pictures/Seed_Images/8.jpg",
+                    ProfilePictureUrl = "/App_Images/_Seed_Images/User_Display_Images/8.jpg",
                     GroupsIn = new List<Group>(),
                     Friends = new List<User>(),
                     GroupWallPosts = new List<GroupWallPost>(),

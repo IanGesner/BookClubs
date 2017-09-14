@@ -229,6 +229,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\BcFileManager.cs" />
     <Compile Include="Helpers\BcHelper.cs" />
     <Compile Include="Migrations\201709100014503_1.cs" />
     <Compile Include="Migrations\201709100014503_1.Designer.cs">
@@ -239,7 +240,6 @@
     <Compile Include="Models\Annotations\MaxFileSizeAttribute.cs" />
     <Compile Include="Models\Annotations\FileTypesAttribute.cs" />
     <Compile Include="Models\Annotations\IsbnAttribute.cs" />
-    <Compile Include="Models\Annotations\UniqueUserNameAttribute.cs" />
     <Compile Include="Models\FriendRequest.cs" />
     <Compile Include="Models\GroupInvitation.cs" />
     <Compile Include="Models\GroupRequest.cs" />
@@ -258,6 +258,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Images\_Seed_Images\User_Display_Images\linkedin_profile_pic.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -343,7 +344,6 @@
     <Folder Include="App_Images\Group_Display_Images\" />
     <Folder Include="App_Images\User_Display_Images\" />
     <Folder Include="App_Images\_Seed_Images\Group_Display_Images\" />
-    <Folder Include="App_Images\_Seed_Images\User_Display_Images\" />
     <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>

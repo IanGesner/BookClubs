@@ -16,6 +16,7 @@ namespace BookClubs.Models
         public DbSet<GroupEvent> GroupEvents { get; set; }
         public DbSet<Book> Books { get; set; }
 
+
         public BcContext() : base("DefaultConnection", throwIfV1Schema: false) { }
         public static BcContext Create()
         {
@@ -63,7 +64,7 @@ namespace BookClubs.Models
 
             HasMany(g => g.Users)
                 .WithMany(g => g.GroupsIn);
-            
+
             Property(g => g.Name)
                 .HasMaxLength((int)MaxLength.GroupName)
                 .IsRequired();
@@ -235,19 +236,20 @@ namespace BookClubs.Models
                 .IsRequired();
         }
     }
+
+    internal enum MaxLength
+    {
+        ZipCode = 5,
+        Isbn = 13,
+        FirstName = 64,
+        LastName = 64,
+        GroupName = 64,
+        MessageBody = 1024,
+        Biography = 1024,
+        Address = 128,
+        Title = 128,
+        City = 64,
+        State = 64,
+    }
 }
 
-internal enum MaxLength
-{
-    ZipCode = 5,
-    Isbn = 13,
-    FirstName = 64,
-    LastName = 64,
-    GroupName = 64,
-    MessageBody = 1024,
-    Biography = 1024,
-    Address = 128,
-    Title = 128,
-    City = 64,
-    State = 64,
-}

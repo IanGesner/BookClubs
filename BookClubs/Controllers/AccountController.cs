@@ -25,15 +25,18 @@ namespace BookClubs.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private readonly IDataRepository _dataRepository;
+        //private readonly IFileManager _fileManager;
         private readonly string _profilePicDir = ConfigurationManager.AppSettings["ProfilePicSaveDirectory"];
         private readonly string _defaultPic = ConfigurationManager.AppSettings["DefaultProfilePicLocation"];
 
-        public AccountController(IDataRepository repo)
+        public AccountController(IDataRepository dataRepository/*, IFileManager fileManager*/)
         {
-            _dataRepository = repo;
+            _dataRepository = dataRepository;
+            //_fileManager = fileManager;
         }
 
         [HttpGet]
+
         public ActionResult EditProfile()
         {
             var userId = User.Identity.GetUserId();
@@ -67,7 +70,6 @@ namespace BookClubs.Controllers
                 // Set the new file name to the current user's ID
                 var profilePicUrl = _profilePicDir + userId +
                  "." + BcHelper.GetFileExtension(model.ProfilePicture);
-
 
                 // Save the profile picture and update the user's
                 // ProfilePicUrl property in database
@@ -230,9 +232,14 @@ namespace BookClubs.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email,
-                            ProfilePictureUrl = _defaultPic, FirstName = model.FirstName,
-                            LastName = model.LastName };
+                var user = new User
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    ProfilePictureUrl = _defaultPic,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                };
 
                 var result = await ApplicationUserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

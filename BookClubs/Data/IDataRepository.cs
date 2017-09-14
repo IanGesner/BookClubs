@@ -30,5 +30,7 @@ namespace BookClubs.Data
 
         IQueryable<GroupEvent> GetAllGroupEvents();
 
+        void Save();
+
     }
 }

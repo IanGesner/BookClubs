@@ -17,6 +17,7 @@ namespace BookClubs.Data
             _dbContext = new BcContext();
         }
 
+        #region USERS
         public void AddUser(User user, string password)
         {
             var userManager = new UserManager<User>(new UserStore<User>(_dbContext));
@@ -55,13 +56,9 @@ namespace BookClubs.Data
         {
             _dbContext.Users.Remove(user);
         }
-
-
-
-
-
-
-
+        #endregion
+                
+        #region GROUPS
         public void AddGroup(Group group)
         {
             _dbContext.Groups.Add(group);
@@ -84,9 +81,7 @@ namespace BookClubs.Data
 
             return group;
         }
-
-
-
+        
         public void RemoveGroup(Group id)
         {
             throw new NotImplementedException();
@@ -96,9 +91,7 @@ namespace BookClubs.Data
         {
             throw new NotImplementedException();
         }
-
-
-
+        
         public void AddGroupEvent(GroupEvent groupEvent)
         {
             _dbContext.GroupEvents.Add(groupEvent);
@@ -108,7 +101,11 @@ namespace BookClubs.Data
         {
             return _dbContext.GroupEvents;
         }
+        #endregion
 
-
+        public void Save()
+        {
+            _dbContext.SaveChanges();
+        }
     }
 }
