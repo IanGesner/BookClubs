@@ -16,6 +16,7 @@ using System.IO;
 using BookClubs.Helpers;
 using System.Web.Security;
 using System.Configuration;
+using System.Data.Entity.Validation;
 
 namespace BookClubs.Controllers
 {
@@ -25,34 +26,34 @@ namespace BookClubs.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private readonly IDataRepository _dataRepository;
-        //private readonly IFileManager _fileManager;
+        private readonly IFileManager _fileManager;
         private readonly string _profilePicDir = ConfigurationManager.AppSettings["ProfilePicSaveDirectory"];
         private readonly string _defaultPic = ConfigurationManager.AppSettings["DefaultProfilePicLocation"];
 
-        public AccountController(IDataRepository dataRepository/*, IFileManager fileManager*/)
+        public AccountController(IDataRepository dataRepository, IFileManager fileManager)
         {
             _dataRepository = dataRepository;
-            //_fileManager = fileManager;
+            _fileManager = fileManager;
         }
 
         [HttpGet]
-
         public ActionResult EditProfile()
         {
             var userId = User.Identity.GetUserId();
             var user = _dataRepository.GetUserById(userId);
 
-            ProfileViewModel model = new ProfileViewModel()
+            EditProfileViewModel model = new EditProfileViewModel()
             {
                 ProfilePictureUrl = user.ProfilePictureUrl,
-                Biography = user.Biography
+                Biography = user.Biography,
+                Public = user.Public
             };
 
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult EditProfile(ProfileViewModel model)
+        public ActionResult EditProfile(EditProfileViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -63,24 +64,26 @@ namespace BookClubs.Controllers
                 //If it isn't the single-instance default picture, delete the current profile
                 // picture from the Profile_Pictures folder
                 if (!String.Equals(user.ProfilePictureUrl, _defaultPic))
-                    System.IO.File.Delete(Server.MapPath(user.ProfilePictureUrl));
+                    _fileManager.DeleteFile(user.ProfilePictureUrl, Server);
 
                 // Create a profile picture URL to save to.
                 // This will map to App_data\Profile_Pictures\{User ID}.{File Extension}
                 // Set the new file name to the current user's ID
-                var profilePicUrl = _profilePicDir + userId +
-                 "." + BcHelper.GetFileExtension(model.ProfilePicture);
+                string fileName = userId + "." + _fileManager.GetFileExtension(model.ProfilePicture);
+                var profilePicUrl = _fileManager.BuildPath(new string[] { _profilePicDir, fileName },
+                                                ForReferenceBy.Server);
 
                 // Save the profile picture and update the user's
                 // ProfilePicUrl property in database
-                model.ProfilePicture.SaveAs(Server.MapPath(profilePicUrl.Replace("/", @"\")));
-                user.ProfilePictureUrl = profilePicUrl;
+                model.ProfilePicture.SaveAs(Server.MapPath(profilePicUrl));
 
-                // Save the user's biography
+                //Save changes in viewModel to user entry
+                user.ProfilePictureUrl = _fileManager.ConvertPath(profilePicUrl, ForReferenceBy.Client);
                 user.Biography = model.Biography;
+                user.Public = model.Public;
 
                 // Commit changes
-                _dataRepository.UpdateProfile(user);
+                _dataRepository.UpdateUser(user);
 
                 return RedirectToAction("Index", "Groups");
             }
@@ -230,34 +233,52 @@ namespace BookClubs.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var user = new User
+                if (ModelState.IsValid)
                 {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    ProfilePictureUrl = _defaultPic,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName
-                };
+                    var user = new User
+                    {
+                        UserName = model.Email,
+                        Email = model.Email,
+                        ProfilePictureUrl = _defaultPic,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Public = true
+                    };
 
-                var result = await ApplicationUserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    var result = await ApplicationUserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await ApplicationUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await ApplicationUserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                        // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await ApplicationUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await ApplicationUserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
 
-                    return RedirectToAction("EditProfile", "Account");
+                        return RedirectToAction("EditProfile", "Account");
+                    }
+                    AddErrors(result);
                 }
-                AddErrors(result);
-            }
 
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
             // If we got this far, something failed, redisplay form
             return View(model);
         }

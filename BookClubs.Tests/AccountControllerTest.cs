@@ -21,7 +21,7 @@ namespace BookClubs.Tests
 
             postedFile.SetupAllProperties();
 
-            ProfileViewModel viewModel = new ProfileViewModel
+            EditProfileViewModel viewModel = new EditProfileViewModel
             {
                 ProfilePicture = postedFile.Object,
                 ProfilePictureUrl = 

@@ -55,7 +55,7 @@ namespace BookClubs.Migrations
                         State = c.String(),
                         GroupPictureUrl = c.String(nullable: false),
                         GroupInfo = c.String(maxLength: 1024),
-                        Privacy = c.Int(nullable: false),
+                        Public = c.Boolean(nullable: false),
                         OrganizerId = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
@@ -88,8 +88,9 @@ namespace BookClubs.Migrations
                         Id = c.String(nullable: false, maxLength: 128),
                         FirstName = c.String(nullable: false, maxLength: 64),
                         LastName = c.String(nullable: false, maxLength: 64),
-                        Biography = c.String(nullable: false, maxLength: 1024),
+                        Biography = c.String(maxLength: 1024),
                         ProfilePictureUrl = c.String(),
+                        Public = c.Boolean(nullable: false),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),

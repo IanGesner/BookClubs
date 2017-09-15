@@ -220,16 +220,17 @@ namespace BookClubs.Migrations
                 }
 
                 //Give people a couple friends
-                MakeFriends(users);
+                SetFriends(users);
                 _repo.Save();
 
-                //Add some PendingRequests and SentRequests between
-                //users that are not already friends
-                foreach (var user in users)
-                {
-                    MakeAFriendRequest(user, users);
-                    _repo.Save();
-                }
+                SetFriendRequests(users);
+                _repo.Save();
+
+                SetGroupInvites(groups, users);
+                _repo.Save();
+
+                SetGroupRequests(groups, users);
+                _repo.Save();
             }
             catch (DbEntityValidationException e)
             {
@@ -247,105 +248,87 @@ namespace BookClubs.Migrations
             }
         }
 
-        private void MakeAFriendRequest(User sender, List<User> users)
+        private void SetGroupRequests(List<Group> groups, List<User> users)
         {
-            foreach (var user in users)
+            groups[0].GroupRequests.Add(new GroupRequest
             {
-                if (user != sender
-                    && !RequestExists(user, sender)
-                    && !user.Friends.Contains(sender))
-                {
-                    sender.SentFriendRequests.Add(new FriendRequest
-                    {
-                        Body = "Hi! Please add me so we can read books together! How fun would that be?",
-                        RecipientId = user.Id,
-                        //SenderId = innerUser.Id,
-                        TimeStamp = DateTime.Now
-                    });
-                }
-            }
+                Body = "Please invite me to your group, so I can read with all of you!",
+                Recipient = groups[0].Organizer,
+                Sender = users[8],
+                TimeStamp = DateTime.Now
+            });
         }
 
-        private void MakeFriendRequests(List<User> users)
+        private void SetGroupInvites(List<Group> groups, List<User> users)
         {
-            //bool seedIt = false;
-
-            //foreach (var user in users)
-            //{
-            //    foreach (var innerUser in users)
-            //    {
-            //        seedIt = false;
-
-            //        FriendRequest duplicate = innerUser.PendingFriendRequests
-            //                                    .Where(fr => fr.RecipientId == innerUser.Id)                                                
-            //                                    .FirstOrDefault();
-
-            //        if (duplicate == null)
-            //            seedIt = true;
-
-            //        if (innerUser != user 
-            //            && !innerUser.Friends.Contains(user) 
-            //            && seedIt)
-            //        {
-            //            innerUser.SentFriendRequests.Add(new FriendRequest
-            //            {
-            //                Body = "Hi! Please add me so we can read books together! How fun would that be?",
-            //                RecipientId = user.Id,
-            //                SenderId = innerUser.Id,
-            //                TimeStamp = DateTime.Now
-            //            });
-            //        }
-            //    }
-            //}
-        }
-
-        private bool RequestExists(User user1, User user2)
-        {
-            foreach (var request in user1.PendingFriendRequests)
-                if (request.SenderId == user2.Id)
-                    return true;
-
-            foreach (var request in user2.PendingFriendRequests)
-                if (request.SenderId == user1.Id)
-                    return true;
-
-            return false;
-        }
-
-        private void MakeFriends(List<User> users)
-        {
-            int seed = (int)DateTime.Now.Ticks;
-            Random rng = new Random(seed);
-
-            int friendIndex = 0;
-
-            foreach (var user in users)
+            groups[2].GroupInvitations.Add(new GroupInvitation
             {
-                for (int i = 0; i < MAX_NUM_FRIENDS_PER_USER; i++)
-                {
-                    friendIndex = rng.Next(users.Count);
+                Body = "Join our group and come read with us sometime!",
+                Recipient = users[0],
+                Sender = groups[2].Organizer,
+                TimeStamp = DateTime.Now
+            });
+        }
 
-                    if (users[friendIndex] != user && !user.Friends.Contains(users[friendIndex]))
-                        user.Friends.Add(users[friendIndex]);
-                }
-            }
+        private void SetFriendRequests(List<User> users)
+        {
+            users[5].SentFriendRequests.Add(new FriendRequest
+            {
+                Recipient = users[0],
+                Body = "You should add me, so we can read together sometime! :)",
+                TimeStamp = DateTime.Now
+            });
+        }
+
+        private void SetFriends(List<User> users)
+        {
+            users[0].Friends.Add(users[1]);
+            users[0].Friends.Add(users[2]);
+            users[0].Friends.Add(users[3]);
+
+            users[1].Friends.Add(users[2]);
+            users[1].Friends.Add(users[3]);
+            users[1].Friends.Add(users[4]);
+
+            users[2].Friends.Add(users[3]);
+            users[2].Friends.Add(users[4]);
+            users[2].Friends.Add(users[5]);
+
+            users[3].Friends.Add(users[4]);
+            users[3].Friends.Add(users[5]);
+            users[3].Friends.Add(users[6]);
+
+            users[4].Friends.Add(users[5]);
+            users[4].Friends.Add(users[6]);
+            users[4].Friends.Add(users[7]);
+
+            users[5].Friends.Add(users[6]);
+            users[5].Friends.Add(users[7]);
+            users[5].Friends.Add(users[8]);
         }
 
         private void SetMembers(List<User> users, List<Group> groups)
         {
-            int seed = (int)DateTime.Now.Ticks;
-            Random rng = new Random(seed);
+            users[0].GroupsIn.Add(groups[0]);
+            users[1].GroupsIn.Add(groups[0]);
+            users[2].GroupsIn.Add(groups[0]);
+            users[3].GroupsIn.Add(groups[0]);
+            users[4].GroupsIn.Add(groups[0]);
+            users[5].GroupsIn.Add(groups[0]);
+            users[6].GroupsIn.Add(groups[0]);
+            users[7].GroupsIn.Add(groups[0]);
 
-            int groupIndex = 0;
+            users[0].GroupsIn.Add(groups[1]);
+            users[1].GroupsIn.Add(groups[1]);
+            users[2].GroupsIn.Add(groups[1]);
+            users[3].GroupsIn.Add(groups[1]);
 
-            foreach (var user in users)
-            {
-                //put user in random group that they do not organize
-                while (groups[groupIndex].OrganizerId == user.Id)
-                    groupIndex = rng.Next(groups.Count);
-
-                user.GroupsIn.Add(groups[groupIndex]);
-            }
+            users[2].GroupsIn.Add(groups[2]);
+            users[3].GroupsIn.Add(groups[2]);
+            users[4].GroupsIn.Add(groups[2]);
+            users[5].GroupsIn.Add(groups[2]);
+            users[6].GroupsIn.Add(groups[2]);
+            users[7].GroupsIn.Add(groups[2]);
         }
 
         private List<GroupEvent> InitializeGroupEvents(List<Group> groups, List<Book> books)
@@ -380,17 +363,10 @@ namespace BookClubs.Migrations
 
         private void SetOrganizers(List<User> users, List<Group> groups)
         {
-            Random rng = new Random();
 
-            foreach (var group in groups)
-            {
-                int toSkip = rng.Next(0, users.Count);
-
-                group.OrganizerId = users.Skip(toSkip)
-                                         .Take(1)
-                                         .Select(u => u.Id)
-                                         .FirstOrDefault();
-            }
+            groups[0].Organizer = users[0];
+            groups[1].Organizer = users[1];
+            groups[2].Organizer = users[3];
         }
 
         private List<User> InitializeUsers()
@@ -404,7 +380,7 @@ namespace BookClubs.Migrations
                     Email = "gesner.ian@gmail.com",
                     UserName = "gesner.ian@gmail.com",
                     Biography = "My biography",
-                    ProfilePictureUrl = "/App_Images/_Seed_Images/User_Display_Images/linkedin_profile_pic.jpg",
+                    ProfilePictureUrl = "/App_Images/blank_profile_picture.png",
                     GroupsIn = new List<Group>(),
                     Friends = new List<User>(),
                     GroupWallPosts = new List<GroupWallPost>(),
@@ -413,7 +389,8 @@ namespace BookClubs.Migrations
                     PendingGroupRequests = new List<GroupRequest>(),
                     SentFriendRequests = new List<FriendRequest>(),
                     SentGroupInvitations = new List<GroupInvitation>(),
-                    SentGroupRequests = new List<GroupRequest>()
+                    SentGroupRequests = new List<GroupRequest>(),
+                    Public = true
                 },
                 new User
                 {
@@ -437,7 +414,8 @@ namespace BookClubs.Migrations
                     PendingGroupRequests = new List<GroupRequest>(),
                     SentFriendRequests = new List<FriendRequest>(),
                     SentGroupInvitations = new List<GroupInvitation>(),
-                    SentGroupRequests = new List<GroupRequest>()
+                    SentGroupRequests = new List<GroupRequest>(),
+                    Public = true
                 },
                 new User
                 {
@@ -461,7 +439,8 @@ namespace BookClubs.Migrations
                     PendingGroupRequests = new List<GroupRequest>(),
                     SentFriendRequests = new List<FriendRequest>(),
                     SentGroupInvitations = new List<GroupInvitation>(),
-                    SentGroupRequests = new List<GroupRequest>()
+                    SentGroupRequests = new List<GroupRequest>(),
+                    Public = true
                 },
                 new User
                 {
@@ -485,7 +464,8 @@ namespace BookClubs.Migrations
                     PendingGroupRequests = new List<GroupRequest>(),
                     SentFriendRequests = new List<FriendRequest>(),
                     SentGroupInvitations = new List<GroupInvitation>(),
-                    SentGroupRequests = new List<GroupRequest>()
+                    SentGroupRequests = new List<GroupRequest>(),
+                    Public = true
                 },
                 new User
                 {
@@ -509,7 +489,8 @@ namespace BookClubs.Migrations
                     PendingGroupRequests = new List<GroupRequest>(),
                     SentFriendRequests = new List<FriendRequest>(),
                     SentGroupInvitations = new List<GroupInvitation>(),
-                    SentGroupRequests = new List<GroupRequest>()
+                    SentGroupRequests = new List<GroupRequest>(),
+                    Public = true
                 },
                 new User
                 {
@@ -533,7 +514,8 @@ namespace BookClubs.Migrations
                     PendingGroupRequests = new List<GroupRequest>(),
                     SentFriendRequests = new List<FriendRequest>(),
                     SentGroupInvitations = new List<GroupInvitation>(),
-                    SentGroupRequests = new List<GroupRequest>()
+                    SentGroupRequests = new List<GroupRequest>(),
+                    Public = true
                 },
                 new User
                 {
@@ -557,7 +539,8 @@ namespace BookClubs.Migrations
                     PendingGroupRequests = new List<GroupRequest>(),
                     SentFriendRequests = new List<FriendRequest>(),
                     SentGroupInvitations = new List<GroupInvitation>(),
-                    SentGroupRequests = new List<GroupRequest>()
+                    SentGroupRequests = new List<GroupRequest>(),
+                    Public = true
                 },
                 new User
                 {
@@ -581,7 +564,8 @@ namespace BookClubs.Migrations
                     PendingGroupRequests = new List<GroupRequest>(),
                     SentFriendRequests = new List<FriendRequest>(),
                     SentGroupInvitations = new List<GroupInvitation>(),
-                    SentGroupRequests = new List<GroupRequest>()
+                    SentGroupRequests = new List<GroupRequest>(),
+                    Public = true
                 },
                 new User
                 {
@@ -605,7 +589,8 @@ namespace BookClubs.Migrations
                     PendingGroupRequests = new List<GroupRequest>(),
                     SentFriendRequests = new List<FriendRequest>(),
                     SentGroupInvitations = new List<GroupInvitation>(),
-                    SentGroupRequests = new List<GroupRequest>()
+                    SentGroupRequests = new List<GroupRequest>(),
+                    Public = false
                 }
             };
 
@@ -622,8 +607,11 @@ namespace BookClubs.Migrations
                     City = "Salem",
                     State = "OR",
                     GroupInfo = "Lorem ipsum dolor sit amet",
-                    Privacy = GroupPrivacy.Private,
+                    Public = false,
                     GroupPictureUrl = "/App_Images/_Seed_Images/Group_Display_Images/1.jpg",
+                    GroupInvitations = new List<GroupInvitation>(),
+                    GroupRequests = new List<GroupRequest>(),
+                    GroupWallPosts = new List<GroupWallPost>()
                 },
                 new Group
                 {
@@ -631,8 +619,11 @@ namespace BookClubs.Migrations
                     City = "Portland",
                     State = "OR",
                     GroupInfo = "Lorem ipsum dolor sit amet",
-                    Privacy = GroupPrivacy.Public,
-                    GroupPictureUrl = "/App_Images/blank_group_profile_picture.jpg"
+                    Public = true,
+                    GroupPictureUrl = "/App_Images/blank_group_profile_picture.jpg",
+                    GroupInvitations = new List<GroupInvitation>(),
+                    GroupRequests = new List<GroupRequest>(),
+                    GroupWallPosts = new List<GroupWallPost>()
                 },
                 new Group
                 {
@@ -640,8 +631,11 @@ namespace BookClubs.Migrations
                     City = "Portland",
                     State = "OR",
                     GroupInfo = "Lorem ipsum dolor sit amet",
-                    Privacy = GroupPrivacy.Public,
-                    GroupPictureUrl = "/App_Images/_Seed_Images/Group_Display_Images/3.jpg"
+                    Public = true,
+                    GroupPictureUrl = "/App_Images/_Seed_Images/Group_Display_Images/3.jpg",
+                    GroupInvitations = new List<GroupInvitation>(),
+                    GroupRequests = new List<GroupRequest>(),
+                    GroupWallPosts = new List<GroupWallPost>()
                 }
             };
 

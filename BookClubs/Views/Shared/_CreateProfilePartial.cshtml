@@ -1,4 +1,4 @@
-﻿@model BookClubs.Models.ViewModels.ProfileViewModel
+﻿@model BookClubs.Models.ViewModels.EditProfileViewModel
 
 <style>
     #hiddenFileInput {
@@ -42,6 +42,12 @@
         <br />
         @Html.EditorFor(model => model.Biography, new { htmlAttributes = new { @placeholder = "Tell us about you", @class = "form-control", @rows = "5" } })
         @Html.ValidationMessageFor(model => model.Biography, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Public, new { htmlAttributes = new { } })
+        <br />
+        @Html.EditorFor(model => model.Public)
     </div>
 
 

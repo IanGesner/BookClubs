@@ -45,7 +45,7 @@ namespace BookClubs.Data
             return _dbContext.Users.Where(u => u.Email == email).FirstOrDefault();
         }
 
-        public void UpdateProfile(User user)
+        public void UpdateUser(User user)
         {
             _dbContext.Users.Attach(user);
             _dbContext.Entry(user).State = EntityState.Modified;

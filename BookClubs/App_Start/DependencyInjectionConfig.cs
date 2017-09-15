@@ -1,4 +1,5 @@
 ﻿using BookClubs.Data;
+using BookClubs.Helpers;
 using BookClubs.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -24,6 +25,7 @@ namespace BookClubs.App_Start
 
             // Register concrete types
             container.Register<IDataRepository, EfDataRepository>(Lifestyle.Scoped);
+            container.Register<IFileManager, BcFileManager>(Lifestyle.Scoped);
             //container.Register<IGroupService, GroupService>(Lifestyle.Scoped);
             //container.Register<IBookService, BookService>(Lifestyle.Scoped);
             //container.Register<IBookProxy, BookProxy>(Lifestyle.Scoped);

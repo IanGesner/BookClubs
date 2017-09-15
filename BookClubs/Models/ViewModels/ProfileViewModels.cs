@@ -7,7 +7,7 @@ using System.Web;
 
 namespace BookClubs.Models.ViewModels
 {
-    public class ProfileViewModel
+    public class EditProfileViewModel
     {
         [Display(Name = "Tell us about you")]
         public string Biography { get; set; }
@@ -18,6 +18,8 @@ namespace BookClubs.Models.ViewModels
         public HttpPostedFileBase ProfilePicture { get; set; }
 
         public string ProfilePictureUrl { get; set; }
+
+        public bool Public { get; set; }
     }
 
     public class ProfileListViewModel

@@ -10,6 +10,7 @@ namespace BookClubs.Models.Annotations
     public class FileTypesAttribute : ValidationAttribute
     {
         private readonly string[] _types;
+        private IFileManager _fileManager = new BcFileManager();
 
         public FileTypesAttribute(string types)
         {
@@ -21,7 +22,7 @@ namespace BookClubs.Models.Annotations
             if (value != null)
             {
                 bool isValid = false;
-                var fileExtension = BcHelper.GetFileExtension((HttpPostedFileBase)value);
+                var fileExtension = _fileManager.GetFileExtension((HttpPostedFileBase)value);
 
                 foreach (var t in _types)
                 {

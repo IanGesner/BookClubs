@@ -11,7 +11,7 @@ namespace BookClubs.Models
         public string State { get; set; }
         public string GroupPictureUrl { get; set; }
         public string GroupInfo { get; set; }
-        public GroupPrivacy Privacy { get; set; }
+        public bool Public { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<GroupEvent> GroupEvents { get; set; }
@@ -22,6 +22,4 @@ namespace BookClubs.Models
         public string OrganizerId { get; set; }
         public virtual User Organizer { get; set; }
     }
-
-    public enum GroupPrivacy { Private, Public };
 }

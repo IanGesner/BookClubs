@@ -51,7 +51,7 @@ namespace BookClubs.Controllers
         {
             if (ModelState.IsValid)
             {
-                _dataRepository.UpdateProfile(model);
+                _dataRepository.UpdateUser(model);
                 return RedirectToAction("Index");
             }
             else

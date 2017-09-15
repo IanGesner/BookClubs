@@ -13,7 +13,7 @@ namespace BookClubs.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201709100014503_1"; }
+            get { return "201709150252488_1"; }
         }
         
         string IMigrationMetadata.Source

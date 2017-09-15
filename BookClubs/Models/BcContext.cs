@@ -232,7 +232,9 @@ namespace BookClubs.Models
                 .IsRequired();
 
             Property(u => u.Biography)
-                .HasMaxLength((int)MaxLength.Biography)
+                .HasMaxLength((int)MaxLength.Biography);
+
+            Property(u => u.Public)
                 .IsRequired();
         }
     }

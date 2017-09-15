@@ -16,6 +16,7 @@ namespace BookClubs.Models
         public string LastName { get; set; }
         public string Biography { get; set; }
         public string ProfilePictureUrl { get; set; }
+        public bool Public { get; set; }
 
         public virtual ICollection<User> Friends { get; set; }
 

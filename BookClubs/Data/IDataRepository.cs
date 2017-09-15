@@ -15,7 +15,7 @@ namespace BookClubs.Data
         User GetUserById(string id);
         User GetUserByUsername(string username);
         User GetUserByEmail(string email);
-        void UpdateProfile(User user);
+        void UpdateUser(User user);
         void RemoveUser(User user);
         #endregion
 
