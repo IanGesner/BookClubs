@@ -1,0 +1,107 @@
+﻿@model BookClubs.Models.ViewModels.ProfileDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<style>
+    .profile {
+        text-align: center;
+    }
+
+    .name {
+    }
+
+    .profilePreview {
+        width: 150px;
+        height: 150px;
+        border: 1px solid #ccc;
+        display: inline-block;
+        margin: 10px;
+        border-radius: 5px;
+    }
+
+        .profilePreview:hover {
+            background-color: #ccc;
+        }
+
+    .profilePreviewImg {
+        width: 100px;
+        height: 100px;
+        border: 1px solid #ccc;
+        margin: 10px auto 5px auto;
+        display: table;
+        border-radius: 5px;
+    }
+
+    #viewMembers {
+        display: none;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    #profilePicture {
+        width: 250px;
+        height: 250px;
+        border: 1px solid #ccc;
+        margin: 10px;
+        border-radius: 5px;
+    }
+</style>
+
+<div class="profile">
+    <hr />
+    @*<dl class="dl-horizontal">*@
+    <img src="@Model.ProfilePictureUrl" id="profilePicture" />
+
+    <br />
+
+    @Html.DisplayFor(model => model.FirstName, new { @class = "name" })
+    @Html.DisplayFor(model => model.LastName, new { @class = "name" })
+
+    <br />
+    @if (Model.PublicToViewer)
+    {
+        @Html.DisplayFor(model => model.Biography)
+    }
+    else
+    {
+        <p>@Model.FirstName's biography is private.</p>
+    }
+
+
+    <button id="viewMembersBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Friends</button>
+    <div id="viewMembers">
+
+        @if (Model.PublicToViewer)
+        {
+            foreach (var item in Model.Friends)
+            {
+                <div class="profilePreview">
+                    <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Profiles", new { id = item.Id })'" />
+                    <p>@item.FirstName @item.LastName</p>
+                </div>
+            }
+        }
+        else
+        {
+            <p>@Model.FirstName's friends are private.</p>
+        }
+
+
+    </div>
+
+</div>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#viewMembersBtn").click(function () {
+            $("#viewMembers").toggle();
+        });
+
+    });
+</script>
+

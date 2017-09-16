@@ -221,7 +221,7 @@
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ProfilesController.cs" />
     <Compile Include="Data\EfDataRepository.cs" />
     <Compile Include="Data\FileStorageStrategy.cs" />
     <Compile Include="Data\IDataRepository.cs" />
@@ -336,6 +336,7 @@
     <Content Include="Views\Groups\Index.cshtml" />
     <Content Include="Views\Groups\Details.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
+    <Content Include="Views\Profiles\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -343,7 +344,6 @@
     <Folder Include="App_Images\User_Display_Images\" />
     <Folder Include="App_Images\_Seed_Images\Group_Display_Images\" />
     <Folder Include="App_Images\_Seed_Images\User_Display_Images\" />
-    <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -17,6 +17,7 @@ using BookClubs.Helpers;
 using System.Web.Security;
 using System.Configuration;
 using System.Data.Entity.Validation;
+using System.Security.Principal;
 
 namespace BookClubs.Controllers
 {
@@ -27,6 +28,7 @@ namespace BookClubs.Controllers
         private ApplicationUserManager _userManager;
         private readonly IDataRepository _dataRepository;
         private readonly IFileManager _fileManager;
+        //private readonly IIdentity _identity;
         private readonly string _profilePicDir = ConfigurationManager.AppSettings["ProfilePicSaveDirectory"];
         private readonly string _defaultPic = ConfigurationManager.AppSettings["DefaultProfilePicLocation"];
 

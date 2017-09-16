@@ -218,7 +218,8 @@ namespace BookClubs.Models
         public UserConfiguration()
         {
             HasMany(u => u.Friends)
-                .WithMany().Map(u =>
+                .WithMany()
+                .Map(u =>
                 {
                     u.ToTable("Friends");
                 });

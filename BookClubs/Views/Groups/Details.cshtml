@@ -87,8 +87,8 @@
         @foreach(var item in Model.MemberProfiles)
         {
             <div class="profilePreview">
-                <img class ="profilePreviewImg" src="@item.ProfilePictureUrl" />
-                <p>@item.FirstName @item.LastName</p>
+                <img class ="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Profiles", new { id = item.Id })'"  />
+                <p>@item.FirstName @item.LastName</p>               
             </div>
         }
 

@@ -24,9 +24,22 @@ namespace BookClubs.Models.ViewModels
 
     public class ProfileListViewModel
     {
+        public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ProfilePictureUrl { get; set; }
         public string Biography { get; set; }
+    }
+
+    public class ProfileDetailsViewModel
+    {
+        public string Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Biography { get; set; }
+        public string ProfilePictureUrl { get; set; }
+        public virtual ICollection<GroupListItemViewModel> GroupsIn { get; set; }
+        public virtual ICollection<ProfileListViewModel> Friends { get; set; }
+        public bool PublicToViewer { get; set; }
     }
 }

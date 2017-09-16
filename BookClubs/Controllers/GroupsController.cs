@@ -43,6 +43,7 @@ namespace BookClubs.Controllers
             var group = _dataRepository.GetGroup(id);
             var memberProfiles = group.Users.Select(u => new ProfileListViewModel()
             {
+                Id = u.Id,
                 Biography = u.Biography,
                 FirstName = u.FirstName,
                 LastName = u.LastName,
