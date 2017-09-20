@@ -12,6 +12,18 @@
         text-align: center;
     }
 
+    #profilePicture {
+        width: 250px;
+        height: 250px;
+        border: 1px solid #ccc;
+        margin: 10px;
+        border-radius: 5px;
+    }
+
+    .profile {
+        text-align: center;
+    }
+
     .profilePreview {
         width: 150px;
         height: 150px;
@@ -21,9 +33,9 @@
         border-radius: 5px;
     }
 
-    .profilePreview:hover {
-        background-color: #ccc;
-    }
+        .profilePreview:hover {
+            background-color: #ccc;
+        }
 
     .profilePreviewImg {
         width: 100px;
@@ -35,60 +47,29 @@
     }
 </style>
 
-<div>
-    <h4>@Model.GroupName</h4>
-    <hr />
+<div class="profile">
+    <img src=@Model.ProfilePictureUrl id="profilePicture" />
+
+    <br />
+    @Html.DisplayFor(model => model.GroupName)
+    <br />
+    @Html.DisplayFor(model => model.GroupCity)
+    ,
+    @Html.DisplayFor(model => model.GroupState)
+    <br />
+    @Html.DisplayNameFor(model => model.CurrentBookTitle):
+    <br/>
+    @Html.DisplayFor(model => model.CurrentBookTitle)
+    <br />
 
 
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.GroupName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GroupName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GroupState)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GroupState)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GroupCity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GroupCity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentBookTitle)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CurrentBookTitle)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MemberCount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MemberCount)
-        </dd>
-    </dl>
-
-    <button id="viewMembersBtn" type="button" class="btn btn-basic btn-block btn-bc">View Members</button>
+    <button id="viewMembersBtn" type="button" class="btn btn-basic btn-block btn-bc">View Members (@Model.MemberCount)</button>
     <div id="viewMembers">
-        @foreach(var item in Model.MemberProfiles)
+        @foreach (var item in Model.MemberProfiles)
         {
             <div class="profilePreview">
-                <img class ="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Profiles", new { id = item.Id })'"  />
-                <p>@item.FirstName @item.LastName</p>               
+                <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Profiles", new { id = item.Id })'" />
+                <p>@item.FirstName @item.LastName</p>
             </div>
         }
 

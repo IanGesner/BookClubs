@@ -9,9 +9,6 @@
         text-align: center;
     }
 
-    .name {
-    }
-
     .profilePreview {
         width: 150px;
         height: 150px;
@@ -34,7 +31,7 @@
         border-radius: 5px;
     }
 
-    #viewMembers {
+    .toggle-div {
         display: none;
         border: 2px solid #ccc;
         border-radius: 5px;
@@ -52,7 +49,6 @@
 
 <div class="profile">
     <hr />
-    @*<dl class="dl-horizontal">*@
     <img src="@Model.ProfilePictureUrl" id="profilePicture" />
 
     <br />
@@ -61,7 +57,7 @@
     @Html.DisplayFor(model => model.LastName, new { @class = "name" })
 
     <br />
-    @if (Model.PublicToViewer)
+    @if (Model.Public || Model.Friend)
     {
         @Html.DisplayFor(model => model.Biography)
     }
@@ -71,10 +67,9 @@
     }
 
 
-    <button id="viewMembersBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Friends</button>
-    <div id="viewMembers">
-
-        @if (Model.PublicToViewer)
+    <button id="viewFriendsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Friends</button>
+    <div id="viewFriends" class="toggle-div">
+        @if (Model.Public || Model.Friend)
         {
             foreach (var item in Model.Friends)
             {
@@ -88,18 +83,31 @@
         {
             <p>@Model.FirstName's friends are private.</p>
         }
+    </div>
 
-
+    <button id="viewGroupsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Groups</button>
+    <div id="viewGroups" class="toggle-div">
+        @if (Model.Public || Model.Friend)
+            {
+            @Html.Partial("_GroupsListPartial", Model.GroupsIn)
+        }
+        else
+        {
+            <p>@Model.FirstName's groups are private.</p>
+        }
     </div>
 
 </div>
-
 <script src="~/Scripts/jquery-3.1.1.min.js"></script>
 <script>
     $(document).ready(function () {
 
-        $("#viewMembersBtn").click(function () {
-            $("#viewMembers").toggle();
+        $("#viewFriendsBtn").click(function () {
+            $("#viewFriends").toggle();
+        });
+
+        $("#viewGroupsBtn").click(function () {
+            $("#viewGroups").toggle();
         });
 
     });

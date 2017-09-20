@@ -27,6 +27,7 @@
     </NuGetPackageImportStamp>
     <ApplicationInsightsResourceId>/subscriptions/18068c62-a9b8-4ab0-a197-87a4e664fd1b/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/BookClubs</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/18068c62-a9b8-4ab0-a197-87a4e664fd1b/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/BookClubs</ApplicationInsightsAnnotationResourceId>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -337,6 +338,7 @@
     <Content Include="Views\Groups\Details.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Profiles\Details.cshtml" />
+    <Content Include="Views\Shared\_GroupsListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

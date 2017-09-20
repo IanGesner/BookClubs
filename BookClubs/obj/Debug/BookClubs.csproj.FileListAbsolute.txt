@@ -173,8 +173,9 @@ C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\EntityFramework.SqlServer.
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\Microsoft.AspNet.Identity.Core.xml
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\Microsoft.AspNet.Identity.Owin.xml
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csprojResolveAssemblyReference.cache
-C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.dll
-C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.pdb
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations._1.resources
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csproj.GenerateResource.Cache
+C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csproj.CoreCompileInputs.cache
+C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.dll
+C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.pdb
+C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csprojResolveAssemblyReference.cache

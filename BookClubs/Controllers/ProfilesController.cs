@@ -31,13 +31,15 @@ namespace BookClubs.Controllers
             ICollection<GroupListItemViewModel> groupsIn = new List<GroupListItemViewModel>();
             ICollection<ProfileListViewModel> friends = new List<ProfileListViewModel>();
             string biography = null;
-            bool publicToViewer = (user.Public || user.Friends.Contains(currentUser));
+            ////bool publicToViewer = (user.Public || user.Friends.Contains(currentUser));
+            bool isPublic = user.Public;
+            bool isFriend = user.Friends.Contains(currentUser);
 
-            if (publicToViewer)
+            if (isPublic || isFriend)
             {
                 groupsIn = user.GroupsIn
                                 .SelectMany(group => group.GroupEvents
-                                    .OrderBy(ge => ge.DateTime), (group, nextEvent) =>
+                                    .OrderBy(ge => ge.DateTime).Take(1), (group, nextEvent) =>
                                         new GroupListItemViewModel
                                         {
                                             Id = group.Id,
@@ -73,7 +75,8 @@ namespace BookClubs.Controllers
                 ProfilePictureUrl = user.ProfilePictureUrl,
                 GroupsIn = groupsIn,
                 Friends = friends,
-                PublicToViewer = publicToViewer
+                Public = isPublic,
+                Friend = isFriend
             };
 
             return View(viewModel);

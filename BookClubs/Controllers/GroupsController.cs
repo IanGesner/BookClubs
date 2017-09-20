@@ -60,7 +60,8 @@ namespace BookClubs.Controllers
                     GroupCity = group.City,
                     CurrentBookTitle = group.GroupEvents.FirstOrDefault().Book.Title,
                     MemberCount = group.Users.Count.ToString(),
-                    MemberProfiles = memberProfiles
+                    MemberProfiles = memberProfiles,
+                    ProfilePictureUrl = group.GroupPictureUrl
                 };
 
                 return View(viewModel);

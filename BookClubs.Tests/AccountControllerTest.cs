@@ -38,30 +38,31 @@ namespace BookClubs.Tests
         //    fileManager.Verify(x => x.DeleteFile()
         //}
 
-    //    [Test]
-    //    public void POST_EditProfile_Delete_Is_Not_Called_When_Profile_Pic_Is_Default()
-    //    {
-    //        //Arrange
-    //        var repository = new Mock<IDataRepository>();
-    //        var fileManager = new Mock<IFileManager>();
-    //        var controller = new AccountController(repository.Object, fileManager.Object);
-    //        var postedFile = new Mock<HttpPostedFileBase>();
-    //        var defaultPicturePath = ConfigurationManager.AppSettings["DefaultProfilePicLocation"];
+        //    [Test]
+        //    public void POST_EditProfile_Delete_Is_Not_Called_When_Profile_Pic_Is_Default()
+        //    {
+        //        //Arrange
+        //        var repository = new Mock<IDataRepository>();
+        //        var fileManager = new Mock<IFileManager>();
+        //        var controller = new AccountController(repository.Object, fileManager.Object);
+        //        var postedFile = new Mock<HttpPostedFileBase>();
+        //        var defaultPicturePath = ConfigurationManager.AppSettings["DefaultProfilePicLocation"];
 
-    //        postedFile.SetupAllProperties();
+        //        postedFile.SetupAllProperties();
 
 
-    //        EditProfileViewModel viewModel = new EditProfileViewModel
-    //        {
-    //            ProfilePicture = postedFile.Object,
-    //            ProfilePictureUrl =
-    //        }
+        //        EditProfileViewModel viewModel = new EditProfileViewModel
+        //        {
+        //            ProfilePicture = postedFile.Object,
+        //            ProfilePictureUrl =
+        //        }
 
-    //        //Act
+        //        //Act
 
-    //        //Assert
-    //        fileManager.Verify(x => x.DeleteFile()
-    //    }
-    //}
+        //        //Assert
+        //        fileManager.Verify(x => x.DeleteFile()
+        //    }
+        //}
+    }
 }
 

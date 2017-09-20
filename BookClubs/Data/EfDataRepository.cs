@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BookClubs.Data
 {
-    public class EfDataRepository : IDataRepository
+    public class EfDataRepository : IDataRepository, IDisposable
     {
         private readonly BcContext _dbContext;
         public EfDataRepository()
@@ -106,6 +106,11 @@ namespace BookClubs.Data
         public void Save()
         {
             _dbContext.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            _dbContext.Dispose();
         }
     }
 }

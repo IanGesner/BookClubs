@@ -38,6 +38,8 @@ namespace BookClubs.Models.ViewModels
         [Display(Name = "Members")]
         public string MemberCount { get; set; }
 
+        public string ProfilePictureUrl { get; set; }
+
         public List<ProfileListViewModel> MemberProfiles { get; set; }
     }
 }

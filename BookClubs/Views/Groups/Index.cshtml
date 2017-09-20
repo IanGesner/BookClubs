@@ -9,7 +9,9 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+
+@Html.Partial("_GroupsListPartial", Model)
+@*<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.GroupName)
@@ -49,7 +51,7 @@
                 @Html.DisplayFor(modelItem => item.MemberCount)
             </td>
         </tr>
-    }
+    }*@
 
 </table>
 
