@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BookClubs.Models;
 using BookClubs.Data;
+using BookClubs.Services;
 
 namespace BookClubs.Controllers
 {
@@ -16,11 +17,12 @@ namespace BookClubs.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private IDataRepository _dataRepository;
+        //private IDataRepository _dataRepository;
+        private readonly IUserService _userService;
 
-        public ManageController(IDataRepository repo)
+        public ManageController(IUserService userService)
         {
-            _dataRepository = repo;
+            _userService = userService;
         }
 
         public ApplicationSignInManager SignInManager
@@ -51,7 +53,9 @@ namespace BookClubs.Controllers
         {
             if (ModelState.IsValid)
             {
-                _dataRepository.UpdateUser(model);
+                _userService.UpdateUser(model);
+                _userService.SaveUser();
+                //_dataRepository.UpdateUser(model);
                 return RedirectToAction("Index");
             }
             else

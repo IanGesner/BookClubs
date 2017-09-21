@@ -1,9 +1,12 @@
-﻿using BookClubs.Data.Infrastructure;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
+using BookClubs.Data.Infrastructure;
 using BookClubs.Models;
 
 namespace BookClubs.Data.Repositories
 {
-    public class GroupRepository : RepositoryBase<Group>, IGroupRepository
+    public class GroupRepository : RepositoryBase<Group, int>, IGroupRepository
     {
         public GroupRepository(IDbFactory dbFactory)
             : base(dbFactory) { }
@@ -22,7 +25,7 @@ namespace BookClubs.Data.Repositories
         }
     }
 
-    public interface IGroupRepository : IRepository<Group>
+    public interface IGroupRepository : IRepository<Group, int>
     {
         //Group GetGroupByName(string categoryName);
     }

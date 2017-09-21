@@ -1,5 +1,6 @@
 ﻿using BookClubs.Data;
 using BookClubs.Models.ViewModels;
+using BookClubs.Services;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,11 @@ namespace BookClubs.Controllers
 {
     public class ProfilesController : Controller
     {
-        IDataRepository _dataRepository;
-        public ProfilesController(IDataRepository dataRepository)
+        private readonly IUserService _userService;
+
+        public ProfilesController(IUserService userService)
         {
-            _dataRepository = dataRepository;
+            _userService = userService;
         }
 
         // GET: Profiles
@@ -25,8 +27,10 @@ namespace BookClubs.Controllers
 
         public ActionResult Details(string id)
         {
-            var user = _dataRepository.GetUserById(id);
-            var currentUser = _dataRepository.GetUserById(User.Identity.GetUserId());
+            //var user = _dataRepository.GetUserById(id);
+            //var currentUser = _dataRepository.GetUserById(User.Identity.GetUserId());
+            var user = _userService.GetUser(id);
+            var currentUser = _userService.GetUser(User.Identity.GetUserId());
 
             ICollection<GroupListItemViewModel> groupsIn = new List<GroupListItemViewModel>();
             ICollection<ProfileListViewModel> friends = new List<ProfileListViewModel>();

@@ -1,6 +1,7 @@
 ﻿using BookClubs.Data;
 using BookClubs.Models;
 using BookClubs.Models.ViewModels;
+using BookClubs.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,18 +12,31 @@ namespace BookClubs.Controllers
 {
     public class GroupsController : Controller
     {
-        IDataRepository _dataRepository;
+        //IDataRepository _dataRepository;
+        IGroupService _groupService;
 
-        public GroupsController(IDataRepository dataRepository)
+        public GroupsController(IGroupService groupService)
         {
-            _dataRepository = dataRepository;
+            _groupService = groupService;
         }
 
         // GET: Groups
         public ActionResult Index()
         {
             // Name, City, State - Books - Members
-            var viewModel = _dataRepository.GetAllGroups().SelectMany(group => group.GroupEvents.OrderBy(ge => ge.DateTime)
+            //var viewModel = _dataRepository.GetAllGroups().SelectMany(group => group.GroupEvents.OrderBy(ge => ge.DateTime)
+            //                                                .Take(1), (group, nextEvent) =>
+            //                                                new GroupListItemViewModel
+            //                                                {
+            //                                                    Id = group.Id,
+            //                                                    GroupName = group.Name,
+            //                                                    GroupCity = group.City,
+            //                                                    GroupState = group.State,
+            //                                                    CurrentBookTitle = nextEvent.Book.Title,
+            //                                                    MemberCount = group.Users.Count().ToString()
+            //                                                });
+
+            var viewModel = _groupService.GetAll().SelectMany(group => group.GroupEvents.OrderBy(ge => ge.DateTime)
                                                             .Take(1), (group, nextEvent) =>
                                                             new GroupListItemViewModel
                                                             {
@@ -38,9 +52,11 @@ namespace BookClubs.Controllers
         }
 
         // GET: Groups/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            var group = _dataRepository.GetGroup(id);
+            //var group = _dataRepository.GetGroup(id);
+            var group = _groupService.GetGroup(id);
+
             var memberProfiles = group.Users.Select(u => new ProfileListViewModel()
             {
                 Id = u.Id,

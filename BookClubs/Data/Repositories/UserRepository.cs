@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace BookClubs.Data.Repositories
 {
-    public class UserRepository : RepositoryBase<User>, IUserRepository
+    public class UserRepository : RepositoryBase<User, string>, IUserRepository
     {
         public UserRepository(IDbFactory dbFactory)
             : base(dbFactory) { }
@@ -24,7 +24,7 @@ namespace BookClubs.Data.Repositories
         }
     }
 
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository : IRepository<User, string>
     {
         User GetUserByName(string firstName, string lastName);
     }

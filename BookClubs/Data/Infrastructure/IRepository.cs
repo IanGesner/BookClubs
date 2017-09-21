@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace BookClubs.Data.Infrastructure
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<TEntity, TKey> where TEntity : class
     {
         // Marks an entity as new
-        void Add(T entity);
+        void Add(TEntity entity);
         // Marks an entity as modified
-        void Update(T entity);
+        void Update(TEntity entity);
         // Marks an entity to be removed
-        void Delete(T entity);
-        void Delete(Expression<Func<T, bool>> where);
+        void Delete(TEntity entity);
+        void Delete(Expression<Func<TEntity, bool>> where);
         // Get an entity by int id
-        T GetById(int id);
+        TEntity GetById(TKey id);
         // Get an entity using delegate
-        T Get(Expression<Func<T, bool>> where);
+        TEntity Get(Expression<Func<TEntity, bool>> where);
         // Gets all entities of type T
-        IEnumerable<T> GetAll();
+        IQueryable<TEntity> GetAll();
         // Gets entities using delegate
-        IEnumerable<T> GetMany(Expression<Func<T, bool>> where);
+        IQueryable<TEntity> GetMany(Expression<Func<TEntity, bool>> where);
     }
 }

@@ -11,21 +11,22 @@ namespace BookClubs.Services
     public interface IUserService
     {
         //IEnumerable<User> GetUsers(string name = null);
-        User GetUser(int id);
+        User GetUser(string id);
         User GetUser(string firstName, string lastName);
         void CreateUser(User user);
         void SaveUser();
+        void UpdateUser(User user);
     }
 
     public class UserService : IUserService
     {
-        private readonly IUserRepository userRepository;
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
         {
-            this.userRepository = userRepository;
-            this.unitOfWork = unitOfWork;
+            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
         #region IUserService Members
@@ -38,26 +39,31 @@ namespace BookClubs.Services
         //        return userRepository.GetAll().Where(c => c.Name == name);
         //}
 
-        public User GetUser(int id)
+        public User GetUser(string id)
         {
-            var user = userRepository.GetById(id);
+            var user = _userRepository.GetById(id);
             return user;
         }
 
         public User GetUser(string firstName, string lastName)
         {
-            var user = userRepository.GetUserByName(firstName, lastName);
+            var user = _userRepository.GetUserByName(firstName, lastName);
             return user;
         }
 
         public void CreateUser(User user)
         {
-            userRepository.Add(user);
+            _userRepository.Add(user);
         }
 
         public void SaveUser()
         {
-            unitOfWork.Commit();
+            _unitOfWork.Commit();
+        }
+
+        public void UpdateUser(User user)
+        {
+            _userRepository.Update(user);
         }
 
         #endregion

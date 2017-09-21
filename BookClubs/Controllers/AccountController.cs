@@ -18,6 +18,7 @@ using System.Web.Security;
 using System.Configuration;
 using System.Data.Entity.Validation;
 using System.Security.Principal;
+using BookClubs.Services;
 
 namespace BookClubs.Controllers
 {
@@ -26,15 +27,14 @@ namespace BookClubs.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private readonly IDataRepository _dataRepository;
+        private readonly IUserService _userService;
         private readonly IFileManager _fileManager;
-        //private readonly IIdentity _identity;
-        private readonly string _profilePicDir = ConfigurationManager.AppSettings["ProfilePicSaveDirectory"];
-        private readonly string _defaultPic = ConfigurationManager.AppSettings["DefaultProfilePicLocation"];
+        private static readonly string _profilePicDir = ConfigurationManager.AppSettings["ProfilePicSaveDirectory"];
+        private static readonly string _defaultPic = ConfigurationManager.AppSettings["DefaultProfilePicLocation"];
 
-        public AccountController(IDataRepository dataRepository, IFileManager fileManager)
+        public AccountController(IUserService userService, IFileManager fileManager)
         {
-            _dataRepository = dataRepository;
+            _userService = userService;
             _fileManager = fileManager;
         }
 
@@ -42,7 +42,8 @@ namespace BookClubs.Controllers
         public ActionResult EditProfile()
         {
             var userId = User.Identity.GetUserId();
-            var user = _dataRepository.GetUserById(userId);
+            //var user = _dataRepository.GetUserById(userId);
+            var user = _userService.GetUser(userId);
 
             EditProfileViewModel model = new EditProfileViewModel()
             {
@@ -61,7 +62,8 @@ namespace BookClubs.Controllers
             {
                 // Retrieve current user
                 var userId = User.Identity.GetUserId();
-                var user = _dataRepository.GetUserById(userId);
+                //var user = _dataRepository.GetUserById(userId);
+                var user = _userService.GetUser(userId);
 
                 //If it isn't the single-instance default picture, delete the current profile
                 // picture from the Profile_Pictures folder
@@ -85,7 +87,8 @@ namespace BookClubs.Controllers
                 user.Public = model.Public;
 
                 // Commit changes
-                _dataRepository.UpdateUser(user);
+                //_dataRepository.UpdateUser(user);
+                _userService.SaveUser();
 
                 return RedirectToAction("Index", "Groups");
             }
@@ -93,24 +96,24 @@ namespace BookClubs.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public JsonResult IsUniqueUsername(string username)
-        {
-            var user = _dataRepository.GetUserByUsername(username);
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public JsonResult IsUniqueUsername(string username)
+        //{
+        //    var user = _dataRepository.GetUserByUsername(username);
 
-            return Json(user == null);
-        }
+        //    return Json(user == null);
+        //}
 
 
-        [HttpPost]
-        [AllowAnonymous]
-        public JsonResult IsUniqueEmail(string email)
-        {
-            var user = _dataRepository.GetUserByEmail(email);
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public JsonResult IsUniqueEmail(string email)
+        //{
+        //    var user = _dataRepository.GetUserByEmail(email);
 
-            return Json(user == null);
-        }
+        //    return Json(user == null);
+        //}
 
         public ApplicationSignInManager SignInManager
         {
