@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookClubs.Data
+namespace BookClubs.Data.Infrastructure
 {
-    //interface IFileStorageTemplate
-    //{
-    //    void AddOrUpdateFile()
-    //}
+    public interface IUnitOfWork
+    {
+        void Commit();
+    }
 }

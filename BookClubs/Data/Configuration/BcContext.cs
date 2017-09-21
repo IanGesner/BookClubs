@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
+﻿using BookClubs.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 using System.Data.Entity.ModelConfiguration;
-using System.Data.Entity.ModelConfiguration.Conventions;
 
-namespace BookClubs.Models
+namespace BookClubs.Data.Configuration
 {
     public class BcContext : IdentityDbContext<User>
     {
@@ -16,7 +12,10 @@ namespace BookClubs.Models
         public DbSet<GroupEvent> GroupEvents { get; set; }
         public DbSet<Book> Books { get; set; }
 
-
+        public virtual void Commit()
+        {
+            base.SaveChanges();
+        }
         public BcContext() : base("DefaultConnection", throwIfV1Schema: false) { }
         public static BcContext Create()
         {

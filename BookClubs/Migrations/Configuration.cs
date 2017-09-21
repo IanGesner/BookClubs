@@ -1,6 +1,6 @@
 namespace BookClubs.Migrations
 {
-    using BookClubs.Data;
+    using BookClubs.Data.Configuration;
     using BookClubs.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
@@ -12,191 +12,31 @@ namespace BookClubs.Migrations
     using System.Diagnostics;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<BookClubs.Models.BcContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<BcContext>
     {
         private const int NUM_EVENTS_PER_GROUP = 10;
         private const int NUM_USERS_PER_GROUP = 5;
         private const int MAX_NUM_FRIENDS_PER_USER = 4;
-
-        EfDataRepository _repo = new EfDataRepository();
-        BcContext _context;
 
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        //RULES
-        protected override void Seed(BookClubs.Models.BcContext context)
+        protected override void Seed(BcContext context)
         {
-            this._context = context;
-            //if (System.Diagnostics.Debugger.IsAttached == false)
-            //    System.Diagnostics.Debugger.Launch();
-
-
-            #region IGNORE
-            //List<GroupEvent> groupOneEvents = new List<GroupEvent>()
-            //{
-            //    new GroupEvent
-            //    {
-            //        Address = "1234 A Street",
-            //        City = "Salem",
-            //        State = "OR",
-            //        ZipCode = "97302",
-            //        DateTime = new DateTime(2017, 9, 30, 18, 0, 0),
-            //        Book = books[4]
-            //    },
-            //    new GroupEvent
-            //    {
-            //        Address = "1234 A Street",
-            //        City = "Salem",
-            //        State = "OR",
-            //        ZipCode = "97302",
-            //        DateTime = new DateTime(2017, 10, 7, 18, 0, 0),
-            //        Book = books[4]
-            //    },
-            //    new GroupEvent
-            //    {
-            //        Address = "1234 A Street",
-            //        City = "Salem",
-            //        State = "OR",
-            //        ZipCode = "97302",
-            //        DateTime = new DateTime(2017, 10, 14, 18, 0, 0),
-            //        Book = books[4]
-            //    },
-            //    new GroupEvent
-            //    {
-            //        Address = "1234 A Street",
-            //        City = "Salem",
-            //        State = "OR",
-            //        ZipCode = "97302",
-            //        DateTime = new DateTime(2017, 10, 21, 18, 0, 0),
-            //        Book = books[1]
-            //    }
-            //};
-            //List<GroupEvent> groupTwoEvents = new List<GroupEvent>()
-            //{
-            //    new GroupEvent
-            //    {
-            //        Address = "1111 B Street",
-            //        City = "Portland",
-            //        State = "OR",
-            //        ZipCode = "97211",
-            //        DateTime = new DateTime(2017, 9, 30, 18, 0, 0),
-            //        Book = books[2]
-            //    },
-            //    new GroupEvent
-            //    {
-            //        Address = "1111 B Street",
-            //        City = "Portland",
-            //        State = "OR",
-            //        ZipCode = "97211",
-            //        DateTime = new DateTime(2017, 10, 2, 18, 0, 0),
-            //        Book = books[2]
-            //    },
-            //    new GroupEvent
-            //    {
-            //        Address = "2222 C Street",
-            //        City = "Portland",
-            //        State = "OR",
-            //        ZipCode = "97280",
-            //        DateTime = new DateTime(2017, 10, 4, 18, 0, 0),
-            //        Book = books[2]
-            //    },
-            //    new GroupEvent
-            //    {
-            //        Address = "1111 B Street",
-            //        City = "Portland",
-            //        State = "OR",
-            //        ZipCode = "97211",
-            //        DateTime = new DateTime(2017, 10, 6, 18, 0, 0),
-            //        Book = books[2]
-            //    }
-            //};
-            //List<GroupEvent> groupThreeEvents = new List<GroupEvent>()
-            //{
-            //    new GroupEvent
-            //    {
-            //        Address = "1111 B Street",
-            //        City = "Portland",
-            //        State = "OR",
-            //        ZipCode = "97211",
-            //        DateTime = new DateTime(2017, 9, 30, 18, 0, 0),
-            //        Book = books[0]
-            //    },
-            //    new GroupEvent
-            //    {
-            //        Address = "1111 B Street",
-            //        City = "Portland",
-            //        State = "OR",
-            //        ZipCode = "97211",
-            //        DateTime = new DateTime(2017, 10, 2, 18, 0, 0),
-            //        Book = books[3]
-            //    },
-            //    new GroupEvent
-            //    {
-            //        Address = "2222 C Street",
-            //        City = "Portland",
-            //        State = "OR",
-            //        ZipCode = "97280",
-            //        DateTime = new DateTime(2017, 10, 4, 18, 0, 0),
-            //        Book = books[0]
-            //    },
-            //    new GroupEvent
-            //    {
-            //        Address = "1111 B Street",
-            //        City = "Portland",
-            //        State = "OR",
-            //        ZipCode = "97211",
-            //        DateTime = new DateTime(2017, 10, 6, 18, 0, 0),
-            //        Book = books[3]
-            //    },
-            //    new GroupEvent
-            //    {
-            //        Address = "1111 B Street",
-            //        City = "Portland",
-            //        State = "OR",
-            //        ZipCode = "97211",
-            //        DateTime = new DateTime(2017, 10, 8, 18, 0, 0),
-            //        Book = books[0]
-            //    },
-            //    new GroupEvent
-            //    {
-            //        Address = "1111 B Street",
-            //        City = "Portland",
-            //        State = "OR",
-            //        ZipCode = "97211",
-            //        DateTime = new DateTime(2017, 10, 15, 18, 0, 0),
-            //        Book = books[3]
-            //    },
-            //    new GroupEvent
-            //    {
-            //        Address = "2222 C Street",
-            //        City = "Portland",
-            //        State = "OR",
-            //        ZipCode = "97280",
-            //        DateTime = new DateTime(2017, 10, 17, 18, 0, 0),
-            //        Book = books[0]
-            //    },
-            //    new GroupEvent
-            //    {
-            //        Address = "1111 B Street",
-            //        City = "Portland",
-            //        State = "OR",
-            //        ZipCode = "97211",
-            //        DateTime = new DateTime(2017, 10, 28, 18, 0, 0),
-            //        Book = books[3]
-            //    }
-            //};
-            #endregion
+            if (Debugger.IsAttached == false)
+                Debugger.Launch();
 
             try
             {
+                var userManager = new UserManager<User>(new UserStore<User>(context));
+
                 //Insert users
                 var users = InitializeUsers();
                 foreach (var user in users)
                 {
-                    _repo.AddUser(user, "P@ssword123");
+                    userManager.Create(user, "P@ssword123");
                 }
 
                 //Insert groups
@@ -204,33 +44,32 @@ namespace BookClubs.Migrations
                 SetOrganizers(users, groups);
                 foreach (var group in groups)
                 {
-                    _repo.AddGroup(group);
+                    context.Groups.Add(group);
                 }
 
                 //Add some users to the groups
                 SetMembers(users, groups);
-                _repo.Save();
+                context.Commit();
 
                 //Create some group events with a book to read
                 var books = InitializeBooks();
                 var events = InitializeGroupEvents(groups, books);
                 foreach (var groupEvent in events)
                 {
-                    _repo.AddGroupEvent(groupEvent);
+                    groups[groupEvent.GroupId-1].GroupEvents.Add(groupEvent);
+
                 }
 
                 //Give people a couple friends
                 SetFriends(users);
-                _repo.Save();
 
                 SetFriendRequests(users);
-                _repo.Save();
 
                 SetGroupInvites(groups, users);
-                _repo.Save();
 
                 SetGroupRequests(groups, users);
-                _repo.Save();
+
+                context.Commit();
             }
             catch (DbEntityValidationException e)
             {
@@ -611,7 +450,8 @@ namespace BookClubs.Migrations
                     GroupPictureUrl = "/App_Images/_Seed_Images/Group_Display_Images/1.jpg",
                     GroupInvitations = new List<GroupInvitation>(),
                     GroupRequests = new List<GroupRequest>(),
-                    GroupWallPosts = new List<GroupWallPost>()
+                    GroupWallPosts = new List<GroupWallPost>(),
+                    GroupEvents = new List<GroupEvent>()
                 },
                 new Group
                 {
@@ -623,7 +463,8 @@ namespace BookClubs.Migrations
                     GroupPictureUrl = "/App_Images/blank_group_profile_picture.jpg",
                     GroupInvitations = new List<GroupInvitation>(),
                     GroupRequests = new List<GroupRequest>(),
-                    GroupWallPosts = new List<GroupWallPost>()
+                    GroupWallPosts = new List<GroupWallPost>(),
+                    GroupEvents = new List<GroupEvent>()
                 },
                 new Group
                 {
@@ -635,7 +476,8 @@ namespace BookClubs.Migrations
                     GroupPictureUrl = "/App_Images/_Seed_Images/Group_Display_Images/3.jpg",
                     GroupInvitations = new List<GroupInvitation>(),
                     GroupRequests = new List<GroupRequest>(),
-                    GroupWallPosts = new List<GroupWallPost>()
+                    GroupWallPosts = new List<GroupWallPost>(),
+                    GroupEvents = new List<GroupEvent>()
                 }
             };
 
