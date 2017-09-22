@@ -1,0 +1,30 @@
+﻿@model BookClubs.Models.ViewModels.ProfileDetailsViewModel
+
+<div>
+    <div>
+
+        @Html.DisplayFor(model => model.Biography)
+
+        <button id="viewFriendsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Friends</button>
+        <div id="viewFriends" class="toggle-div">
+
+            @foreach (var item in Model.Friends)
+            {
+                <div class="profilePreview">
+                    <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Profiles", new { id = item.Id })'" />
+                    <p>@item.FirstName @item.LastName</p>
+                </div>
+            }
+
+        </div>
+
+        <button id="viewGroupsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Groups</button>
+        <div id="viewGroups" class="toggle-div">
+
+            @Html.Partial("_GroupsListPartial", Model.GroupsIn)
+
+        </div>
+    </div>
+
+</div>
+
