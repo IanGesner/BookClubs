@@ -16,6 +16,9 @@ namespace BookClubs.Services
         void CreateUser(User user);
         void SaveUser();
         void UpdateUser(User user);
+        bool AreFriends(User userOne, User userTwo);
+        bool HasPendingRequest(User userOne, User userTwo);
+        void AddFriendRequest(User sender, User recipient);
     }
 
     public class UserService : IUserService
@@ -64,6 +67,26 @@ namespace BookClubs.Services
         public void UpdateUser(User user)
         {
             _userRepository.Update(user);
+        }
+
+        public bool AreFriends(User userOne, User userTwo)
+        {
+            return userOne.Friends.Contains(userTwo) || userTwo.Friends.Contains(userOne);
+        }
+
+        public bool HasPendingRequest(User userOne, User userTwo)
+        {
+            if (userOne.SentFriendRequests.Where(r => r.RecipientId == userTwo.Id).FirstOrDefault() != null ||
+                    userTwo.SentFriendRequests.Where(r => r.RecipientId == userOne.Id).FirstOrDefault() != null)
+                return true;
+            else
+                return false;
+        }
+
+        public void AddFriendRequest(User sender, User recipient)
+        {
+            //if (sender != null && recipient != null)
+            //    sender.SentFriendRequests.Add(new FriendRequest)
         }
 
         #endregion

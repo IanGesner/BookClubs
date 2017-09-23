@@ -40,7 +40,14 @@ namespace BookClubs.Models.ViewModels
         public string ProfilePictureUrl { get; set; }
         public virtual ICollection<GroupListItemViewModel> GroupsIn { get; set; }
         public virtual ICollection<ProfileListViewModel> Friends { get; set; }
-        public bool Public { get; set; }
-        public bool Friend { get; set; }
+        public bool IsPublicProfile { get; set; }
+        public bool IsFriend { get; set; }
+        public bool IsRequestPending { get; set; }
+    }
+
+    public class CreateFriendRequestViewModel
+    {
+        public int Id { get; set; }
+        public string Body { get; set; }
     }
 }

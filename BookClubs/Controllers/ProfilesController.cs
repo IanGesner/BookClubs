@@ -25,19 +25,26 @@ namespace BookClubs.Controllers
             return View();
         }
 
+        public ActionResult SendRequest(string id)
+        {
+            //var user = _userService.GetUser(id);
+            //var currentUser = _userService.GetUser(User.Identity.GetUserId());
+
+            //_userService.AddFriendRequest(currentUser, user);
+            return View();
+        }
+
         public ActionResult Details(string id)
         {
-            //var user = _dataRepository.GetUserById(id);
-            //var currentUser = _dataRepository.GetUserById(User.Identity.GetUserId());
-            var user = _userService.GetUser(id);
-            var currentUser = _userService.GetUser(User.Identity.GetUserId());
-
             ICollection<GroupListItemViewModel> groupsIn = new List<GroupListItemViewModel>();
             ICollection<ProfileListViewModel> friends = new List<ProfileListViewModel>();
             string biography = null;
-            ////bool publicToViewer = (user.Public || user.Friends.Contains(currentUser));
+
+            var user = _userService.GetUser(id);
+            var currentUser = _userService.GetUser(User.Identity.GetUserId());
+            bool isFriend = _userService.AreFriends(user, currentUser);
+            bool isRequested = _userService.HasPendingRequest(user, currentUser);
             bool isPublic = user.Public;
-            bool isFriend = user.Friends.Contains(currentUser);
 
             if (isPublic || isFriend)
             {
@@ -79,8 +86,9 @@ namespace BookClubs.Controllers
                 ProfilePictureUrl = user.ProfilePictureUrl,
                 GroupsIn = groupsIn,
                 Friends = friends,
-                Public = isPublic,
-                Friend = isFriend
+                IsPublicProfile = isPublic,
+                IsFriend = isFriend,
+                IsRequestPending = isRequested
             };
 
             return View(viewModel);

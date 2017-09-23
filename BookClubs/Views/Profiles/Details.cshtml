@@ -9,6 +9,13 @@
         text-align: center;
     }
 
+    .profile-item {
+        text-align: center;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        display:block;
+    }
+
     .profilePreview {
         width: 150px;
         height: 150px;
@@ -57,45 +64,48 @@
     @Html.DisplayFor(model => model.LastName, new { @class = "name" })
 
     <br />
-    @if (Model.Public || Model.Friend)
+    @if (Model.IsPublicProfile || Model.IsFriend)
     {
-        @Html.DisplayFor(model => model.Biography)
+        //Public profile
+        <div>
+            @if (!Model.IsFriend)
+            {
+                <button class="btn-primary" onclick="location.href='@Url.Action("SendRequest", "Profiles", new { id = Model.Id })'">Add Friend</button>
+                <br />
+                <br />
+            }
+            else if (Model.IsRequestPending)
+            {
+                <p>Friend request sent.</p>
+            }
+            else {
+                <p>Friends</p>
+            }
+
+            @Html.DisplayFor(model => model.Biography)
+
+            <button id="viewFriendsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Friends</button>
+            <div id="viewFriends" class="toggle-div">
+                @foreach (var item in Model.Friends)
+                {
+                    <div class="profilePreview">
+                        <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Profiles", new { id = item.Id })'" />
+                        <p>@item.FirstName @item.LastName</p>
+                    </div>
+                }
+            </div>
+
+            <button id="viewGroupsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Groups</button>
+            <div id="viewGroups" class="toggle-div">
+                @Html.Partial("_GroupsListPartial", Model.GroupsIn)
+            </div>
+        </div>
     }
     else
     {
-        <p>@Model.FirstName's biography is private.</p>
-    }
-
-
-    <button id="viewFriendsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Friends</button>
-    <div id="viewFriends" class="toggle-div">
-        @if (Model.Public || Model.Friend)
-        {
-            foreach (var item in Model.Friends)
-            {
-                <div class="profilePreview">
-                    <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Profiles", new { id = item.Id })'" />
-                    <p>@item.FirstName @item.LastName</p>
-                </div>
-            }
-        }
-        else
-        {
-            <p>@Model.FirstName's friends are private.</p>
-        }
-    </div>
-
-    <button id="viewGroupsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Groups</button>
-    <div id="viewGroups" class="toggle-div">
-        @if (Model.Public || Model.Friend)
-            {
-            @Html.Partial("_GroupsListPartial", Model.GroupsIn)
-        }
-        else
-        {
-            <p>@Model.FirstName's groups are private.</p>
-        }
-    </div>
+        //Private notice
+        <p>This user's profile is private.</p>
+    }  
 
 </div>
 <script src="~/Scripts/jquery-3.1.1.min.js"></script>

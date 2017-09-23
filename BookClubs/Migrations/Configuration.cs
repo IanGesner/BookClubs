@@ -229,7 +229,7 @@ namespace BookClubs.Migrations
                     SentFriendRequests = new List<FriendRequest>(),
                     SentGroupInvitations = new List<GroupInvitation>(),
                     SentGroupRequests = new List<GroupRequest>(),
-                    Public = true
+                    Public = false
                 },
                 new User
                 {
