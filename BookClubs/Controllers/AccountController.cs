@@ -88,7 +88,7 @@ namespace BookClubs.Controllers
 
                 // Commit changes
                 //_dataRepository.UpdateUser(user);
-                _userService.SaveUser();
+                _userService.Commit();
 
                 return RedirectToAction("Index", "Groups");
             }

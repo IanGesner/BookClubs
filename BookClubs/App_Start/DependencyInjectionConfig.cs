@@ -37,6 +37,9 @@ namespace BookClubs.App_Start
 
             container.Register<IGroupRepository, GroupRepository>(Lifestyle.Scoped);
             container.Register<IGroupService, GroupService>(Lifestyle.Scoped);
+
+            container.Register<IFriendRequestRepository, FriendRequestRepository>(Lifestyle.Scoped);
+            container.Register<IFriendRequestService, FriendRequestService>(Lifestyle.Scoped);
             //container.Register<IGroupService, GroupService>(Lifestyle.Scoped);
             //container.Register<IBookService, BookService>(Lifestyle.Scoped);
             //container.Register<IBookProxy, BookProxy>(Lifestyle.Scoped);

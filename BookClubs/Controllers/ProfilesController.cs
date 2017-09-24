@@ -13,10 +13,12 @@ namespace BookClubs.Controllers
     public class ProfilesController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IFriendRequestService _frService;
 
-        public ProfilesController(IUserService userService)
+        public ProfilesController(IUserService userService, IFriendRequestService frService)
         {
             _userService = userService;
+            _frService = frService;
         }
 
         // GET: Profiles
@@ -25,13 +27,29 @@ namespace BookClubs.Controllers
             return View();
         }
 
-        public ActionResult SendRequest(string id)
+        [Authorize]
+        public EmptyResult SendRequest(string id, string message)
         {
-            //var user = _userService.GetUser(id);
-            //var currentUser = _userService.GetUser(User.Identity.GetUserId());
+            var user = _userService.GetUser(id);
+            var currentUser = _userService.GetUser(User.Identity.GetUserId());
 
-            //_userService.AddFriendRequest(currentUser, user);
-            return View();
+            _userService.AddFriendRequest(currentUser, user, message);
+
+            _userService.Commit();
+
+            return new EmptyResult();
+        }
+
+        [Authorize]
+        public ActionResult AcceptRequest(string id)
+        {
+            var user = _userService.GetUser(id);
+            var currentUser = _userService.GetUser(User.Identity.GetUserId());
+
+            _userService.AcceptRequest(user, currentUser);
+            _userService.Commit();
+
+            return RedirectToAction("Details", new { @id = id });
         }
 
         public ActionResult Details(string id)
@@ -43,7 +61,8 @@ namespace BookClubs.Controllers
             var user = _userService.GetUser(id);
             var currentUser = _userService.GetUser(User.Identity.GetUserId());
             bool isFriend = _userService.AreFriends(user, currentUser);
-            bool isRequested = _userService.HasPendingRequest(user, currentUser);
+            bool isRequestSent = _userService.HasReceivedRequest(currentUser, user);
+            bool isRequestReceived = _userService.HasReceivedRequest(user, currentUser);
             bool isPublic = user.Public;
 
             if (isPublic || isFriend)
@@ -88,7 +107,8 @@ namespace BookClubs.Controllers
                 Friends = friends,
                 IsPublicProfile = isPublic,
                 IsFriend = isFriend,
-                IsRequestPending = isRequested
+                IsRequestSent = isRequestSent,
+                IsRequestReceived = isRequestReceived
             };
 
             return View(viewModel);

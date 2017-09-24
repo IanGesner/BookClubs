@@ -4,57 +4,10 @@
     ViewBag.Title = "Details";
 }
 
-<style>
-    .profile {
-        text-align: center;
-    }
-
-    .profile-item {
-        text-align: center;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        display:block;
-    }
-
-    .profilePreview {
-        width: 150px;
-        height: 150px;
-        border: 1px solid #ccc;
-        display: inline-block;
-        margin: 10px;
-        border-radius: 5px;
-    }
-
-        .profilePreview:hover {
-            background-color: #ccc;
-        }
-
-    .profilePreviewImg {
-        width: 100px;
-        height: 100px;
-        border: 1px solid #ccc;
-        margin: 10px auto 5px auto;
-        display: table;
-        border-radius: 5px;
-    }
-
-    .toggle-div {
-        display: none;
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        text-align: center;
-    }
-
-    #profilePicture {
-        width: 250px;
-        height: 250px;
-        border: 1px solid #ccc;
-        margin: 10px;
-        border-radius: 5px;
-    }
-</style>
+@Styles.Render("~/Content/BcStyles/profile-details.css");
 
 <div class="profile">
+    @Html.HiddenFor(model => model.Id, new { @id = "userId" })
     <hr />
     <img src="@Model.ProfilePictureUrl" id="profilePicture" />
 
@@ -64,62 +17,72 @@
     @Html.DisplayFor(model => model.LastName, new { @class = "name" })
 
     <br />
-    @if (Model.IsPublicProfile || Model.IsFriend)
+    @if (Model.IsPublicProfile || Model.IsFriend || Model.IsRequestReceived)
     {
         //Public profile
         <div>
-            @if (!Model.IsFriend)
+            @if (!Model.IsFriend && !Model.IsRequestSent && !Model.IsRequestReceived)
             {
-                <button class="btn-primary" onclick="location.href='@Url.Action("SendRequest", "Profiles", new { id = Model.Id })'">Add Friend</button>
-                <br />
-                <br />
+                <button id="addFriend" class="btn-primary">Add Friend</button>
             }
-            else if (Model.IsRequestPending)
+            else if (Model.IsRequestSent)
             {
                 <p>Friend request sent.</p>
             }
-            else {
+            else if (Model.IsRequestReceived)
+            {
+                <button id="acceptFriend" class="btn-primary" onclick="location.href='@Url.Action("AcceptRequest", "Profiles", new { @id = Model.Id })'">Accept @Model.FirstName's Request</button>
+                //onclick = "@Url.Action("AcceptRequest", "Profiles", new { @id = Model.Id })"
+            }
+            else if (Model.IsFriend)
+            {
                 <p>Friends</p>
             }
 
+            <br />
+            <br />
+
             @Html.DisplayFor(model => model.Biography)
 
-            <button id="viewFriendsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Friends</button>
-            <div id="viewFriends" class="toggle-div">
-                @foreach (var item in Model.Friends)
-                {
-                    <div class="profilePreview">
-                        <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Profiles", new { id = item.Id })'" />
-                        <p>@item.FirstName @item.LastName</p>
-                    </div>
-                }
-            </div>
+            @if (Model.IsPublicProfile || Model.IsFriend)
+            {
+                <button id="viewFriendsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Friends</button>
+                <div id="viewFriends" class="toggle-div">
+                    @foreach (var item in Model.Friends)
+                    {
+                        <div class="profilePreview">
+                            <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Profiles", new { id = item.Id })'" />
+                            <p>@item.FirstName @item.LastName</p>
+                        </div>
+                    }
+                </div>
 
-            <button id="viewGroupsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Groups</button>
-            <div id="viewGroups" class="toggle-div">
-                @Html.Partial("_GroupsListPartial", Model.GroupsIn)
-            </div>
+                <button id="viewGroupsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Groups</button>
+                <div id="viewGroups" class="toggle-div">
+                    @Html.Partial("_GroupsListPartial", Model.GroupsIn)
+                </div>
+            }
+
         </div>
     }
     else
     {
         //Private notice
         <p>This user's profile is private.</p>
-    }  
+    }
 
 </div>
-<script src="~/Scripts/jquery-3.1.1.min.js"></script>
-<script>
-    $(document).ready(function () {
 
-        $("#viewFriendsBtn").click(function () {
-            $("#viewFriends").toggle();
-        });
+@Scripts.Render("~/Scripts/BcScripts/profile-details.js");
 
-        $("#viewGroupsBtn").click(function () {
-            $("#viewGroups").toggle();
-        });
+<div id="dialog-form" title="Send Friend Request">
 
-    });
-</script>
+    <form class="form-horizontal"></form>
+    <fieldset>
+        <label for="message" class="control-label">Message</label>
+        <textarea class="form-control" rows="5" id="message" placeholder="You may add a message here."></textarea>
+        <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+
+</div>
 

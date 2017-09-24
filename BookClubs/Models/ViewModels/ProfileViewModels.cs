@@ -42,7 +42,8 @@ namespace BookClubs.Models.ViewModels
         public virtual ICollection<ProfileListViewModel> Friends { get; set; }
         public bool IsPublicProfile { get; set; }
         public bool IsFriend { get; set; }
-        public bool IsRequestPending { get; set; }
+        public bool IsRequestSent { get; set; }
+        public bool IsRequestReceived { get; set; }
     }
 
     public class CreateFriendRequestViewModel

@@ -54,7 +54,7 @@ namespace BookClubs.Controllers
             if (ModelState.IsValid)
             {
                 _userService.UpdateUser(model);
-                _userService.SaveUser();
+                _userService.Commit();
                 //_dataRepository.UpdateUser(model);
                 return RedirectToAction("Index");
             }

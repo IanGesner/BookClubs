@@ -11,6 +11,7 @@ namespace BookClubs.Data.Configuration
         public DbSet<Group> Groups { get; set; }
         public DbSet<GroupEvent> GroupEvents { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<FriendRequest> FriendRequests { get; set; }
 
         public virtual void Commit()
         {

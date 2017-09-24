@@ -14,21 +14,26 @@ namespace BookClubs.Services
         User GetUser(string id);
         User GetUser(string firstName, string lastName);
         void CreateUser(User user);
-        void SaveUser();
+        void Commit();
         void UpdateUser(User user);
         bool AreFriends(User userOne, User userTwo);
-        bool HasPendingRequest(User userOne, User userTwo);
-        void AddFriendRequest(User sender, User recipient);
+        bool HasReceivedRequest(User sender, User recipient);
+        void AddFriendRequest(User sender, User recipient, string message);
+        void AcceptRequest(User sender, User recipient);
     }
 
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IFriendRequestRepository _frRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
+        public UserService(IUserRepository userRepository, 
+                            IFriendRequestRepository frRepository, 
+                            IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
+            _frRepository = frRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -59,7 +64,7 @@ namespace BookClubs.Services
             _userRepository.Add(user);
         }
 
-        public void SaveUser()
+        public void Commit()
         {
             _unitOfWork.Commit();
         }
@@ -71,22 +76,53 @@ namespace BookClubs.Services
 
         public bool AreFriends(User userOne, User userTwo)
         {
-            return userOne.Friends.Contains(userTwo) || userTwo.Friends.Contains(userOne);
-        }
-
-        public bool HasPendingRequest(User userOne, User userTwo)
-        {
-            if (userOne.SentFriendRequests.Where(r => r.RecipientId == userTwo.Id).FirstOrDefault() != null ||
-                    userTwo.SentFriendRequests.Where(r => r.RecipientId == userOne.Id).FirstOrDefault() != null)
-                return true;
+            if (userOne != null && userTwo != null)
+                return userOne.Friends.Contains(userTwo) || userTwo.Friends.Contains(userOne);
             else
                 return false;
         }
 
-        public void AddFriendRequest(User sender, User recipient)
+        public bool HasReceivedRequest(User sender, User recipient)
         {
-            //if (sender != null && recipient != null)
-            //    sender.SentFriendRequests.Add(new FriendRequest)
+            if (sender != null && recipient != null)
+            {
+                if (sender.SentFriendRequests.Where(r => r.RecipientId == recipient.Id).FirstOrDefault() != null)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public void AddFriendRequest(User sender, User recipient, string message)
+        {
+            if (sender != null && recipient != null)
+            {
+                //Build & add friend request
+                recipient.PendingFriendRequests.Add(new FriendRequest()
+                {
+                    Sender = sender,
+                    Body = message,
+                    TimeStamp = DateTime.Now
+                });
+
+                //Update the recipient
+                _userRepository.Update(recipient);
+            }
+
+        }
+
+        public void AcceptRequest(User sender, User recipient)
+        {
+            if (sender != null && recipient != null)
+            {
+                //Delete the friend request
+                _frRepository.Delete(sender.SentFriendRequests
+                    .Where(r => r.RecipientId == recipient.Id)
+                    .FirstOrDefault());
+
+                //Establish friendship
+                sender.Friends.Add(recipient);
+            }
         }
 
         #endregion

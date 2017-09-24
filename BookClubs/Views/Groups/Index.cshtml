@@ -1,58 +1,14 @@
 ﻿@model IEnumerable<BookClubs.Models.ViewModels.GroupListItemViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Groups";
 }
 
-<h2>Index</h2>
+<h2>Groups</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 
 @Html.Partial("_GroupsListPartial", Model)
-@*<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.GroupName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GroupCity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GroupState)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CurrentBookTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MemberCount)
-        </th>
 
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr class="link-row">
-            <td>
-                @Html.ActionLink(item.GroupName, "Details", new { id = item.Id }, new { @class = "group" })
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GroupCity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GroupState)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CurrentBookTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MemberCount)
-            </td>
-        </tr>
-    }*@
-
-</table>
-
-@Scripts.Render("~/Scripts/site.js");
