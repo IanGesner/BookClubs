@@ -248,6 +248,7 @@
       <DependentUpon>201709211703264_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Annotations\AjaxAuthorize.cs" />
     <Compile Include="Models\Annotations\MaxFileSizeAttribute.cs" />
     <Compile Include="Models\Annotations\FileTypesAttribute.cs" />
     <Compile Include="Models\Annotations\IsbnAttribute.cs" />
@@ -336,6 +337,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\BcScripts\global.js" />
     <Content Include="Scripts\BcScripts\profile-details.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

@@ -93,6 +93,7 @@ C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\BookClubs.dll.config
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\BookClubs.dll
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\BookClubs.pdb
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\Antlr3.Runtime.dll
+C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\AutoMapper.dll
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\EntityFramework.dll
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\EntityFramework.SqlServer.dll
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\Microsoft.AI.Agent.Intercept.dll
@@ -136,6 +137,7 @@ C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\System.Web.WebPages.dll
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\System.Web.WebPages.Razor.dll
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\WebGrease.dll
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\Antlr3.Runtime.pdb
+C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\AutoMapper.xml
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\Microsoft.AI.DependencyCollector.xml
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\Microsoft.AI.Web.xml
@@ -173,11 +175,9 @@ C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\EntityFramework.SqlServer.
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\Microsoft.AspNet.Identity.Core.xml
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\Microsoft.AspNet.Identity.Owin.xml
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations._1.resources
+C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csproj.GenerateResource.Cache
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csproj.CoreCompileInputs.cache
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.dll
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.pdb
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csprojResolveAssemblyReference.cache
-C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations._1.resources
-C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csproj.GenerateResource.Cache
-C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\AutoMapper.dll
-C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\bin\AutoMapper.xml

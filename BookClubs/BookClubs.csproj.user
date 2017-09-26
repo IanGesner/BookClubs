@@ -23,7 +23,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <StartPageUrl>Profiles/Details/4ccea8c3-abc6-4c50-be7a-c5500b77425a</StartPageUrl>
+          <StartPageUrl>Groups</StartPageUrl>
           <StartAction>SpecificPage</StartAction>
           <AspNetDebugging>True</AspNetDebugging>
           <SilverlightDebugging>False</SilverlightDebugging>

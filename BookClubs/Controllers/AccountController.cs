@@ -1,24 +1,18 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+﻿using BookClubs.Helpers;
+using BookClubs.Models;
+using BookClubs.Models.ViewModels;
+using BookClubs.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using BookClubs.Models;
-using BookClubs.Data;
-using BookClubs.Models.ViewModels;
-using System.Diagnostics;
-using System.IO;
-using BookClubs.Helpers;
-using System.Web.Security;
+using System;
 using System.Configuration;
 using System.Data.Entity.Validation;
-using System.Security.Principal;
-using BookClubs.Services;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace BookClubs.Controllers
 {
@@ -106,14 +100,14 @@ namespace BookClubs.Controllers
         //}
 
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public JsonResult IsUniqueEmail(string email)
-        //{
-        //    var user = _dataRepository.GetUserByEmail(email);
+        [HttpPost]
+        [AllowAnonymous]
+        public JsonResult IsUniqueEmail(string email)
+        {
+            var user = _userService.GetUserByEmail(email);
 
-        //    return Json(user == null);
-        //}
+            return Json(user == null);
+        }
 
         public ApplicationSignInManager SignInManager
         {
@@ -223,6 +217,7 @@ namespace BookClubs.Controllers
 
         //
         // GET: /Account/Register
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult Register()
         {
@@ -242,6 +237,7 @@ namespace BookClubs.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    Debug.WriteLine("Model state valid");
                     var user = new User
                     {
                         UserName = model.Email,
@@ -255,6 +251,7 @@ namespace BookClubs.Controllers
                     var result = await ApplicationUserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
+                        Debug.WriteLine("result.Succeeded = true");
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

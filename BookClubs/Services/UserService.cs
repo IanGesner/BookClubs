@@ -20,6 +20,8 @@ namespace BookClubs.Services
         bool HasReceivedRequest(User sender, User recipient);
         void AddFriendRequest(User sender, User recipient, string message);
         void AcceptRequest(User sender, User recipient);
+        int GetNotificationCount(string Id);
+        User GetUserByEmail(string email);
     }
 
     public class UserService : IUserService
@@ -28,8 +30,8 @@ namespace BookClubs.Services
         private readonly IFriendRequestRepository _frRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUserRepository userRepository, 
-                            IFriendRequestRepository frRepository, 
+        public UserService(IUserRepository userRepository,
+                            IFriendRequestRepository frRepository,
                             IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
@@ -123,6 +125,24 @@ namespace BookClubs.Services
                 //Establish friendship
                 sender.Friends.Add(recipient);
             }
+        }
+
+        public int GetNotificationCount(string id)
+        {
+            int count = 0;
+            if (id != null)
+            {
+                var user = _userRepository.GetById(id);
+                count = user.PendingFriendRequests.Count +
+                    user.PendingGroupInvitations.Count +
+                    user.PendingGroupRequests.Count;
+            }
+            return count;
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            return _userRepository.Get(u => u.Email == email);
         }
 
         #endregion

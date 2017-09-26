@@ -7,7 +7,7 @@
 @Styles.Render("~/Content/BcStyles/profile-details.css");
 
 <div class="profile">
-    @Html.HiddenFor(model => model.Id, new { @id = "userId" })
+    @Html.HiddenFor(model => model.Id, new { @id = "user-id" })
     <hr />
     <img src="@Model.ProfilePictureUrl" id="profilePicture" />
 
@@ -23,20 +23,19 @@
         <div>
             @if (!Model.IsFriend && !Model.IsRequestSent && !Model.IsRequestReceived)
             {
-                <button id="addFriend" class="btn-primary">Add Friend</button>
+                <button id="add-friend" class="friend-status btn-primary">Add Friend</button>
             }
             else if (Model.IsRequestSent)
             {
-                <p>Friend request sent.</p>
+                <span class="friend-status">Friend request sent.</span>
             }
             else if (Model.IsRequestReceived)
-            {
-                <button id="acceptFriend" class="btn-primary" onclick="location.href='@Url.Action("AcceptRequest", "Profiles", new { @id = Model.Id })'">Accept @Model.FirstName's Request</button>
-                //onclick = "@Url.Action("AcceptRequest", "Profiles", new { @id = Model.Id })"
+            { 
+                <button id="accept-request" class="friend-status btn-primary">Accept @Model.FirstName's Request</button>
             }
             else if (Model.IsFriend)
             {
-                <p>Friends</p>
+                <span id="friends" class="friend-status">Friends</span>
             }
 
             <br />
@@ -46,7 +45,7 @@
 
             @if (Model.IsPublicProfile || Model.IsFriend)
             {
-                <button id="viewFriendsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Friends</button>
+                <button id="viewFriendsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Friends (@Model.Friends.Count)</button>
                 <div id="viewFriends" class="toggle-div">
                     @foreach (var item in Model.Friends)
                     {
@@ -57,7 +56,7 @@
                     }
                 </div>
 
-                <button id="viewGroupsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Groups</button>
+                <button id="viewGroupsBtn" type="button" class="btn btn-basic btn-block btn-bc">@Model.FirstName's Groups (@Model.GroupsIn.Count)</button>
                 <div id="viewGroups" class="toggle-div">
                     @Html.Partial("_GroupsListPartial", Model.GroupsIn)
                 </div>

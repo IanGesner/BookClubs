@@ -117,6 +117,36 @@ namespace BookClubs.Migrations
                 Body = "You should add me, so we can read together sometime! :)",
                 TimeStamp = DateTime.Now
             });
+            users[4].SentFriendRequests.Add(new FriendRequest
+            {
+                Recipient = users[0],
+                Body = "You should add me, so we can read together sometime! :)",
+                TimeStamp = DateTime.Now
+            });
+            users[3].SentFriendRequests.Add(new FriendRequest
+            {
+                Recipient = users[0],
+                Body = "You should add me, so we can read together sometime! :)",
+                TimeStamp = DateTime.Now
+            });
+            users[2].SentFriendRequests.Add(new FriendRequest
+            {
+                Recipient = users[0],
+                Body = "You should add me, so we can read together sometime! :)",
+                TimeStamp = DateTime.Now
+            });
+            users[1].SentFriendRequests.Add(new FriendRequest
+            {
+                Recipient = users[0],
+                Body = "You should add me, so we can read together sometime! :)",
+                TimeStamp = DateTime.Now
+            });
+            users[6].SentFriendRequests.Add(new FriendRequest
+            {
+                Recipient = users[0],
+                Body = "You should add me, so we can read together sometime! :)",
+                TimeStamp = DateTime.Now
+            });
         }
 
         private void SetFriends(List<User> users)

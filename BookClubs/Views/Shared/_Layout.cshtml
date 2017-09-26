@@ -38,6 +38,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Find Group", "Index", "Groups")</li>
+                    <li>@Html.ActionLink("Notifications", "Index", "Groups", new { @id = "notifications" })</li>
                     @*<li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                 </ul>
@@ -49,7 +50,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p id="footer">&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p id="footer">&copy; @DateTime.Now.Year - Just kidding - Feel free to copy whatever you like.</p>
         </footer>
     </div>
     
