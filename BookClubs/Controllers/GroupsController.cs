@@ -10,6 +10,8 @@ using System.Web.Mvc;
 
 namespace BookClubs.Controllers
 {
+    [RequireHttps]
+    [OutputCache(NoStore = true, Duration = 0)]
     public class GroupsController : Controller
     {
         //IDataRepository _dataRepository;

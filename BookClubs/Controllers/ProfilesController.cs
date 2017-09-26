@@ -9,7 +9,8 @@ using System.Web.Mvc;
 
 namespace BookClubs.Controllers
 {
-
+    [RequireHttps]
+    [OutputCache(NoStore = true, Duration = 0)]
     public class ProfilesController : Controller
     {
         private readonly IUserService _userService;
@@ -66,7 +67,6 @@ namespace BookClubs.Controllers
             return Json(true);
         }
 
-        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Details(string id)
         {
             ICollection<GroupListItemViewModel> groupsIn = new List<GroupListItemViewModel>();

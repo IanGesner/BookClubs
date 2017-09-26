@@ -7,11 +7,7 @@ using System.Web.Mvc;
 namespace BookClubs.Controllers
 {
     [RequireHttps]
-    // Add the RequireHttps attribute to the Home controller to require all requests must use HTTPS. 
-    // A more secure approach is to add the RequireHttps filter to the application. 
-    // See the section "Protect the Application with SSL and the Authorize Attribute" in 
-    // my tutoral Create an ASP.NET MVC app with auth and SQL DB and deploy to Azure App Service. 
-    // A portion of the Home controller is shown below.
+    [OutputCache(NoStore = true, Duration = 0)]
     public class HomeController : Controller
     {
         public ActionResult Index()

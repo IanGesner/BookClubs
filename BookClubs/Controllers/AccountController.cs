@@ -17,6 +17,8 @@ using System.Web.Mvc;
 namespace BookClubs.Controllers
 {
     [Authorize]
+    [RequireHttps]
+    [OutputCache(NoStore = true, Duration = 0)]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;

@@ -13,6 +13,8 @@ using BookClubs.Services;
 namespace BookClubs.Controllers
 {
     [Authorize]
+    [RequireHttps]
+    [OutputCache(NoStore = true, Duration = 0)]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
