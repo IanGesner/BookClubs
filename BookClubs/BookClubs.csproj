@@ -223,6 +223,7 @@
     <Compile Include="App_Start\StoreSeedData.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GroupEventsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -246,6 +247,10 @@
     <Compile Include="Migrations\201709211703264_1.cs" />
     <Compile Include="Migrations\201709211703264_1.Designer.cs">
       <DependentUpon>201709211703264_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710111800039_removed-req-constraint-grouppicurl.cs" />
+    <Compile Include="Migrations\201710111800039_removed-req-constraint-grouppicurl.Designer.cs">
+      <DependentUpon>201710111800039_removed-req-constraint-grouppicurl.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Annotations\AjaxAuthorize.cs" />
@@ -273,6 +278,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Images\blank_group_profile_picture.jpg" />
+    <Content Include="Content\BcStyles\create-profile.css" />
+    <Content Include="Content\BcStyles\group-details.css" />
     <Content Include="Content\BcStyles\profile-details.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -337,6 +345,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\BcScripts\create-profile.js" />
     <Content Include="Scripts\BcScripts\global.js" />
     <Content Include="Scripts\BcScripts\profile-details.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -396,9 +405,11 @@
     <Content Include="Views\Shared\_CreateProfilePartial.cshtml" />
     <Content Include="Views\Groups\Index.cshtml" />
     <Content Include="Views\Groups\Details.cshtml" />
-    <Content Include="Views\Account\EditProfile.cshtml" />
+    <Content Include="Views\Profiles\Edit.cshtml" />
     <Content Include="Views\Profiles\Details.cshtml" />
     <Content Include="Views\Shared\_GroupsListPartial.cshtml" />
+    <Content Include="Views\Groups\_GroupEventsListPartial.cshtml" />
+    <Content Include="Views\Groups\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -406,6 +417,7 @@
     <Folder Include="App_Images\User_Display_Images\" />
     <Folder Include="App_Images\_Seed_Images\Group_Display_Images\" />
     <Folder Include="App_Images\_Seed_Images\User_Display_Images\" />
+    <Folder Include="Views\GroupEvents\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -422,6 +434,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201709211703264_1.resx">
       <DependentUpon>201709211703264_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710111800039_removed-req-constraint-grouppicurl.resx">
+      <DependentUpon>201710111800039_removed-req-constraint-grouppicurl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

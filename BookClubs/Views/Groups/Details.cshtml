@@ -4,48 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-<style>
-    #viewMembers {
-        display: none;
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        text-align: center;
-    }
-
-    #profilePicture {
-        width: 250px;
-        height: 250px;
-        border: 1px solid #ccc;
-        margin: 10px;
-        border-radius: 5px;
-    }
-
-    .profile {
-        text-align: center;
-    }
-
-    .profilePreview {
-        width: 150px;
-        height: 150px;
-        border: 1px solid #ccc;
-        display: inline-block;
-        margin: 10px;
-        border-radius: 5px;
-    }
-
-        .profilePreview:hover {
-            background-color: #ccc;
-        }
-
-    .profilePreviewImg {
-        width: 100px;
-        height: 100px;
-        border: 1px solid #ccc;
-        margin: 10px auto 5px auto;
-        display: table;
-        border-radius: 5px;
-    }
-</style>
+@Styles.Render("~/Content/BcStyles/group-details.css");
 
 <div class="profile">
     <img src=@Model.ProfilePictureUrl id="profilePicture" />
@@ -58,23 +17,94 @@
     @Html.DisplayFor(model => model.GroupState)
     <br />
     @Html.DisplayNameFor(model => model.CurrentBookTitle):
-    <br/>
+    <br />
     @Html.DisplayFor(model => model.CurrentBookTitle)
     <br />
 
+    @if (Model.IsPublic || Model.IsOrganizer || Model.IsMember)
+    {
+        //MEMBERS
+        <button id="viewMembersBtn" type="button" class="btn btn-basic btn-block btn-bc">View Members (@Model.MemberCount)</button>
+        <div id="viewMembers">
+            @foreach (var item in Model.MemberProfiles)
+            {
+                <div class="profilePreview">
+                    <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Profiles", new { id = item.Id })'" />
+                    <p>@item.FirstName @item.LastName</p>
+                </div>
+            }
+        </div>
 
-    <button id="viewMembersBtn" type="button" class="btn btn-basic btn-block btn-bc">View Members (@Model.MemberCount)</button>
-    <div id="viewMembers">
-        @foreach (var item in Model.MemberProfiles)
-        {
-            <div class="profilePreview">
-                <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Profiles", new { id = item.Id })'" />
-                <p>@item.FirstName @item.LastName</p>
-            </div>
-        }
+        //GROUP EVENTS
+        <button id="viewGroupEventsBtn" type="button" class="btn btn-basic btn-block btn-bc">View Events (@Model.GroupEvents.Count)</button>
+        <div id="viewGroupEvents">
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GroupEvents.First().BookName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GroupEvents.First().Location)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GroupEvents.First().DateTime)
+                    </th>
+                    <th></th>
+                </tr>
 
+                @foreach (var item in Model.GroupEvents)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BookName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Location)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateTime)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        </td>
+                    </tr>
+                }
 
-    </div>
+            </table>
+
+        </div>
+
+        //POSTS
+        <button id="viewWallPostsBtn" type="button" class="btn btn-basic btn-block btn-bc">View Posts (@Model.WallPosts.Count)</button>
+        <div id="viewWallPosts">
+            <textarea class="form-control" rows="5" id="message" placeholder="You may add a message here."></textarea>
+            @foreach (var item in Model.WallPosts)
+            {
+                <p>@item.Body</p>
+
+                Html.ActionLink(item.PosterName, "Details", "Profiles", new { @id = item.PosterId });
+
+                if (Model.CurrentUserId == item.PosterId || Model.IsOrganizer)
+                {
+                    Html.ActionLink("Delete", "Delete", "GroupEvents", new { @id = item.Id });
+                }
+                if (Model.CurrentUserId == item.PosterId)
+                {
+                    Html.ActionLink("Edit", "Edit", "GroupEvents", new { @id = item.Id });
+                }
+            }
+        </div>
+    }
+    else
+    {
+        <p>This group is private.</p>
+    }
+
 </div>
 
 
@@ -87,6 +117,14 @@
 
         $("#viewMembersBtn").click(function () {
             $("#viewMembers").toggle();
+        });
+
+        $("#viewWallPostsBtn").click(function () {
+            $("#viewWallPosts").toggle();
+        });
+
+        $("#viewGroupEventsBtn").click(function () {
+            $("#viewGroupEvents").toggle();
         });
 
     });

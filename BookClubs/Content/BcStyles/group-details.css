@@ -1,0 +1,54 @@
+﻿#viewMembers {
+    display: none;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#viewWallPosts {
+    display: none;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#viewGroupEvents {
+    display: none;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#profilePicture {
+    width: 250px;
+    height: 250px;
+    border: 1px solid #ccc;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.profile {
+    text-align: center;
+}
+
+.profilePreview {
+    width: 150px;
+    height: 150px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+    .profilePreview:hover {
+        background-color: #ccc;
+    }
+
+.profilePreviewImg {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #ccc;
+    margin: 10px auto 5px auto;
+    display: table;
+    border-radius: 5px;
+}

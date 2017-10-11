@@ -77,9 +77,6 @@ namespace BookClubs.Data.Configuration
                 .HasMaxLength((int)MaxLength.State)
                 .IsRequired();
 
-            Property(g => g.GroupPictureUrl)
-                .IsRequired();
-
             Property(g => g.GroupInfo)
                 .HasMaxLength((int)MaxLength.MessageBody);
         }

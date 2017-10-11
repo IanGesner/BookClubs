@@ -69,6 +69,11 @@ namespace BookClubs.Helpers
 
             return fileName.Substring(extIndex, fileName.Length - extIndex);
         }
+
+        public string MapServerPath(string path, HttpServerUtilityBase httpServerUtilityBase)
+        {
+            return httpServerUtilityBase.MapPath(path);
+        }
     }
 
     public interface IFileManager
@@ -77,6 +82,7 @@ namespace BookClubs.Helpers
         string ConvertPath(string path, ForReferenceBy referenceBy);
         void DeleteFile(string path, HttpServerUtilityBase server);
         string GetFileExtension(HttpPostedFileBase file);
+        string MapServerPath(string path, HttpServerUtilityBase httpServerUtilityBase);
     }
 
     public enum ForReferenceBy { Client, Server };

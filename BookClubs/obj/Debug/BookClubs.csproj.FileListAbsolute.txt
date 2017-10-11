@@ -181,3 +181,4 @@ C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csproj.Cor
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.dll
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.pdb
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.csprojResolveAssemblyReference.cache
+C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs\obj\Debug\BookClubs.Migrations.removedreqconstraintgrouppicurl.resources

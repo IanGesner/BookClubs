@@ -130,6 +130,7 @@ namespace BookClubs.Services
         public int GetNotificationCount(string id)
         {
             int count = 0;
+
             if (id != null)
             {
                 var user = _userRepository.GetById(id);
@@ -137,6 +138,7 @@ namespace BookClubs.Services
                     user.PendingGroupInvitations.Count +
                     user.PendingGroupRequests.Count;
             }
+
             return count;
         }
 
