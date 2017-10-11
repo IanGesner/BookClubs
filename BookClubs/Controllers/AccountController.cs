@@ -24,83 +24,14 @@ namespace BookClubs.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private readonly IUserService _userService;
-        private readonly IFileManager _fileManager;
-        private static readonly string _profilePicDir = ConfigurationManager.AppSettings["ProfilePicSaveDirectory"];
+
         private static readonly string _defaultPic = ConfigurationManager.AppSettings["DefaultProfilePicLocation"];
 
-        public AccountController(IUserService userService, IFileManager fileManager)
+
+        public AccountController(IUserService userService)
         {
             _userService = userService;
-            _fileManager = fileManager;
         }
-
-        [HttpGet]
-        public ActionResult EditProfile()
-        {
-            var userId = User.Identity.GetUserId();
-            //var user = _dataRepository.GetUserById(userId);
-            var user = _userService.GetUser(userId);
-
-            EditProfileViewModel model = new EditProfileViewModel()
-            {
-                ProfilePictureUrl = user.ProfilePictureUrl,
-                Biography = user.Biography,
-                Public = user.Public
-            };
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult EditProfile(EditProfileViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                // Retrieve current user
-                var userId = User.Identity.GetUserId();
-                //var user = _dataRepository.GetUserById(userId);
-                var user = _userService.GetUser(userId);
-
-                //If it isn't the single-instance default picture, delete the current profile
-                // picture from the Profile_Pictures folder
-                if (!String.Equals(user.ProfilePictureUrl, _defaultPic))
-                    _fileManager.DeleteFile(user.ProfilePictureUrl, Server);
-
-                // Create a profile picture URL to save to.
-                // This will map to App_data\Profile_Pictures\{User ID}.{File Extension}
-                // Set the new file name to the current user's ID
-                string fileName = userId + "." + _fileManager.GetFileExtension(model.ProfilePicture);
-                var profilePicUrl = _fileManager.BuildPath(new string[] { _profilePicDir, fileName },
-                                                ForReferenceBy.Server);
-
-                // Save the profile picture and update the user's
-                // ProfilePicUrl property in database
-                model.ProfilePicture.SaveAs(Server.MapPath(profilePicUrl));
-
-                //Save changes in viewModel to user entry
-                user.ProfilePictureUrl = _fileManager.ConvertPath(profilePicUrl, ForReferenceBy.Client);
-                user.Biography = model.Biography;
-                user.Public = model.Public;
-
-                // Commit changes
-                //_dataRepository.UpdateUser(user);
-                _userService.Commit();
-
-                return RedirectToAction("Index", "Groups");
-            }
-
-            return View(model);
-        }
-
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public JsonResult IsUniqueUsername(string username)
-        //{
-        //    var user = _dataRepository.GetUserByUsername(username);
-
-        //    return Json(user == null);
-        //}
-
 
         [HttpPost]
         [AllowAnonymous]
@@ -263,7 +194,7 @@ namespace BookClubs.Controllers
                         // await ApplicationUserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
 
-                        return RedirectToAction("EditProfile", "Account");
+                        return RedirectToAction("Edit", "Profiles");
                     }
                     AddErrors(result);
                 }

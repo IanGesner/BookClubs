@@ -1,0 +1,22 @@
+﻿div{
+    margin-left: 15px;
+}
+
+#hiddenFileInput {
+    display: none;
+}
+
+#profileImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 10%;
+    border: 1px solid #cccccc;
+}
+
+#uploadPictureBtn {
+    margin-top: 10px;
+}
+
+.text-danger {
+    display: inline;
+}

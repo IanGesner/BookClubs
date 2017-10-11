@@ -1,8 +1,12 @@
-﻿using BookClubs.Models.Annotations;
+﻿using BookClubs.Helpers;
+using BookClubs.Models;
+using BookClubs.Models.Annotations;
 using BookClubs.Models.ViewModels;
 using BookClubs.Services;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -15,11 +19,88 @@ namespace BookClubs.Controllers
     {
         private readonly IUserService _userService;
         private readonly IFriendRequestService _frService;
+        private readonly IFileManager _fileManager;
 
-        public ProfilesController(IUserService userService, IFriendRequestService frService)
+        private static readonly string _profilePicDir = ConfigurationManager.AppSettings["ProfilePicSaveDirectory"];
+        private static readonly string _defaultPic = ConfigurationManager.AppSettings["DefaultProfilePicLocation"];
+
+        public ProfilesController(IUserService userService, IFriendRequestService frService, IFileManager fileManager)
         {
             _userService = userService;
+            _fileManager = fileManager;
             _frService = frService;
+        }
+
+        [HttpGet]
+        public ActionResult Edit()
+        {
+            var userId = User.Identity.GetUserId();
+            //var user = _dataRepository.GetUserById(userId);
+            var user = _userService.GetUser(userId);
+
+            EditProfileViewModel model = new EditProfileViewModel()
+            {
+                ProfilePictureUrl = user.ProfilePictureUrl,
+                Biography = user.Biography,
+                Public = user.Public
+            };
+
+            return View(model);
+        }
+
+        public ActionResult Edit(User model)
+        {
+            if (ModelState.IsValid)
+            {
+                _userService.UpdateUser(model);
+                _userService.Commit();
+                //_dataRepository.UpdateUser(model);
+                return RedirectToAction("Index");
+            }
+            else
+                return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Edit(EditProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Retrieve current user
+                var userId = User.Identity.GetUserId();
+                //var user = _dataRepository.GetUserById(userId);
+                var user = _userService.GetUser(userId);
+
+                //If it isn't the single-instance default picture, delete the current profile
+                // picture from the Profile_Pictures folder
+                if (!String.Equals(user.ProfilePictureUrl, _defaultPic))
+                    _fileManager.DeleteFile(user.ProfilePictureUrl, Server);
+
+                // Create a profile picture URL to save to.
+                // This will map to App_data\Profile_Pictures\{User ID}.{File Extension}
+                // Set the new file name to the current user's ID
+                string fileName = userId + "." + _fileManager.GetFileExtension(model.ProfilePicture);
+                var profilePicUrl = _fileManager.BuildPath(new string[] { _profilePicDir, fileName },
+                                                ForReferenceBy.Server);
+
+                // Save the profile picture and update the user's
+                // ProfilePicUrl property in database
+                string mappedPath = _fileManager.MapServerPath(profilePicUrl, Server);
+                model.ProfilePicture.SaveAs(mappedPath);
+
+                //Save changes in viewModel to user entry
+                user.ProfilePictureUrl = _fileManager.ConvertPath(profilePicUrl, ForReferenceBy.Client);
+                user.Biography = model.Biography;
+                user.Public = model.Public;
+
+                // Commit changes
+                //_dataRepository.UpdateUser(user);
+                _userService.Commit();
+
+                return RedirectToAction("Index", "Groups");
+            }
+
+            return View(model);
         }
 
         // GET: Profiles
@@ -94,7 +175,7 @@ namespace BookClubs.Controllers
                                                 GroupName = group.Name,
                                                 GroupCity = group.City,
                                                 GroupState = group.State,
-                                                CurrentBookTitle = nextEvent.Book.Title,
+                                                //CurrentBookTitle = nextEvent.Book.Title,
                                                 MemberCount = group.Users.Count().ToString()
                                             })
                                     .ToList();

@@ -27,7 +27,6 @@ namespace BookClubs.App_Start
             container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
 
             // Register concrete types
-            //container.Register<IDataRepository, EfDataRepository>(Lifestyle.Scoped);
             container.Register<IFileManager, BcFileManager>(Lifestyle.Scoped);
             container.Register<IDbFactory, DbFactory>(Lifestyle.Scoped);
             container.Register<IUnitOfWork, UnitOfWork>(Lifestyle.Scoped);
@@ -40,10 +39,6 @@ namespace BookClubs.App_Start
 
             container.Register<IFriendRequestRepository, FriendRequestRepository>(Lifestyle.Scoped);
             container.Register<IFriendRequestService, FriendRequestService>(Lifestyle.Scoped);
-            //container.Register<IGroupService, GroupService>(Lifestyle.Scoped);
-            //container.Register<IBookService, BookService>(Lifestyle.Scoped);
-            //container.Register<IBookProxy, BookProxy>(Lifestyle.Scoped);
-            //container.Register<ICreditRatingService, CreditRatingService>();
 
             // This is an extension method from the integration package.
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());

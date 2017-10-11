@@ -51,18 +51,7 @@ namespace BookClubs.Controllers
             }
         }
 
-        public ActionResult EditProfile(User model)
-        {
-            if (ModelState.IsValid)
-            {
-                _userService.UpdateUser(model);
-                _userService.Commit();
-                //_dataRepository.UpdateUser(model);
-                return RedirectToAction("Index");
-            }
-            else
-                return RedirectToAction("Index");
-        }
+
 
         //
         // GET: /Manage/Index
