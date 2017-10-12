@@ -64,13 +64,6 @@ C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs.Tests\obj
 C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs.Tests\obj\Debug\BookClubs.Tests.dll
 C:\Users\Ian\Documents\visual studio 2017\Projects\BookClubs\BookClubs.Tests\obj\Debug\BookClubs.Tests.pdb
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\bin\Debug\ApplicationInsights.config
-C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\bin\Debug\NUnit3.TestAdapter.dll
-C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\bin\Debug\nunit.engine.dll
-C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\bin\Debug\nunit.engine.api.dll
-C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\bin\Debug\Mono.Cecil.dll
-C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\bin\Debug\Mono.Cecil.Pdb.dll
-C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\bin\Debug\Mono.Cecil.Mdb.dll
-C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\bin\Debug\Mono.Cecil.Rocks.dll
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\bin\Debug\BookClubs.Tests.dll.config
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\bin\Debug\BookClubs.Tests.dll
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\bin\Debug\BookClubs.Tests.pdb
@@ -140,3 +133,4 @@ C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\obj\Debug\BookClubs.Test
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\obj\Debug\BookClubs.Tests.csproj.CoreCompileInputs.cache
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\obj\Debug\BookClubs.Tests.dll
 C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\obj\Debug\BookClubs.Tests.pdb
+C:\Users\Ian\Desktop\Projects\BookClubs\BookClubs.Tests\bin\Debug\Castle.Core.xml

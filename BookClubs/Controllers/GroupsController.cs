@@ -67,32 +67,32 @@ namespace BookClubs.Controllers
             var currentUserId = User.Identity.GetUserId();
 
             var memberProfiles = group.Users.Select(u => new ProfileListViewModel()
-            {
-                Id = u.Id,
-                Biography = u.Biography,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                ProfilePictureUrl = u.ProfilePictureUrl
-            })
+                {
+                    Id = u.Id,
+                    Biography = u.Biography,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    ProfilePictureUrl = u.ProfilePictureUrl
+                })
                 .ToList();
 
             var wallPosts = group.GroupWallPosts.Select(gwp => new GroupWallPostListViewModel()
-            {
-                Id = gwp.Id,
-                PosterId = gwp.PosterId,
-                Body = gwp.Body,
-                DateTime = gwp.TimeStamp.ToShortTimeString(),
-                PosterName = gwp.Poster.FirstName + ", " + gwp.Poster.LastName
-            })
+                {
+                    Id = gwp.Id,
+                    PosterId = gwp.PosterId,
+                    Body = gwp.Body,
+                    DateTime = gwp.TimeStamp.ToShortTimeString(),
+                    PosterName = gwp.Poster.FirstName + ", " + gwp.Poster.LastName
+                })
                 .ToList();
 
             var groupEvents = group.GroupEvents.Select(ge => new GroupEventListViewModel()
-            {
-                Id = ge.Id,
-                BookName = ge.Book.Title,
-                DateTime = ge.DateTime.ToLongTimeString(),
-                Location = ge.City + ", " + ge.State
-            })
+                {
+                    Id = ge.Id,
+                    BookName = ge.Book.Title,
+                    DateTime = ge.DateTime.ToLongTimeString(),
+                    Location = ge.City + ", " + ge.State
+                })
                 .OrderBy(ge => ge.DateTime)
                 .ToList();
 
