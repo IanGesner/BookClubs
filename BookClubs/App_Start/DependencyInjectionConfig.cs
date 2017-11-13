@@ -38,7 +38,7 @@ namespace BookClubs.App_Start
             container.Register<IGroupService, GroupService>(Lifestyle.Scoped);
 
             container.Register<IFriendRequestRepository, FriendRequestRepository>(Lifestyle.Scoped);
-            container.Register<IFriendRequestService, FriendRequestService>(Lifestyle.Scoped);
+            //container.Register<ISocializationService, SocializationService>(Lifestyle.Scoped);
 
             // This is an extension method from the integration package.
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());

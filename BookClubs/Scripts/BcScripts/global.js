@@ -2,7 +2,7 @@
 
     $.ajax({
         type: "GET",
-        url: "/Profiles/NotificationCount",
+        url: "/Users/NotificationCount",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {

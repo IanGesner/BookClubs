@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -31,22 +33,34 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Book Clubs", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("BookClubs", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
 
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    @* Users Dropdown *@
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Users<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Friends", "Friends", "Users")</li>
+                            <li>@Html.ActionLink("All Users", "Index", "Users")</li>
+                        </ul>
+                    </li>
 
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @* Groups Dropdown *@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Groups<span class="caret"></span></a>
-
                         <ul class="dropdown-menu">
+                            @{ /*TODO: Add correct id here to find groups this user belongs to*/ }
+                            <li>@Html.ActionLink("My Groups", "Index", "Groups")</li> 
                             <li>@Html.ActionLink("Find Group", "Index", "Groups")</li>
                             <li>@Html.ActionLink("Create Group", "Create", "Groups")</li>
                         </ul>
                     </li>
+
+                    @*<li onclick="getNotifications"></li>*@
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -58,7 +72,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p id="footer">&copy; @DateTime.Now.Year - Just kidding - Feel free to copy whatever you like.</p>
+            <p id="footer">&copy; Copyright @DateTime.Now.Year - Ian Gesner</p>
         </footer>
     </div>
 

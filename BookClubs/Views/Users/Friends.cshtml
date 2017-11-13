@@ -1,0 +1,20 @@
+﻿@model IEnumerable<BookClubs.Models.ViewModels.ProfileListViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@Styles.Render("~/Content/BcStyles/users-thumbnails.css")
+
+<h2>Friends</h2>
+
+<div id="viewMembers">
+    @foreach (var item in Model)
+            {
+        <div class="profilePreview">
+            <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Users", new { id = item.Id })'" />
+            <p>@item.FirstName @item.LastName</p>
+        </div>
+    }
+</div>
+

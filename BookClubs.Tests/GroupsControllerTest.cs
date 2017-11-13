@@ -40,5 +40,5 @@ namespace BookClubs.Tests
     //        mockGroupService.VerifyAll();
     //    }
 
-    }
+    //}
 }

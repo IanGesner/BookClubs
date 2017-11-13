@@ -36,13 +36,6 @@ namespace BookClubs
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ApplicationUserManager : UserManager<User>
     {
-        //TODO: Figure out what how to resolve this:
-        //    System.InvalidOperationException: 'The configuration is invalid. 
-        //    Creating the instance for type ApplicationUserManager failed. 
-        //    The constructor of type ApplicationUserManager contains the parameter 
-        //    with name 'store' and type IUserStore<ApplicationUser> that is not 
-        //    registered. Please ensure IUserStore<ApplicationUser> is registered, 
-        //    or change the constructor of ApplicationUserManager.'
         //
         //  You have tried: Injecting UserStore<ApplicationUser> for
         //  IUserStore<ApplicationUser> - Error: 2 public ctors on UserStore

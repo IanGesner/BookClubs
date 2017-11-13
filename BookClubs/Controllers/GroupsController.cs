@@ -178,7 +178,6 @@ namespace BookClubs.Controllers
         {
             try
             {
-                // TODO: Add update logic here
 
                 return RedirectToAction("Index");
             }
@@ -200,7 +199,6 @@ namespace BookClubs.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
 
                 return RedirectToAction("Index");
             }

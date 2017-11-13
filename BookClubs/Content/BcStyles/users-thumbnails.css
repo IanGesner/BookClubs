@@ -1,22 +1,7 @@
 ﻿#viewMembers {
-    display: none;
     border: 2px solid #ccc;
     border-radius: 5px;
     text-align: center;
-}
-
-#viewWallPosts {
-    display: none;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-}
-
-#viewGroupEvents {
-    display: none;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    text-align: left;
 }
 
 #profilePicture {

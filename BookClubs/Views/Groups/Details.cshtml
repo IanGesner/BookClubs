@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-@Styles.Render("~/Content/BcStyles/group-details.css");
+@Styles.Render("~/Content/BcStyles/group-details.css")
 
 <div class="profile">
     <img src=@Model.ProfilePictureUrl id="profilePicture" />
@@ -29,7 +29,7 @@
             @foreach (var item in Model.MemberProfiles)
             {
                 <div class="profilePreview">
-                    <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Profiles", new { id = item.Id })'" />
+                    <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Users", new { id = item.Id })'" />
                     <p>@item.FirstName @item.LastName</p>
                 </div>
             }
@@ -87,7 +87,7 @@
             {
                 <p>@item.Body</p>
 
-                Html.ActionLink(item.PosterName, "Details", "Profiles", new { @id = item.PosterId });
+                Html.ActionLink(item.PosterName, "Details", "Users", new { @id = item.PosterId });
 
                 if (Model.CurrentUserId == item.PosterId || Model.IsOrganizer)
                 {

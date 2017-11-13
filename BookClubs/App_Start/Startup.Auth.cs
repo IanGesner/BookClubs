@@ -56,18 +56,8 @@ namespace BookClubs
             //   consumerSecret: "");
 
 
-            // TODO: Before Deployment: Remove these credentials from source code. See best practices at: 
-            // https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure
-            app.UseFacebookAuthentication(
-               appId: "688245288027706",
-               appSecret: "887ccb539174f4b98eec04f5c9469e65");
+            // TODO: Paste API keys here
 
-            // TODO: Before Deployment: Add key restriction for Google API key.
-            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            {
-                ClientId = "440441579682-9d9581l09ehdjg4o0u7t36epbc8g8u4r.apps.googleusercontent.com",
-                ClientSecret = "PIDdNW8Hv-4kq_SVMmnNXKHf"
-            });
 
 
         }

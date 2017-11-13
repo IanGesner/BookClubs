@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-@Styles.Render("~/Content/BcStyles/profile-details.css");
+@Styles.Render("~/Content/BcStyles/profile-details.css")
 
 <div class="profile">
     @Html.HiddenFor(model => model.Id, new { @id = "user-id" })
@@ -50,7 +50,7 @@
                     @foreach (var item in Model.Friends)
                     {
                         <div class="profilePreview">
-                            <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Profiles", new { id = item.Id })'" />
+                            <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Users", new { id = item.Id })'" />
                             <p>@item.FirstName @item.LastName</p>
                         </div>
                     }
@@ -72,7 +72,7 @@
 
 </div>
 
-@Scripts.Render("~/Scripts/BcScripts/profile-details.js");
+@Scripts.Render("~/Scripts/BcScripts/profile-details.js")
 
 <div id="dialog-form" title="Send Friend Request">
 

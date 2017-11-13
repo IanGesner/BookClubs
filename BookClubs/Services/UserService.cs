@@ -22,6 +22,7 @@ namespace BookClubs.Services
         void AcceptRequest(User sender, User recipient);
         int GetNotificationCount(string Id);
         User GetUserByEmail(string email);
+        IQueryable<User> GetAll();
     }
 
     public class UserService : IUserService
@@ -145,6 +146,11 @@ namespace BookClubs.Services
         public User GetUserByEmail(string email)
         {
             return _userRepository.Get(u => u.Email == email);
+        }
+
+        public IQueryable<User> GetAll()
+        {
+            return _userRepository.GetAll();
         }
 
         #endregion

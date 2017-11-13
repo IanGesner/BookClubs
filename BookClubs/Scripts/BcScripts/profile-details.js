@@ -27,7 +27,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/Profiles/SendRequest",
+            url: "/Users/SendRequest",
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -50,7 +50,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/Profiles/AcceptRequest",
+            url: "/Users/AcceptRequest",
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "text json",
@@ -72,7 +72,7 @@
         $.ajax({
             type: "POST",
             async: true,
-            url: "/Profiles/VerifyLoggedOn",
+            url: "/Users/VerifyLoggedOn",
             contentType: "application/json; charset=utf-8",
             success: function (response) {
                 dialog.dialog("open");

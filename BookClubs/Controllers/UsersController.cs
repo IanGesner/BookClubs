@@ -15,20 +15,18 @@ namespace BookClubs.Controllers
 {
     [RequireHttps]
     [OutputCache(NoStore = true, Duration = 0)]
-    public class ProfilesController : Controller
+    public class UsersController : Controller
     {
         private readonly IUserService _userService;
-        private readonly IFriendRequestService _frService;
         private readonly IFileManager _fileManager;
 
         private static readonly string _profilePicDir = ConfigurationManager.AppSettings["ProfilePicSaveDirectory"];
         private static readonly string _defaultPic = ConfigurationManager.AppSettings["DefaultProfilePicLocation"];
 
-        public ProfilesController(IUserService userService, IFriendRequestService frService, IFileManager fileManager)
+        public UsersController(IUserService userService, IFileManager fileManager)
         {
             _userService = userService;
             _fileManager = fileManager;
-            _frService = frService;
         }
 
         [HttpGet]
@@ -103,13 +101,41 @@ namespace BookClubs.Controllers
             return View(model);
         }
 
-        // GET: Profiles
+        // GET: Users
         public ActionResult Index()
         {
-            return View();
+            var viewModel = _userService.GetAll().Select(u => new ProfileListViewModel
+            {
+                Id = u.Id,
+                Biography = u.Biography,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                ProfilePictureUrl = u.ProfilePictureUrl
+            }).ToList();
+
+            return View(viewModel);
         }
 
-        public ActionResult NotificationCount()
+        [Authorize]
+        public ActionResult Friends()
+        {
+            // TODO: Find friends by Id and return
+            var currentUser = _userService.GetUser(User.Identity.GetUserId());
+
+            var viewModel = currentUser.Friends.Select(u => new ProfileListViewModel
+            {
+                Id = u.Id,
+                Biography = u.Biography,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                ProfilePictureUrl = u.ProfilePictureUrl
+            }).ToList();
+
+            return View("Friends", viewModel);
+        }
+
+
+        public ActionResult GetNotificationCount()
         {
             var currentUser = _userService.GetUser(User.Identity.GetUserId());
 
