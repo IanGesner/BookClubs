@@ -27,6 +27,7 @@ namespace BookClubs.Data.Configuration
         {
             modelBuilder.Configurations.Add(new UserConfiguration());
             modelBuilder.Configurations.Add(new GroupWallPostConfiguration());
+            modelBuilder.Configurations.Add(new GroupWallPostReplyConfiguration());
             modelBuilder.Configurations.Add(new BookConfiguration());
             modelBuilder.Configurations.Add(new FriendRequestConfiguration());
             modelBuilder.Configurations.Add(new GroupEventConfiguration());
@@ -36,6 +37,19 @@ namespace BookClubs.Data.Configuration
             modelBuilder.Configurations.Add(new AuthorConfiguration());
 
             base.OnModelCreating(modelBuilder);
+        }
+    }
+
+    internal class GroupWallPostReplyConfiguration : EntityTypeConfiguration<GroupWallPostReply>
+    {
+        public GroupWallPostReplyConfiguration()
+        {            
+            HasRequired(pr => pr.Poster)
+                .WithMany(p => p.GroupWallPostReplies)
+                .HasForeignKey(pr => pr.PosterId);
+
+            HasRequired(pr => pr.OriginalPost)
+                .WithMany(p => p.Replies);
         }
     }
 
@@ -202,11 +216,16 @@ namespace BookClubs.Data.Configuration
 
             HasRequired(p => p.Poster)
                 .WithMany(u => u.GroupWallPosts)
-                .HasForeignKey(p => p.PosterId);
+                .HasForeignKey(p => p.PosterId)
+                .WillCascadeOnDelete(false);
 
             Property(p => p.Body)
                 .HasMaxLength((int)MaxLength.MessageBody)
                 .IsRequired();
+
+            //HasMany(p => p.Replies)
+            //    .WithOptional(r => r.OriginalPost)
+            //    .HasForeignKey(r => r.OriginalPostId);
         }
     }
 

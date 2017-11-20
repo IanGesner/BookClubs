@@ -19,7 +19,7 @@ using System.Web.Mvc;
 namespace BookClubs.App_Start
 {
     public class DependencyInjectionConfig
-    {
+            {
         public static void Register()
         {
             // Create the container
@@ -38,6 +38,7 @@ namespace BookClubs.App_Start
             container.Register<IGroupService, GroupService>(Lifestyle.Scoped);
 
             container.Register<IFriendRequestRepository, FriendRequestRepository>(Lifestyle.Scoped);
+            container.Register<IGroupWallPostRepository, GroupWallPostRepository>(Lifestyle.Scoped);
             //container.Register<ISocializationService, SocializationService>(Lifestyle.Scoped);
 
             // This is an extension method from the integration package.

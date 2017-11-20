@@ -19,13 +19,15 @@ namespace BookClubs.Controllers
     [OutputCache(NoStore = true, Duration = 0)]
     public class GroupsController : Controller
     {
-        IGroupService _groupService;
-        IFileManager _fileManager;
+        private readonly IGroupService _groupService;
+        private readonly IUserService _userService;
+        private readonly IFileManager _fileManager;
 
         private static readonly string _defaultGroupPicPath = ConfigurationManager.AppSettings["DefaultGroupPicLocation"];
 
-        public GroupsController(IGroupService groupService, IFileManager fileManager)
+        public GroupsController(IGroupService groupService, IUserService userService, IFileManager fileManager)
         {
+            _userService = userService;
             _groupService = groupService;
             _fileManager = fileManager;
         }
@@ -34,27 +36,15 @@ namespace BookClubs.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            // old index query, query - won't include groups with no events yet - need to make it simpler
-            //var viewModel = _groupService.GetAll().SelectMany(group => group.GroupEvents.OrderBy(ge => ge.DateTime)
-            //                                                .Take(1), (group, nextEvent) =>
-            //                                                new GroupListItemViewModel
-            //                                                {
-            //                                                    Id = group.Id,
-            //                                                    GroupName = group.Name,
-            //                                                    GroupCity = group.City,
-            //                                                    GroupState = group.State,
-            //                                                    CurrentBookTitle = nextEvent.Book.Title,
-            //                                                    MemberCount = group.Users.Count().ToString()
-            //                                                });
-
+            // Get a list of all groups
             var viewModel = _groupService.GetAll().Select(group => new GroupListItemViewModel
-                                                            {
-                                                                Id = group.Id,
-                                                                GroupName = group.Name,
-                                                                GroupCity = group.City,
-                                                                GroupState = group.State,
-                                                                MemberCount = group.Users.Count.ToString()
-                                                            });
+            {
+                Id = group.Id,
+                GroupName = group.Name,
+                GroupCity = group.City,
+                GroupState = group.State,
+                MemberCount = group.Users.Count.ToString()
+            });
 
             return View(viewModel);
         }
@@ -62,41 +52,54 @@ namespace BookClubs.Controllers
         // GET: Groups/Details/5
         public ActionResult Details(int id)
         {
-            //var group = _dataRepository.GetGroup(id);
+            // Retrieve the current user and the group they are viewing
             var group = _groupService.GetGroup(id);
             var currentUserId = User.Identity.GetUserId();
 
+            // Retrieve member profiles for the group
             var memberProfiles = group.Users.Select(u => new ProfileListViewModel()
-                {
-                    Id = u.Id,
-                    Biography = u.Biography,
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    ProfilePictureUrl = u.ProfilePictureUrl
-                })
+            {
+                Id = u.Id,
+                Biography = u.Biography,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                ProfilePictureUrl = u.ProfilePictureUrl
+            })
                 .ToList();
 
+            // Retrieve posts and replies on group wall
             var wallPosts = group.GroupWallPosts.Select(gwp => new GroupWallPostListViewModel()
+            {
+                Id = gwp.Id,
+                PosterId = gwp.PosterId,
+                Body = gwp.Body,
+                DateTime = gwp.TimeStamp.ToShortTimeString(),
+                PosterName = gwp.Poster.FirstName + " " + gwp.Poster.LastName,
+                ProfilePictureUrl = _userService.GetUser(gwp.PosterId).ProfilePictureUrl,
+                Replies = gwp.Replies.Select(gwpr => new GroupWallPostReplyViewModel()
                 {
-                    Id = gwp.Id,
-                    PosterId = gwp.PosterId,
-                    Body = gwp.Body,
-                    DateTime = gwp.TimeStamp.ToShortTimeString(),
-                    PosterName = gwp.Poster.FirstName + ", " + gwp.Poster.LastName
+                    Id = gwpr.Id,
+                    Body = gwpr.Body,
+                    PosterId = gwpr.PosterId,
+                    PosterName = gwpr.Poster.FirstName + " " + gwpr.Poster.LastName,
+                    DateTime = gwpr.TimeStamp.ToShortTimeString(),
+                    ProfilePictureUrl = _userService.GetUser(gwpr.PosterId).ProfilePictureUrl
                 })
+            })
                 .ToList();
 
+            // Retrieve events scheduled for this group
             var groupEvents = group.GroupEvents.Select(ge => new GroupEventListViewModel()
-                {
-                    Id = ge.Id,
-                    BookName = ge.Book.Title,
-                    DateTime = ge.DateTime.ToLongTimeString(),
-                    Location = ge.City + ", " + ge.State
-                })
+            {
+                Id = ge.Id,
+                BookName = ge.Book.Title,
+                DateTime = ge.DateTime.ToLongTimeString(),
+                Location = ge.City + ", " + ge.State
+            })
                 .OrderBy(ge => ge.DateTime)
                 .ToList();
 
-            // Determine if the user is a member of the specified group.
+            // Verify the user is a member of the specified group.
             var member = group.Users.Where(u => u.Id == currentUserId)
                                     .FirstOrDefault();
 
@@ -149,15 +152,15 @@ namespace BookClubs.Controllers
                 // Save the uploaded picture to the file system in
                 // App_Images/Group_Display_Images/{id}.{type}
                 _groupService.CreateGroup(new Group
-                    {
-                        OrganizerId = User.Identity.GetUserId(),
-                        City = model.City,
-                        State = model.State,
-                        GroupPictureUrl = model.GroupPictureUrl,
-                        Name = model.Name,
-                        Public = model.Public,
-                        GroupInfo = model.GroupInfo
-                    }, 
+                {
+                    OrganizerId = User.Identity.GetUserId(),
+                    City = model.City,
+                    State = model.State,
+                    GroupPictureUrl = model.GroupPictureUrl,
+                    Name = model.Name,
+                    Public = model.Public,
+                    GroupInfo = model.GroupInfo
+                },
                     model.GroupPicture, Server);
 
                 return RedirectToAction("Index");

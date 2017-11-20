@@ -22,6 +22,8 @@ namespace BookClubs.Models
 
         public virtual ICollection<GroupWallPost> GroupWallPosts { get; set; }
 
+        public virtual ICollection<GroupWallPostReply> GroupWallPostReplies { get; set; }
+
         public virtual ICollection<Group> GroupsIn { get; set; }
         public virtual ICollection<Group> GroupsOrganized { get; set; }
 

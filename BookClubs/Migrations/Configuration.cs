@@ -56,7 +56,7 @@ namespace BookClubs.Migrations
                 var events = InitializeGroupEvents(groups, books);
                 foreach (var groupEvent in events)
                 {
-                    groups[groupEvent.GroupId-1].GroupEvents.Add(groupEvent);
+                    groups[groupEvent.GroupId - 1].GroupEvents.Add(groupEvent);
 
                 }
 
@@ -70,6 +70,12 @@ namespace BookClubs.Migrations
                 SetGroupRequests(groups, users);
 
                 context.Commit();
+
+                SetGroupWallPosts(groups, users);
+
+                context.Commit();
+
+                SetGroupWallReplies(groups, users);
             }
             catch (DbEntityValidationException e)
             {
@@ -85,6 +91,62 @@ namespace BookClubs.Migrations
                 }
                 throw;
             }
+        }
+
+        private void SetGroupWallReplies(List<Group> groups, List<User> users)
+        {
+            var gwp = groups[0].GroupWallPosts.ToArray();
+
+            // Instantiate Replies properties
+            gwp[0].Replies = new List<GroupWallPostReply>();
+            gwp[1].Replies = new List<GroupWallPostReply>();
+
+            // Add replies to the first post in the first group.
+            gwp[0].Replies.Add(new GroupWallPostReply()
+            {
+                Body = "Thank you for this post, " + users[0].FirstName
+                    + ". It was very interesting, so I felt the need to reply.",
+                Poster = users[1],
+                TimeStamp = DateTime.Now.AddHours(-3.0)
+            });
+            gwp[0].Replies.Add(new GroupWallPostReply()
+            {
+                Body = "Reply #2",
+                Poster = users[2],
+                TimeStamp = DateTime.Now.AddHours(-2.5)
+            });
+
+            // Add replies to the second post in the first group.
+            gwp[1].Replies.Add(new GroupWallPostReply()
+            {
+                Body = "A Reply to Post #2.",
+                Poster = users[1],
+                TimeStamp = DateTime.Now.AddHours(-3.0)
+            });
+            gwp[1].Replies.Add(new GroupWallPostReply()
+            {
+                Body = "The second reply to post #2.",
+                Poster = users[2],
+                TimeStamp = DateTime.Now.AddHours(-2.5)
+            });
+        }
+
+        private void SetGroupWallPosts(List<Group> groups, List<User> users)
+        {
+            groups[0].GroupWallPosts.Add(new GroupWallPost()
+            {
+                Body = "I am the very first wall post in this group!",
+                Group = groups[0],
+                Poster = users[0],
+                TimeStamp = DateTime.Now.AddHours(-4)
+            });
+            groups[0].GroupWallPosts.Add(new GroupWallPost()
+            {
+                Body = "I am the second wall post in this group.",
+                Group = groups[0],
+                Poster = users[3],
+                TimeStamp = DateTime.Now.AddHours(-2)
+            });
         }
 
         private void SetGroupRequests(List<Group> groups, List<User> users)
@@ -338,8 +400,8 @@ namespace BookClubs.Migrations
                 },
                 new User
                 {
-                    FirstName="Tran",
-                    LastName = "Nguyen",
+                    FirstName="Jimmy",
+                    LastName = "Dean",
                     Email = "Tran.Nguyen@gmail.com",
                     UserName = "Tran.Nguyen@gmail.com",
                     Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
@@ -414,7 +476,7 @@ namespace BookClubs.Migrations
                 new User
                 {
                     FirstName="Tim",
-                    LastName = "Wong",
+                    LastName = "Frederick",
                     Email = "Tim.Wong@gmail.com",
                     UserName = "Tim.Wong@gmail.com",
                     Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +

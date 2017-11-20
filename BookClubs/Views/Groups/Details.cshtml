@@ -3,7 +3,9 @@
 @{
     ViewBag.Title = "Details";
 }
-
+@Styles.Render("~/Content/bootstrap.min.css")
+@Styles.Render("~/Content/bootstrap-theme.min.css")
+@*<link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />*@
 @Styles.Render("~/Content/BcStyles/group-details.css")
 
 <div class="profile">
@@ -28,8 +30,8 @@
         <div id="viewMembers">
             @foreach (var item in Model.MemberProfiles)
             {
-                <div class="profilePreview">
-                    <img class="profilePreviewImg" src="@item.ProfilePictureUrl" onclick="location.href='@Url.Action("Details", "Users", new { id = item.Id })'" />
+                <div class="profile-preview" onclick="location.href='@Url.Action("Details", "Users", new { id = item.Id })'">
+                    <img class="profile-thumbnail profile-thumbnail-large" src="@item.ProfilePictureUrl" />
                     <p>@item.FirstName @item.LastName</p>
                 </div>
             }
@@ -79,31 +81,58 @@
 
         </div>
 
-        //POSTS
-        <button id="viewWallPostsBtn" type="button" class="btn btn-basic btn-block btn-bc">View Posts (@Model.WallPosts.Count)</button>
-        <div id="viewWallPosts">
-            <textarea class="form-control" rows="5" id="message" placeholder="You may add a message here."></textarea>
-            @foreach (var item in Model.WallPosts)
+
+        <br />
+        <hr />
+
+        // POSTS
+        @*<div id="viewWallPosts">*@
+        <h2>Group Discussion</h2>
+
+
+        <div id="messageBoxSection">
+            <textarea class="form-control" rows="3" id="messageBox" placeholder="Post a message"></textarea>
+            @{ /*TODO: Add onclick handler for the post button*/ }
+            <input type="button" class="btn btn-info" value="Post" onclick="" />
+        </div>
+
+        <div id="commentSection">
+            @* Iterate through top-level posts and display them *@
+            @foreach (var post in Model.WallPosts)
             {
-                <p>@item.Body</p>
+                <div class="post post-original">
+                    @* Profile Image *@
+                    <div class="poster-area">
+                        <img class="profile-thumbnail profile-thumbnail-small" src="@post.ProfilePictureUrl" />
+                        @post.PosterName
+                    </div>
+                    <div class="post-body-area">
+                        <div class="post-body">
+                            @post.Body
+                        </div>
+                        <div class="post-elapsed-time">
+                            Posted 3 hours ago
+                        </div>
+                    </div>
 
-                Html.ActionLink(item.PosterName, "Details", "Users", new { @id = item.PosterId });
+                    @* @Html.ActionLink(post.PosterName, "Details", "Users", new { @id = post.PosterId });*@
 
-                if (Model.CurrentUserId == item.PosterId || Model.IsOrganizer)
-                {
-                    Html.ActionLink("Delete", "Delete", "GroupEvents", new { @id = item.Id });
-                }
-                if (Model.CurrentUserId == item.PosterId)
-                {
-                    Html.ActionLink("Edit", "Edit", "GroupEvents", new { @id = item.Id });
-                }
+                    @if (Model.CurrentUserId == post.PosterId || Model.IsOrganizer)
+                    {
+                        Html.ActionLink("Delete", "Delete", "GroupEvents", new { @id = post.Id });
+                    }
+                    @if (Model.CurrentUserId == post.PosterId)
+                    {
+                        Html.ActionLink("Edit", "Edit", "GroupEvents", new { @id = post.Id });
+                    }
+                </div>
             }
         </div>
-    }
-    else
-    {
-        <p>This group is private.</p>
-    }
+                }
+                else
+                {
+                    <p>This group is private.</p>
+                }
 
 </div>
 

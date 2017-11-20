@@ -33,7 +33,6 @@ namespace BookClubs.Controllers
         public ActionResult Edit()
         {
             var userId = User.Identity.GetUserId();
-            //var user = _dataRepository.GetUserById(userId);
             var user = _userService.GetUser(userId);
 
             EditProfileViewModel model = new EditProfileViewModel()

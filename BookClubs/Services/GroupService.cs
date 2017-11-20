@@ -18,20 +18,23 @@ namespace BookClubs.Services
         void SaveGroup();
         IQueryable<Group> GetAll();
         void CreateGroup(Group group, HttpPostedFileBase groupPicture, HttpServerUtilityBase httpServerUtilityBase);
+        void AddPost(string body, string posterId, string groupId);
     }
 
     public class GroupService : IGroupService
     {
         private readonly IGroupRepository _groupRepository;
+        private readonly IGroupWallPostRepository _gwpRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFileManager _fileManager;
 
         private static readonly string _defaultGroupPicPath = ConfigurationManager.AppSettings["DefaultGroupPicLocation"];
         private static readonly string _customGroupPicsPath = ConfigurationManager.AppSettings["GroupProfilePicSaveDirectory"];
 
-        public GroupService(IGroupRepository groupRepository, IUnitOfWork unitOfWork, IFileManager fileManager)
+        public GroupService(IGroupRepository groupRepository, IGroupWallPostRepository gwpRepository, IUnitOfWork unitOfWork, IFileManager fileManager)
         {
             _groupRepository = groupRepository;
+            _gwpRepository = gwpRepository;
             _unitOfWork = unitOfWork;
             _fileManager = fileManager;
         }
@@ -86,6 +89,17 @@ namespace BookClubs.Services
                     _unitOfWork.Commit();   // Re-commit with the image path.
                 }
             }
+        }
+
+        public void AddPost(string body, string posterId, string groupId)
+        {
+            _gwpRepository.Add(new GroupWallPost()
+            {
+                Body = body,
+                GroupId = Int32.Parse(groupId),
+                PosterId = posterId,
+                TimeStamp = DateTime.Now
+            });
         }
 
         #endregion
