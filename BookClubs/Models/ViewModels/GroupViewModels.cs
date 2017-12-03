@@ -100,7 +100,7 @@ namespace BookClubs.Models.ViewModels
         public string ProfilePictureUrl { get; set; }
         public string DateTime { get; set; }
         public string Body { get; set; }
-        public IEnumerable<GroupWallPostReplyViewModel> Replies { get; set; }
+        public ICollection<GroupWallPostReplyViewModel> Replies { get; set; }
     }
 
     public class GroupWallPostReplyViewModel

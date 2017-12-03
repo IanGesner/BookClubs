@@ -84,7 +84,7 @@ namespace BookClubs.Controllers
                     PosterName = gwpr.Poster.FirstName + " " + gwpr.Poster.LastName,
                     DateTime = gwpr.TimeStamp.ToShortTimeString(),
                     ProfilePictureUrl = _userService.GetUser(gwpr.PosterId).ProfilePictureUrl
-                })
+                }).ToArray()
             })
                 .ToList();
 

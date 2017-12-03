@@ -117,15 +117,44 @@
 
                     @* @Html.ActionLink(post.PosterName, "Details", "Users", new { @id = post.PosterId });*@
 
-                    @if (Model.CurrentUserId == post.PosterId || Model.IsOrganizer)
-                    {
-                        Html.ActionLink("Delete", "Delete", "GroupEvents", new { @id = post.Id });
-                    }
-                    @if (Model.CurrentUserId == post.PosterId)
-                    {
-                        Html.ActionLink("Edit", "Edit", "GroupEvents", new { @id = post.Id });
-                    }
+                    @*@if (Model.CurrentUserId == post.PosterId || Model.IsOrganizer)
+                        {
+                            Html.ActionLink("Delete", "Delete", "GroupEvents", new { @id = post.Id });
+                        }
+                        @if (Model.CurrentUserId == post.PosterId)
+                        {
+                            Html.ActionLink("Edit", "Edit", "GroupEvents", new { @id = post.Id });
+                        }*@
+
+                    <div class="fetch-replies">
+                        <button class="transparent-button" onclick="toggleReplies(@post.Id)">VIEW REPLIES (@post.Replies.Count)</button>
+                    </div>
+
+                    @* Iterate through replies. This section is hidden until toggleReplies() is called. *@
+                    <div id="replySection@(post.Id)" class="reply-section">
+                        @foreach (var reply in post.Replies)
+                        {
+                            <div class="post post-reply">
+                                @* Profile Image *@
+                                <div class="poster-area">
+                                    <img class="profile-thumbnail profile-thumbnail-small" src="@reply.ProfilePictureUrl" />
+                                    @reply.PosterName
+                                </div>
+                                <div class="post-body-area">
+                                    <div class="post-body">
+                                        @reply.Body
+                                    </div>
+                                    <div class="post-elapsed-time">
+                                        Posted 3 hours ago
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
                 </div>
+
+                @* Iterate through replies to this post but keep them hidden*@
             }
         </div>
                 }
@@ -155,7 +184,12 @@
         $("#viewGroupEventsBtn").click(function () {
             $("#viewGroupEvents").toggle();
         });
-
     });
+
+    function toggleReplies(id) {
+        $("#replySection" + id.toString()).toggle();
+    }
+
+
 </script>
 
